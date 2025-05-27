@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora</title>
+  <style>
+    body { font-family: sans-serif; background: #f1f1f1; text-align: center; }
+    input { margin: 5px; padding: 10px; font-size: 1em; }
+    button { padding: 10px 20px; margin: 10px; font-size: 1em; }
+    .hidden { display: none; }
+    #buttons button { width: 60px; height: 60px; font-size: 1.5em; margin: 5px; }
+  </style>
+</head>
+<body>
+
+<div id="registerLogin">
+  <h2 id="formTitle">Iniciar sesión o registrarse</h2>
+  <input type="email" id="email" placeholder="Correo"><br>
+  <input type="text" id="nick" placeholder="Nick"><br>
+  <input type="password" id="password" placeholder="Contraseña"><br>
+  <button onclick="register()">Registrarse</button>
+  <button onclick="login()">Iniciar sesión</button>
+</div>
+
+<div id="menu" class="hidden">
+  <h2>🎉 Menú secreto</h2>
+  <button onclick="showCalculator()">🧮 Calculadora</button>
+  <br><br>
+  <div onclick="openInIframe('https://youtube.com')" style="cursor:pointer;">
+    <img src="https://www.youtube.com/s/desktop/b1c424f8/img/favicon_144x144.png" width="100">
+    <p>YouTube</p>
+  </div>
+</div>
+
+<div id="calculator" class="hidden">
+  <h2>🧮 Calculadora</h2>
+  <input type="text" id="calcDisplay" readonly style="width: 240px; font-size: 2em;"><br>
+  <div id="buttons"></div>
+  <br>
+  <button onclick="backToMenu()">Volver al menú</button>
+</div>
+
+<script>
+const BIN_ID = '6835f7838a456b7966a61d04';
+const API_KEY = '$2a$10$W7r2d0gmDZE45aqzwLFbTumNYrlgnya.eify2ghIr2Ebrf0aupxWu';
+
+const registerLoginDiv = document.getElementById("registerLogin");
+const menuDiv = document.getElementById("menu");
+const calculatorDiv = document.getElementById("calculator");
+
+async function getUsers() {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+    headers: { 'X-Master-Key': API_KEY }
+  });
+  const data = await res.json();
+  return data.record.users || [];
+}
+
+async function updateUsers(users) {
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': API_KEY
+    },
+    body: JSON.stringify({ users })
+  });
+}
+
+async function register() {
+  const email = emailInput.value.trim();
+  const nick = nickInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !nick || !password) return alert("Rellena todos los campos");
+
+  const users = await getUsers();
+  if (users.find(u => u.email === email)) return alert("Ese correo ya está registrado");
+
+  users.push({ email, nick, password });
+  await updateUsers(users);
+  alert("Registrado con éxito. Ahora puedes iniciar sesión.");
+}
+
+async function login() {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password) return alert("Rellena todos los campos");
+
+  const users = await getUsers();
+  const user = users.find(u => u.email === email && u.password === password);
+  if (!user) return alert("Correo o contraseña incorrectos");
+
+  alert("Bienvenido, " + user.nick);
+  registerLoginDiv.classList.add("hidden");
+  menuDiv.classList.remove("hidden");
+}
+
+// Calculadora
+const display = document.getElementById("calcDisplay");
+let expr = "";
+const buttons = ["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+"];
+
+buttons.forEach(b => {
+  const btn = document.createElement("button");
+  btn.textContent = b;
+  btn.onclick = () => {
+    if (b === "=") {
+      try { expr = eval(expr).toString(); } catch { expr = "Error"; }
+    } else {
+      expr += b;
+    }
+    display.value = expr;
+  };
+  document.getElementById("buttons").appendChild(btn);
+});
+
+function showCalculator() {
+  menuDiv.classList.add("hidden");
+  calculatorDiv.classList.remove("hidden");
+}
+
+function backToMenu() {
+  calculatorDiv.classList.add("hidden");
+  menuDiv.classList.remove("hidden");
+}
+
+function openInIframe(url) {
+  const win = window.open("about:blank", "_blank");
+  const doc = win.document;
+  doc.write(`<iframe src="${url}" style="width:100vw; height:100vh; border:none;"></iframe>`);
+}
+
+const emailInput = document.getElementById("email");
+const nickInput = document.getElementById("nick");
+const passwordInput = document.getElementById("password");
+</script>
+
+</body>
+</html>
