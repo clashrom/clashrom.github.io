@@ -4,198 +4,246 @@
   <meta charset="UTF-8" />
   <title>Google Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="icon" href="https://www.google.com/favicon.ico" sizes="16x16 32x32" />
+  <link rel="icon" href="https://ssl.gstatic.com/gb/images/i1_1967ca6a.png" sizes="32x32" />
   <style>
     /* Reset y base */
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Roboto', Arial, sans-serif;
       background: #f8f9fa;
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .card {
       width: 100%;
       max-width: 360px;
       background: white;
-      padding: 30px 30px 40px 30px;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
+      padding: 30px 40px 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
       display: none;
-      border-radius: 16px;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: box-shadow 0.3s ease;
+    }
+    .card:focus-within {
+      box-shadow: 0 0 25px rgba(26,115,232,0.4);
     }
 
-    #calculator {
-      display: none;
-      user-select: text;
+    /* Mostrar homeCard al inicio */
+    #homeCard {
+      display: block;
     }
 
-    /* Título estilo Google */
+    /* Título Google Calculator */
     #calculator h1 {
       font-weight: 500;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       color: #202124;
-      margin: 0 0 16px 0;
-      letter-spacing: 0.02em;
+      margin-bottom: 15px;
+      user-select: none;
     }
 
-    /* Display */
+    /* Inputs estilo Google */
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
     #calcDisplay {
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 16px;
       width: 100%;
-      font-size: 2.2rem;
-      text-align: right;
-      padding: 14px 20px;
-      margin-bottom: 20px;
       border: none;
-      border-radius: 24px;
-      background: #f1f3f4;
-      color: #202124;
-      box-sizing: border-box;
-      box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.1);
-    }
-    #calcDisplay:focus {
+      border-bottom: 1.5px solid #dadce0;
+      padding: 10px 0 8px 0;
+      margin: 20px 0 10px 0;
       outline: none;
-      box-shadow: 0 0 0 2px #1a73e8;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+      background: transparent;
+      color: #202124;
+      user-select: text;
     }
-
-    /* Grid de botones */
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="text"]:focus,
+    #calcDisplay:focus {
+      border-bottom-color: #1a73e8;
+      box-shadow: 0 1px 0 0 #1a73e8;
+    }
+    input::placeholder {
+      color: #5f6368;
+      font-weight: 400;
     }
 
     /* Botones estilo Google */
-    .calc-grid button {
-      background: white;
-      border: none;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      font-size: 1.25rem;
-      color: #3c4043;
-      box-shadow: 0 1px 1.5px rgb(60 64 67 / 0.3);
+    button {
+      font-family: 'Roboto', Arial, sans-serif;
+      font-weight: 500;
+      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px 0;
+      margin: 15px 0 5px;
+      border-radius: 24px;
+      width: 100%;
+      box-shadow: 0 3px 6px rgba(26,115,232,0.3);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
       user-select: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
+      outline-offset: 2px;
+      outline-color: transparent;
+    }
+    button:hover {
+      background-color: #155ab6;
+      box-shadow: 0 4px 8px rgba(21,90,182,0.4);
+    }
+    button:active {
+      background-color: #0c3d91;
+      box-shadow: 0 2px 4px rgba(12,61,145,0.6);
+    }
+
+    /* Botones pequeños estilo Google */
+    .small-btn {
+      background: transparent;
+      color: #1a73e8;
+      box-shadow: none;
+      border-radius: 0;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 6px 0;
+      margin: 10px 0 20px;
+      width: auto;
+      transition: color 0.2s ease;
+    }
+    .small-btn:hover {
+      color: #155ab6;
+      text-decoration: underline;
+    }
+
+    /* Calculadora estilo Google */
+
+    #calculator {
+      display: none;
+      user-select: none;
+    }
+
+    #calcDisplay {
+      font-size: 2rem;
+      text-align: right;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background-color: #f1f3f4;
+      border: none;
+      color: #202124;
+      user-select: text;
+      cursor: default;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .calc-grid button {
+      font-size: 1.2rem;
+      padding: 18px 0;
+      border-radius: 50%;
+      border: none;
+      background-color: #f1f3f4;
+      color: #3c4043;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+      transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+      user-select: none;
+      cursor: pointer;
+      outline-offset: 2px;
+      outline-color: transparent;
     }
     .calc-grid button:hover {
-      background: #f1f3f4;
-      box-shadow: 0 2px 5px rgb(60 64 67 / 0.15);
+      background-color: #e8eaed;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.15);
     }
     .calc-grid button:active {
-      background: #e8e8e8;
-      box-shadow: inset 0 1px 3px rgb(60 64 67 / 0.2);
+      background-color: #dadce0;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+      color: #202124;
     }
 
-    /* Botón C más grande y rectangular */
-    .btn-clear {
+    /* Botón C estilo Google: alargado y rojo */
+    .calc-grid button.clear {
       grid-column: span 2;
       border-radius: 24px;
-      background: #f44336;
+      background-color: #ea4335;
       color: white;
-      font-weight: 500;
-      box-shadow: 0 2px 5px rgb(244 67 54 / 0.6);
+      font-weight: 600;
+      box-shadow: 0 3px 6px rgba(234,67,53,0.4);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .btn-clear:hover {
-      background: #d32f2f;
-      box-shadow: 0 4px 10px rgb(211 47 47 / 0.6);
+    .calc-grid button.clear:hover {
+      background-color: #c23321;
+      box-shadow: 0 4px 8px rgba(194,51,33,0.5);
     }
-    .btn-clear:active {
-      background: #b71c1c;
-      box-shadow: inset 0 2px 6px rgb(183 28 28 / 0.7);
-    }
-
-    /* Botones operadores con color azul */
-    .btn-op {
-      color: #1a73e8;
-      font-weight: 500;
-    }
-    .btn-op:hover {
-      background: #e8f0fe;
-    }
-    .btn-op:active {
-      background: #c6dafc;
+    .calc-grid button.clear:active {
+      background-color: #9b271a;
+      box-shadow: 0 2px 4px rgba(155,39,26,0.6);
     }
 
-    /* Cards de inicio, login, registro */
-    #homeCard, #loginCard, #registerCard, #menu {
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
-    }
-    button.small-btn {
-      background: none;
-      border: none;
-      color: #1a73e8;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 4px 8px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      transition: background-color 0.15s ease;
-    }
-    button.small-btn:hover {
-      background: #e8f0fe;
-    }
-
-    /* Imagen menú secreto */
+    /* Menú secreto */
     #menu img {
       width: 100px;
       cursor: pointer;
-      border-radius: 12px;
-      transition: box-shadow 0.2s ease;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
     }
     #menu img:hover {
-      box-shadow: 0 4px 12px rgb(26 115 232 / 0.5);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
 <!-- Pantalla Inicial -->
-<div class="card" id="homeCard">
+<div class="card" id="homeCard" tabindex="0">
   <h2>Bienvenido</h2>
   <button onclick="showCard('loginCard')">Iniciar sesión</button>
   <button onclick="showCard('registerCard')">Registrarse</button>
 </div>
 
 <!-- Login -->
-<div class="card" id="loginCard">
+<div class="card" id="loginCard" tabindex="0">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
   <h2>Iniciar sesión</h2>
-  <input type="email" id="email" placeholder="Correo" />
-  <input type="password" id="password" placeholder="Contraseña" />
+  <input type="email" id="email" placeholder="Correo" autocomplete="username" />
+  <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" />
   <button onclick="login()">Entrar</button>
 </div>
 
 <!-- Registro -->
-<div class="card" id="registerCard">
+<div class="card" id="registerCard" tabindex="0">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
   <h2>Registro</h2>
-  <input type="email" id="reg_email" placeholder="Correo" />
-  <input type="text" id="reg_nick" placeholder="Nick" />
-  <input type="password" id="reg_password" placeholder="Contraseña" />
+  <input type="email" id="reg_email" placeholder="Correo" autocomplete="email" />
+  <input type="text" id="reg_nick" placeholder="Nick" autocomplete="nickname" />
+  <input type="password" id="reg_password" placeholder="Contraseña" autocomplete="new-password" />
   <button onclick="register()">Registrarse</button>
 </div>
 
 <!-- Calculadora -->
-<div class="card" id="calculator">
+<div class="card" id="calculator" tabindex="0">
   <h1>Google Calculator</h1>
   <input type="text" id="calcDisplay" readonly />
   <div class="calc-grid" id="buttons"></div>
 </div>
 
 <!-- Menú secreto -->
-<div class="card" id="menu">
-  <button class="small-btn" onclick="showCard('calculator')">← Volver</button>
+<div class="card" id="menu" tabindex="0">
   <h2>🔒 Menú Secreto</h2>
   <div onclick="openInIframe('youtube.html')">
     <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
@@ -210,7 +258,9 @@ let userPassword = "";
 
 function showCard(id) {
   document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
-  document.getElementById(id).style.display = 'block';
+  const card = document.getElementById(id);
+  card.style.display = 'block';
+  card.focus();
 }
 
 async function getUsers() {
@@ -265,122 +315,75 @@ async function login() {
 // ---------------- CALCULADORA ----------------
 
 const display = document.getElementById("calcDisplay");
-
-const buttons = [
-  { label: "7" }, { label: "8" }, { label: "9" }, { label: "/", class: "btn-op" }, { label: "sin", class: "btn-op" },
-  { label: "4" }, { label: "5" }, { label: "6" }, { label: "*", class: "btn-op" }, { label: "cos", class: "btn-op" },
-  { label: "1" }, { label: "2" }, { label: "3" }, { label: "-", class: "btn-op" }, { label: "tan", class: "btn-op" },
-  { label: "0" }, { label: "." }, { label: "=", class: "btn-op" }, { label: "+", class: "btn-op" }, { label: "log", class: "btn-op" },
-  { label: "C", class: "btn-clear" }
+const buttonsArr = [
+  "7","8","9","/","sin",
+  "4","5","6","*","cos",
+  "1","2","3","-","tan",
+  "0",".","=","+","log",
+  "C"
 ];
 
-let expr = "";
-
-const btnContainer = document.getElementById("buttons");
-buttons.forEach(b => {
+// Crear botones en la calculadora
+const buttonsContainer = document.getElementById("buttons");
+buttonsArr.forEach(b => {
   const btn = document.createElement("button");
-  btn.textContent = b.label;
-  if(b.class) btn.classList.add(b.class);
+  btn.textContent = b;
+  if (b === "C") btn.classList.add("clear");
   btn.onclick = () => {
-    if (b.label === "C") {
+    if (b === "C") {
       expr = "";
-    } else if (b.label === "=") {
+    } else if (b === "=") {
       if (expr === userPassword) {
         showCard("menu");
         return;
       }
       try {
-        // Reemplazo funciones científicas por Math.
-        const safeExpr = expr.replace(/sin|cos|tan|log/g, m => {
+        expr = eval(expr.replace(/sin|cos|tan|log/g, m => {
           return {
             sin: "Math.sin",
             cos: "Math.cos",
             tan: "Math.tan",
             log: "Math.log10"
           }[m];
-        });
-        expr = eval(safeExpr).toString();
+        })).toString();
       } catch {
         expr = "Error";
       }
     } else {
-      expr += b.label;
+      expr += b;
     }
     display.value = expr;
   };
-  btnContainer.appendChild(btn);
+  buttonsContainer.appendChild(btn);
 });
 
-// ---------------- Soporte teclado ----------------
+let expr = "";
 
-document.addEventListener('keydown', (e) => {
-  const key = e.key;
-
-  // Teclas válidas numéricas y de operaciones básicas
-  const validKeys = ['0','1','2','3','4','5','6','7','8','9','.','+','-','*','/'];
-
-  // Funciones especiales mapeadas a teclas
-  const funcKeys = {
-    'Enter': '=',
-    '=': '=',
-    'Backspace': 'C',
-    'c': 'C',
-    'C': 'C',
-  };
-
-  // Funciones científicas con letras
-  const sciKeys = {
-    's': 'sin',
-    'o': 'cos',
-    't': 'tan',
-    'l': 'log'
-  };
-
-  if (validKeys.includes(key)) {
-    expr += key;
-    display.value = expr;
-  } else if (funcKeys[key]) {
-    const b = funcKeys[key];
-    if (b === 'C') {
-      expr = '';
-      display.value = expr;
-    } else if (b === '=') {
-      if (expr === userPassword) {
-        showCard("menu");
-        return;
-      }
-      try {
-        const safeExpr = expr.replace(/sin|cos|tan|log/g, m => {
-          return {
-            sin: "Math.sin",
-            cos: "Math.cos",
-            tan: "Math.tan",
-            log: "Math.log10"
-          }[m];
-        });
-        expr = eval(safeExpr).toString();
-      } catch {
-        expr = "Error";
-      }
+// Añadir soporte teclado para la calculadora
+window.addEventListener("keydown", e => {
+  if (document.getElementById("calculator").style.display !== "block") return;
+  const allowedKeys = "0123456789/*-+.=";
+  if (allowedKeys.includes(e.key)) {
+    if (e.key === "=") {
+      buttonsContainer.querySelector("button:nth-child(19)").click();
+    } else {
+      expr += e.key;
       display.value = expr;
     }
-  } else if (sciKeys[key]) {
-    expr += sciKeys[key];
+    e.preventDefault();
+  } else if (e.key === "Backspace") {
+    expr = expr.slice(0, -1);
     display.value = expr;
+    e.preventDefault();
   }
 });
 
-// ---------------- IFRAME ----------------
+// ---------------- IFRAME Y OTROS ----------------
 
 function openInIframe(url) {
-  const win = window.open("about:blank", "_blank");
-  const doc = win.document;
-  doc.write(`<iframe src="${url}" style="width:100vw; height:100vh; border:none;"></iframe>`);
-  doc.close();
+  window.open(url, "_blank");
 }
-
-// Mostrar pantalla inicial al cargar
-showCard("homeCard");
 </script>
+
 </body>
 </html>
