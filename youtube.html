@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Classroom inicio</title>
+  <link rel="icon" href="https://www.gstatic.com/classroom/logo_square_rounded.svg">
+  <!-- Iconos de Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=publish" />
+  <style>
+    body { 
+      background: linear-gradient(-45deg, #111, #222, #333, #444); 
+      background-size: 400% 400%; 
+      animation: gradientBackground 10s ease infinite;
+      color: white; 
+      font-family: 'Roboto', sans-serif; 
+      text-align: center; 
+      padding-top: 40px; 
+      overflow: hidden; /* Evita scroll cuando la imagen está en pantalla completa */
+    }
+
+    @keyframes gradientBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      color: #d32f2f;
+      font-family: 'Bungee Tint', sans-serif; /* Fuente personalizada */
+      font-size: 36px; /* Título más grande */
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      margin: 5px;
+      border: 1px solid #dadce0;
+    }
+    input {
+      width: 300px;
+    }
+    button {
+      background: #d32f2f;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    button:hover {
+      background: #a62a2a;
+    }
+    #resultados {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      max-height: 500px; /* Altura máxima ajustable */
+      overflow-y: auto; /* Scroll vertical */
+      padding-right: 10px; /* Espacio para el scrollbar */
+    }
+    .video {
+      background: #222;
+      padding: 10px;
+      border-radius: 8px;
+      width: 200px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .video:hover {
+      background: #333;
+    }
+    .video img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    .titulo {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #ccc;
+    }
+    #fullscreen-image {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999; /* Siempre encima de todo */
+    }
+    #fullscreen-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Mantiene la proporción de la imagen */
+      pointer-events: none; /* Evita arrastrar la imagen */
+      user-select: none; /* Evita seleccionar la imagen */
+    }
+    #upload-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #222; /* Fondo oscuro */
+      border: 2px solid #d32f2f; /* Borde rojo */
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4); /* Sombra */
+      z-index: 10000; /* Encima de todo */
+      text-align: center;
+    }
+    #upload-popup p {
+      color: white; /* Texto en blanco */
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    #upload-popup button {
+      margin: 10px;
+      width: 100px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: none;
+      background: #d32f2f; /* Botón rojo */
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #upload-popup button:hover {
+      background: #a62a2a; /* Efecto hover */
+    }
+
+    /* Posicionamiento del botón de upload (modificación solicitada) */
+    #publish-button {
+      position: fixed;
+      top: 10%;
+      left: 20px;
+      z-index: 1000;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    #publish-button:hover {
+      background: #a62a2a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Buscador privado de YouTube</h1>
+  <input id="busqueda" placeholder="Buscar video o canal...">
+  <button onclick="buscar()">Buscar</button>
+
+  <div id="resultados"></div>
+
+  <!-- Botón para abrir el popup -->
+  <button id="publish-button" onclick="toggleUploadPopup()">
+    <span class="material-symbols-outlined">publish</span>
+  </button>
+
+  <!-- Popup para subir o establecer imagen predeterminada -->
+  <div id="upload-popup">
+    <p><strong>Seleccione una acción:</strong></p>
+    <button onclick="triggerFileUpload()">Upload</button>
+    <button onclick="setDefaultImage()">Default</button>
+    <input id="file-input" type="file" accept="image/*" style="display: none;" onchange="updateFullscreenImage(event)">
+  </div>
+
+  <!-- Contenedor para la imagen a pantalla completa -->
+  <div id="fullscreen-image">
+    <img id="fullscreen-img" src="images/Screenshot%202025-05-07%2011.39.48.png" alt="Fullscreen Screenshot">
+  </div>
+
+  <script>
+    async function buscar() {
+      const texto = document.getElementById("busqueda").value;
+      const resultados = document.getElementById("resultados");
+      resultados.innerHTML = "";
+
+      if (!texto) return;
+
+      const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(texto)}`;
+      const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+
+      try {
+        const res = await fetch(proxy);
+        const html = await res.text();
+
+        const vistos = new Set();
+
+        // Buscar canales
+        const canales = [...html.matchAll(/\/@([a-zA-Z0-9_-]+)"/g)];
+        canales.forEach(match => {
+          const canalId = match[1];
+          if (vistos.has(canalId)) return;
+          vistos.add(canalId);
+
+          const div = document.createElement("div");
+          div.className = "video";
+          div.innerHTML = `
+            <div class="titulo">Canal: ${canalId}</div>
+          `;
+          resultados.appendChild(div);
+        });
+
+        // Buscar videos
+        const videos = [...html.matchAll(/"videoId":"([a-zA-Z0-9_-]{11})".*?"title":\{"runs":\[\{"text":"(.*?)"\}\]/g)];
+        videos.forEach(match => {
+          const id = match[1];
+          const descripcion = match[2].trim();
+
+          if (vistos.has(id)) return;
+          vistos.add(id);
+
+          const div = document.createElement("div");
+          div.className = "video";
+          div.onclick = () => abrirVideo(id);
+          div.innerHTML = `
+            <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg">
+            <div class="titulo">Video: ${descripcion}</div>
+          `;
+          resultados.appendChild(div);
+        });
+
+        // Buscar videos relacionados
+        const relacionados = [...html.matchAll(/"relatedVideoRenderer".*?"videoId":"([a-zA-Z0-9_-]{11})"/g)];
+        relacionados.forEach(match => {
+          const id = match[1];
+
+          if (vistos.has(id)) return;
+          vistos.add(id);
+
+          const div = document.createElement("div");
+          div.className = "video";
+          div.onclick = () => abrirVideo(id);
+          div.innerHTML = `
+            <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg">
+            <div class="titulo">Video relacionado</div>
+          `;
+          resultados.appendChild(div);
+        });
+
+        if (vistos.size === 0) {
+          resultados.innerHTML = "<p>No se encontraron resultados.</p>";
+        }
+      } catch (e) {
+        alert("Ocurrió un error al buscar.");
+      }
+    }
+
+    function abrirVideo(videoId) {
+      const win = window.open("about:blank", "_blank");
+      const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
+      win.document.write(`<iframe width="100%" height="100%" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`);
+      win.document.close();
+    }
+
+    function toggleUploadPopup() {
+      const popup = document.getElementById('upload-popup');
+      popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function triggerFileUpload() {
+      const fileInput = document.getElementById('file-input');
+      fileInput.click();
+    }
+
+    function setDefaultImage() {
+      const fullscreenImg = document.getElementById('fullscreen-img');
+      fullscreenImg.src = "images/Screenshot%202025-05-07%2011.39.48.png"; // Imagen predeterminada
+      document.getElementById('upload-popup').style.display = 'none';
+    }
+
+    function updateFullscreenImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const fullscreenImg = document.getElementById('fullscreen-img');
+          fullscreenImg.src = e.target.result; // Actualiza la imagen a la nueva subida
+        };
+        reader.readAsDataURL(file);
+      }
+      document.getElementById('upload-popup').style.display = 'none';
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Tab') {
+        event.preventDefault(); // Evita el comportamiento normal de Tab
+        const fullscreenImage = document.getElementById('fullscreen-image');
+        fullscreenImage.style.display = fullscreenImage.style.display === 'flex' ? 'none' : 'flex';
+      }
+    });
+  </script>
+</body>
+</html>
+
