@@ -3,169 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <title>Calculadora</title>
-  <link rel="icon" href="https://ssl.gstatic.com/images/branding/product/1x/calculator_48dp.png">
   <style>
     body {
-      font-family: "Roboto", sans-serif;
-      background: #f1f3f4;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
+
     .card {
+      width: 100%;
+      max-width: 360px;
       background: white;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 320px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
       display: none;
     }
-    #mainMenu { display: flex; flex-direction: column; gap: 10px; }
-    button {
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: #e8eaed;
-      color: #202124;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    button:hover {
-      background: #d2e3fc;
-    }
-    button:active {
-      background: #aecbfa;
-    }
+
     input {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
       width: 100%;
-      margin-bottom: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
     }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0c59c1;
+    }
+
+    .small-btn {
+      width: auto;
+      background: #e0e0e0;
+      color: black;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    #calculator {
+      display: none;
+    }
+
     #calcDisplay {
       width: 100%;
-      font-size: 2em;
+      font-size: 1.8em;
       text-align: right;
-      padding: 15px;
+      padding: 10px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
-      border-radius: 10px;
-      background: #f1f3f4;
     }
+
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      gap: 5px;
     }
+
     .calc-grid button {
       font-size: 1.2em;
       padding: 15px;
     }
-    .icon-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+    #menu img {
+      width: 100px;
+      cursor: pointer;
     }
-    .icon-btn img {
-      width: 32px;
-      height: 32px;
+
+    #homeCard {
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<div class="card" id="selectLogin">
-  <h3>Bienvenido</h3>
-  <button onclick="showCard('login')">Iniciar sesión</button>
-  <button onclick="showCard('register')">Registrarse</button>
+<!-- Pantalla Inicial -->
+<div class="card" id="homeCard">
+  <h2>Bienvenido</h2>
+  <button onclick="showCard('loginCard')">Iniciar sesión</button>
+  <button onclick="showCard('registerCard')">Registrarse</button>
 </div>
 
-<div class="card" id="login">
-  <button onclick="showCard('selectLogin')">← Atrás</button>
-  <h3>Iniciar sesión</h3>
-  <input type="email" id="loginEmail" placeholder="Correo">
-  <input type="password" id="loginPassword" placeholder="Contraseña">
+<!-- Login -->
+<div class="card" id="loginCard">
+  <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
+  <h2>Iniciar sesión</h2>
+  <input type="email" id="email" placeholder="Correo">
+  <input type="password" id="password" placeholder="Contraseña">
   <button onclick="login()">Entrar</button>
 </div>
 
-<div class="card" id="register">
-  <button onclick="showCard('selectLogin')">← Atrás</button>
-  <h3>Registrarse</h3>
-  <input type="text" id="regNick" placeholder="Nombre de usuario">
-  <input type="email" id="regEmail" placeholder="Correo">
-  <input type="password" id="regPassword" placeholder="Contraseña">
-  <button onclick="register()">Crear cuenta</button>
+<!-- Registro -->
+<div class="card" id="registerCard">
+  <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
+  <h2>Registro</h2>
+  <input type="email" id="reg_email" placeholder="Correo">
+  <input type="text" id="reg_nick" placeholder="Nick">
+  <input type="password" id="reg_password" placeholder="Contraseña">
+  <button onclick="register()">Registrarse</button>
 </div>
 
+<!-- Calculadora -->
 <div class="card" id="calculator">
   <input type="text" id="calcDisplay" readonly>
   <div class="calc-grid" id="buttons"></div>
 </div>
 
+<!-- Menú secreto -->
 <div class="card" id="menu">
-  <h3>Menú secreto</h3>
-  <button class="icon-btn" onclick="openInBlank()">
+  <h2>🔒 Menú Secreto</h2>
+  <div onclick="openInIframe('youtube.html')">
     <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube">
-  </button>
+  </div>
 </div>
 
 <script>
-const binId = "6835f7838a456b7966a61d04";
-const apiKey = "$2a$10$W7r2d0gmDZE45aqzwLFbTumNYrlgnya.eify2ghIr2Ebrf0aupxWu";
-let users = [], userPassword = "";
+const BIN_ID = '6835f7838a456b7966a61d04';
+const API_KEY = '$2a$10$W7r2d0gmDZE45aqzwLFbTumNYrlgnya.eify2ghIr2Ebrf0aupxWu';
+
+let userPassword = "";
 
 function showCard(id) {
-  document.querySelectorAll(".card").forEach(c => c.style.display = "none");
-  document.getElementById(id).style.display = "block";
+  document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
 }
 
-async function loadUsers() {
-  const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
-    headers: { "X-Master-Key": apiKey }
+async function getUsers() {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+    headers: { 'X-Master-Key': API_KEY }
   });
   const data = await res.json();
-  users = data.record.users || [];
+  return data.record.users || [];
 }
 
-async function saveUsers() {
-  await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-    method: "PUT",
+async function updateUsers(users) {
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
-      "X-Master-Key": apiKey
+      'Content-Type': 'application/json',
+      'X-Master-Key': API_KEY
     },
     body: JSON.stringify({ users })
   });
 }
 
-function register() {
-  const nick = document.getElementById("regNick").value;
-  const email = document.getElementById("regEmail").value;
-  const pass = document.getElementById("regPassword").value;
-  if (users.some(u => u.email === email)) return alert("Ya existe ese correo.");
-  users.push({ nick, email, pass });
-  saveUsers().then(() => {
-    alert("Cuenta creada");
-    showCard("login");
-  });
+async function register() {
+  const email = document.getElementById("reg_email").value.trim();
+  const nick = document.getElementById("reg_nick").value.trim();
+  const password = document.getElementById("reg_password").value;
+
+  if (!email || !nick || !password) return alert("Rellena todos los campos");
+
+  const users = await getUsers();
+  if (users.find(u => u.email === email)) return alert("Ese correo ya está registrado");
+
+  users.push({ email, nick, password });
+  await updateUsers(users);
+  alert("Registrado con éxito");
+  showCard("homeCard");
 }
 
-function login() {
-  const email = document.getElementById("loginEmail").value;
-  const pass = document.getElementById("loginPassword").value;
-  const user = users.find(u => u.email === email && u.pass === pass);
-  if (!user) return alert("Datos incorrectos");
-  userPassword = pass;
+async function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) return alert("Rellena todos los campos");
+
+  const users = await getUsers();
+  const user = users.find(u => u.email === email && u.password === password);
+  if (!user) return alert("Correo o contraseña incorrectos");
+
+  userPassword = password;
   showCard("calculator");
 }
 
-function openInBlank() {
-  const win = window.open("about:blank", "_blank");
-  win.document.write(`<iframe src="youtube.html" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`);
-}
+// ---------------- CALCULADORA ----------------
 
 const display = document.getElementById("calcDisplay");
 const buttons = [
@@ -178,39 +203,44 @@ const buttons = [
 
 let expr = "";
 
-function appendCalc(char) {
-  if (char === "C") {
-    expr = "";
-  } else if (char === "=") {
-    if (expr === userPassword) return showCard("menu");
-    try {
-      expr = eval(expr.replace(/sin|cos|tan|log/g, f => ({
-        sin: "Math.sin", cos: "Math.cos",
-        tan: "Math.tan", log: "Math.log10"
-      })[f])).toString();
-    } catch { expr = "Error"; }
-  } else {
-    expr += char;
-  }
-  display.value = expr;
-}
-
 buttons.forEach(b => {
   const btn = document.createElement("button");
   btn.textContent = b;
-  btn.onclick = () => appendCalc(b);
+  btn.onclick = () => {
+    if (b === "C") {
+      expr = "";
+    } else if (b === "=") {
+      if (expr === userPassword) {
+        showCard("menu");
+        return;
+      }
+      try {
+        expr = eval(expr.replace(/sin|cos|tan|log/g, m => {
+          return {
+            sin: "Math.sin",
+            cos: "Math.cos",
+            tan: "Math.tan",
+            log: "Math.log10"
+          }[m];
+        })).toString();
+      } catch {
+        expr = "Error";
+      }
+    } else {
+      expr += b;
+    }
+    display.value = expr;
+  };
   document.getElementById("buttons").appendChild(btn);
 });
 
-document.addEventListener("keydown", e => {
-  const key = e.key;
-  if ("0123456789.+-*/".includes(key)) appendCalc(key);
-  else if (key === "Enter") appendCalc("=");
-  else if (key.toLowerCase() === "c") appendCalc("C");
-});
+// ---------------- IFRAME ----------------
 
-loadUsers();
-showCard("selectLogin");
+function openInIframe(url) {
+  const win = window.open("about:blank", "_blank");
+  const doc = win.document;
+  doc.write(`<iframe src="${url}" style="width:100vw; height:100vh; border:none;"></iframe>`);
+}
 </script>
 
 </body>
