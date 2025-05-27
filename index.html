@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Google Calculator</title>
-  <link rel="icon" href="https://www.google.com/favicon.ico" sizes="16x16 32x32" />
+  <link rel="icon" href="https://ssl.gstatic.com/gb/images/i1_1967ca6a.png" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -73,7 +73,6 @@
       box-shadow: 0 4px 10px rgba(21,90,182,0.6);
     }
 
-    /* Botones "volver" más sutiles */
     .small-btn {
       width: auto;
       background: transparent;
@@ -95,7 +94,6 @@
       box-shadow: none;
     }
 
-    /* Calculadora */
     #calculator {
       display: none;
       max-width: 360px;
@@ -151,7 +149,6 @@
       color: white;
     }
 
-    /* Botón C más rectangular */
     .calc-grid button:last-child {
       border-radius: 10px;
       grid-column: span 1;
@@ -166,7 +163,6 @@
       box-shadow: none;
     }
 
-    /* Menú secreto */
     #menu {
       max-width: 360px;
       width: 100%;
@@ -195,7 +191,6 @@
       box-shadow: 0 6px 20px rgba(21,90,182,0.5);
     }
 
-    /* Título de calculadora arriba */
     #calculatorTitle {
       font-size: 2.1em;
       font-weight: 500;
@@ -203,6 +198,18 @@
       color: #1a73e8;
       user-select: none;
       font-family: 'Roboto', Arial, sans-serif;
+    }
+
+    /* Bienvenida hacker */
+    #welcomeMsg {
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 19px;
+      color: #00FF41;
+      user-select: none;
+      letter-spacing: 2px;
+      text-shadow: 0 0 6px #00FF41, 0 0 4px #00FF41;
+      font-family: 'Consolas', 'Roboto Mono', 'monospace', Arial, sans-serif;
     }
   </style>
 </head>
@@ -243,7 +250,7 @@
 
 <!-- Menú secreto -->
 <div class="card" id="menu">
-  <div id="welcomeMsg" style="font-size:2em;font-weight:700;margin-bottom:19px;color:#1a73e8;user-select:none;"></div>
+  <div id="welcomeMsg"></div>
   <h2>🔒 Menú Secreto</h2>
   <div onclick="openInIframe('youtube.html')">
     <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
@@ -255,7 +262,7 @@ const BIN_ID = '68360d738960c979a5a1e240';
 const API_KEY = '$2a$10$W7r2d0gmDZE45aqzwLFbTumNYrlgnya.eify2ghIr2Ebrf0aupxWu';
 
 let userPassword = "";
-let userNick = ""; // <-- Añadido para guardar el nick
+let userNick = "";
 
 function showCard(id) {
   document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
@@ -309,7 +316,7 @@ async function login() {
   if (!user) return alert("Correo o contraseña incorrectos");
 
   userPassword = password;
-  userNick = user.nick; // <-- Guardar el nick al iniciar sesión
+  userNick = user.nick;
   showCard("calculator");
 }
 
@@ -357,7 +364,6 @@ buttons.forEach(b => {
   document.getElementById("buttons").appendChild(btn);
 });
 
-// Habilitar teclado para la calculadora
 document.addEventListener("keydown", e => {
   if (document.getElementById("calculator").style.display === "block") {
     if (e.key.match(/[0-9+\-*/.=]/)) {
@@ -384,59 +390,49 @@ function openInIframe(url) {
   window.open(url, "_blank");
 }
 
-// --------- BIENVENIDA ANIMADA EN MENU SECRETO ---------
+// --------- BIENVENIDA HACKER EN MENU SECRETO ---------
 
-const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&";
+let welcomeAnimInterval;
 
-function animateText(element, text, interval = 50, duration = 1500) {
+function animateText(element, text, interval = 120, duration = 2000) {
   let frame = 0;
-  let finished = false;
   let revealTimeout;
-
   function randomize(i) {
-    if (i >= text.length) return text;
     return (
       text.slice(0, i) +
-      Array.from({length: text.length - i}, () => randomChars[Math.floor(Math.random() * randomChars.length)]).join('')
+      Array.from({length: text.length - i}, () =>
+        randomChars[Math.floor(Math.random() * randomChars.length)]
+      ).join('')
     );
   }
-
   function revealStep() {
     if (frame <= text.length) {
-      element.textContent = "bienvenido (" + randomize(frame) + ")";
+      element.textContent = randomize(frame);
       frame++;
       setTimeout(revealStep, interval);
     } else {
-      element.textContent = "bienvenido (" + text + ")";
-      finished = true;
+      element.textContent = text;
     }
   }
-
   revealStep();
-  // Para asegurar que después de 'duration' segundos se muestre el nick real
   if (revealTimeout) clearTimeout(revealTimeout);
   revealTimeout = setTimeout(() => {
-    element.textContent = "bienvenido (" + text + ")";
-    finished = true;
+    element.textContent = text;
   }, duration);
 }
 
-let welcomeAnimInterval;
 function showWelcome() {
   const el = document.getElementById("welcomeMsg");
-  if(!userNick) {
+  if (!userNick) {
     el.textContent = "";
     return;
   }
-  // Primero, lanza la animación
-  animateText(el, userNick);
-
-  // Limpia cualquier intervalo anterior
+  const fullText = `bienvenido ${userNick}`;
+  animateText(el, fullText, 120, 2200);
   if (welcomeAnimInterval) clearInterval(welcomeAnimInterval);
-
-  // Luego repite la animación cada 5 segundos
   welcomeAnimInterval = setInterval(() => {
-    animateText(el, userNick);
+    animateText(el, fullText, 120, 2200);
   }, 5000);
 }
 </script>
