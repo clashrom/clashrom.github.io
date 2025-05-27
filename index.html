@@ -5,8 +5,8 @@
   <title>Calculadora</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #fff;
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
       margin: 0;
       display: flex;
       justify-content: center;
@@ -17,16 +17,18 @@
     .card {
       width: 100%;
       max-width: 360px;
-      padding: 40px;
+      background: white;
+      padding: 30px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
+      display: none;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      font-size: 1em;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
     }
 
     button {
@@ -36,15 +38,23 @@
       background: #1a73e8;
       color: white;
       border: none;
-      font-size: 1em;
+      font-size: 16px;
       cursor: pointer;
     }
 
     button:hover {
-      background: #1669c1;
+      background: #0c59c1;
     }
 
-    #calculator, #menu {
+    .small-btn {
+      width: auto;
+      background: #e0e0e0;
+      color: black;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    #calculator {
       display: none;
     }
 
@@ -73,27 +83,46 @@
       cursor: pointer;
     }
 
-    .hidden {
-      display: none;
+    #homeCard {
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<div class="card" id="authCard">
-  <h2>Iniciar sesión / Registro</h2>
-  <input type="email" id="email" placeholder="Correo">
-  <input type="text" id="nick" placeholder="Nick">
-  <input type="password" id="password" placeholder="Contraseña">
-  <button onclick="register()">Registrarse</button>
-  <button onclick="login()">Iniciar sesión</button>
+<!-- Pantalla Inicial -->
+<div class="card" id="homeCard">
+  <h2>Bienvenido</h2>
+  <button onclick="showCard('loginCard')">Iniciar sesión</button>
+  <button onclick="showCard('registerCard')">Registrarse</button>
 </div>
 
+<!-- Login -->
+<div class="card" id="loginCard">
+  <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
+  <h2>Iniciar sesión</h2>
+  <input type="email" id="email" placeholder="Correo">
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+</div>
+
+<!-- Registro -->
+<div class="card" id="registerCard">
+  <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
+  <h2>Registro</h2>
+  <input type="email" id="reg_email" placeholder="Correo">
+  <input type="text" id="reg_nick" placeholder="Nick">
+  <input type="password" id="reg_password" placeholder="Contraseña">
+  <button onclick="register()">Registrarse</button>
+</div>
+
+<!-- Calculadora -->
 <div class="card" id="calculator">
   <input type="text" id="calcDisplay" readonly>
   <div class="calc-grid" id="buttons"></div>
 </div>
 
+<!-- Menú secreto -->
 <div class="card" id="menu">
   <h2>🔒 Menú Secreto</h2>
   <div onclick="openInIframe('youtube.html')">
@@ -106,6 +135,11 @@ const BIN_ID = '6835f7838a456b7966a61d04';
 const API_KEY = '$2a$10$W7r2d0gmDZE45aqzwLFbTumNYrlgnya.eify2ghIr2Ebrf0aupxWu';
 
 let userPassword = "";
+
+function showCard(id) {
+  document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
 
 async function getUsers() {
   const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
@@ -127,9 +161,9 @@ async function updateUsers(users) {
 }
 
 async function register() {
-  const email = emailInput.value.trim();
-  const nick = nickInput.value.trim();
-  const password = passwordInput.value;
+  const email = document.getElementById("reg_email").value.trim();
+  const nick = document.getElementById("reg_nick").value.trim();
+  const password = document.getElementById("reg_password").value;
 
   if (!email || !nick || !password) return alert("Rellena todos los campos");
 
@@ -139,11 +173,12 @@ async function register() {
   users.push({ email, nick, password });
   await updateUsers(users);
   alert("Registrado con éxito");
+  showCard("homeCard");
 }
 
 async function login() {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
   if (!email || !password) return alert("Rellena todos los campos");
 
@@ -152,18 +187,18 @@ async function login() {
   if (!user) return alert("Correo o contraseña incorrectos");
 
   userPassword = password;
-  document.getElementById("authCard").style.display = "none";
-  document.getElementById("calculator").style.display = "block";
+  showCard("calculator");
 }
 
-// ------------------- CALCULADORA ----------------------
+// ---------------- CALCULADORA ----------------
 
 const display = document.getElementById("calcDisplay");
 const buttons = [
   "7","8","9","/","sin",
   "4","5","6","*","cos",
   "1","2","3","-","tan",
-  "0",".","=","+","log"
+  "0",".","=","+","log",
+  "C"
 ];
 
 let expr = "";
@@ -172,10 +207,11 @@ buttons.forEach(b => {
   const btn = document.createElement("button");
   btn.textContent = b;
   btn.onclick = () => {
-    if (b === "=") {
+    if (b === "C") {
+      expr = "";
+    } else if (b === "=") {
       if (expr === userPassword) {
-        document.getElementById("calculator").style.display = "none";
-        document.getElementById("menu").style.display = "block";
+        showCard("menu");
         return;
       }
       try {
@@ -198,18 +234,13 @@ buttons.forEach(b => {
   document.getElementById("buttons").appendChild(btn);
 });
 
-// ------------------- IFRAME ----------------------
+// ---------------- IFRAME ----------------
 
 function openInIframe(url) {
   const win = window.open("about:blank", "_blank");
   const doc = win.document;
   doc.write(`<iframe src="${url}" style="width:100vw; height:100vh; border:none;"></iframe>`);
 }
-
-// ------------------- INPUTS ----------------------
-const emailInput = document.getElementById("email");
-const nickInput = document.getElementById("nick");
-const passwordInput = document.getElementById("password");
 </script>
 
 </body>
