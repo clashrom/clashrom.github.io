@@ -374,12 +374,4 @@ document.addEventListener('keydown', (e) => {
 function openInIframe(url) {
   const win = window.open("about:blank", "_blank");
   const doc = win.document;
-  doc.write(`<iframe src="${url}" style="width:100vw; height:100vh; border:none;"></iframe>`);
-  doc.close();
-}
-
-// Mostrar pantalla inicial al cargar
-showCard("homeCard");
-</script>
-</body>
-</html>
+  doc.write(`<iframe src="${url}" style="width:100vw; height:
