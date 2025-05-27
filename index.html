@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Google Calculator</title>
-  <link rel="icon" href="https://ssl.gstatic.com/gb/images/i1_1967ca6a.png" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="https://ssl.gstatic.com/gb/images/i1_1967ca6a.png" sizes="32x32" />
   <style>
+    /* Reset y base */
     body {
       font-family: 'Roboto', Arial, sans-serif;
       background: #f8f9fa;
@@ -14,235 +15,235 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .card {
       width: 100%;
       max-width: 360px;
       background: white;
-      padding: 30px 25px 35px 25px;
+      padding: 30px 40px 40px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
       display: none;
-      border-radius: 12px;
+      border-radius: 8px;
       box-sizing: border-box;
+      transition: box-shadow 0.3s ease;
+    }
+    .card:focus-within {
+      box-shadow: 0 0 25px rgba(26,115,232,0.4);
     }
 
+    /* Mostrar homeCard al inicio */
     #homeCard {
       display: block;
     }
 
-    input, button {
+    /* Título Google Calculator */
+    #calculator h1 {
+      font-weight: 500;
+      font-size: 1.6rem;
+      color: #202124;
+      margin-bottom: 15px;
+      user-select: none;
+    }
+
+    /* Inputs estilo Google */
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    #calcDisplay {
       font-family: 'Roboto', Arial, sans-serif;
-      outline: none;
-      border: none;
-      box-sizing: border-box;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px 14px;
-      margin: 10px 0;
       font-size: 16px;
-      border: 1.8px solid #ddd;
-      border-radius: 8px;
-      transition: border-color 0.25s ease;
-    }
-
-    input:focus {
-      border-color: #1a73e8;
-      box-shadow: 0 0 6px #aecbfa;
-    }
-
-    button {
       width: 100%;
-      padding: 14px;
-      margin-top: 14px;
-      background: #1a73e8;
-      color: white;
-      border-radius: 8px;
+      border: none;
+      border-bottom: 1.5px solid #dadce0;
+      padding: 10px 0 8px 0;
+      margin: 20px 0 10px 0;
+      outline: none;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+      background: transparent;
+      color: #202124;
+      user-select: text;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="text"]:focus,
+    #calcDisplay:focus {
+      border-bottom-color: #1a73e8;
+      box-shadow: 0 1px 0 0 #1a73e8;
+    }
+    input::placeholder {
+      color: #5f6368;
+      font-weight: 400;
+    }
+
+    /* Botones estilo Google */
+    button {
+      font-family: 'Roboto', Arial, sans-serif;
+      font-weight: 500;
       font-size: 16px;
       cursor: pointer;
-      font-weight: 500;
-      box-shadow: 0 2px 5px rgba(26,115,232,0.4);
-      transition: background-color 0.3s ease;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px 0;
+      margin: 15px 0 5px;
+      border-radius: 24px;
+      width: 100%;
+      box-shadow: 0 3px 6px rgba(26,115,232,0.3);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      user-select: none;
+      outline-offset: 2px;
+      outline-color: transparent;
     }
-
     button:hover {
-      background: #155ab6;
-      box-shadow: 0 4px 10px rgba(21,90,182,0.6);
+      background-color: #155ab6;
+      box-shadow: 0 4px 8px rgba(21,90,182,0.4);
+    }
+    button:active {
+      background-color: #0c3d91;
+      box-shadow: 0 2px 4px rgba(12,61,145,0.6);
     }
 
-    /* Botones "volver" más sutiles */
+    /* Botones pequeños estilo Google */
     .small-btn {
-      width: auto;
       background: transparent;
       color: #1a73e8;
-      font-size: 14px;
-      margin-bottom: 20px;
-      padding: 0;
       box-shadow: none;
       border-radius: 0;
-      cursor: pointer;
-      transition: color 0.2s;
-      text-decoration: none;
-      border: none;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 6px 0;
+      margin: 10px 0 20px;
+      width: auto;
+      transition: color 0.2s ease;
     }
     .small-btn:hover {
       color: #155ab6;
-      text-decoration: none;
-      background: transparent;
-      box-shadow: none;
+      text-decoration: underline;
     }
 
-    /* Calculadora */
+    /* Calculadora estilo Google */
+
     #calculator {
       display: none;
-      max-width: 360px;
-      width: 100%;
-      padding: 25px 20px 30px 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.12);
-      box-sizing: border-box;
-      text-align: center;
+      user-select: none;
     }
 
     #calcDisplay {
-      width: 100%;
-      font-size: 2em;
+      font-size: 2rem;
       text-align: right;
-      padding: 14px 16px;
+      padding: 12px 15px;
       margin-bottom: 15px;
-      border: 1.8px solid #ccc;
-      border-radius: 12px;
-      user-select: none;
-      background: #fafafa;
-      box-sizing: border-box;
-      font-weight: 500;
-      color: #222;
+      border-radius: 8px;
+      background-color: #f1f3f4;
+      border: none;
+      color: #202124;
+      user-select: text;
+      cursor: default;
     }
 
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 10px;
     }
 
     .calc-grid button {
-      font-size: 1.3em;
+      font-size: 1.2rem;
       padding: 18px 0;
       border-radius: 50%;
       border: none;
-      background: #dbe6f7;
-      color: #1a73e8;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 3px 6px rgba(26,115,232,0.3);
-      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+      background-color: #f1f3f4;
+      color: #3c4043;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+      transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
       user-select: none;
+      cursor: pointer;
+      outline-offset: 2px;
+      outline-color: transparent;
     }
     .calc-grid button:hover {
-      background: #b3c7f9;
-      box-shadow: 0 5px 12px rgba(21,90,182,0.5);
+      background-color: #e8eaed;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.15);
     }
     .calc-grid button:active {
-      background: #7a9ef6;
-      box-shadow: 0 2px 5px rgba(21,90,182,0.8);
-      color: white;
+      background-color: #dadce0;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+      color: #202124;
     }
 
-    /* Botón C más rectangular */
-    .calc-grid button:last-child {
-      border-radius: 10px;
-      grid-column: span 1;
-      background: #f4f6fa;
-      color: #555;
-      font-weight: 700;
-      box-shadow: none;
+    /* Botón C estilo Google: alargado y rojo */
+    .calc-grid button.clear {
+      grid-column: span 2;
+      border-radius: 24px;
+      background-color: #ea4335;
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 3px 6px rgba(234,67,53,0.4);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .calc-grid button:last-child:hover {
-      background: #d7dde9;
-      color: #333;
-      box-shadow: none;
+    .calc-grid button.clear:hover {
+      background-color: #c23321;
+      box-shadow: 0 4px 8px rgba(194,51,33,0.5);
+    }
+    .calc-grid button.clear:active {
+      background-color: #9b271a;
+      box-shadow: 0 2px 4px rgba(155,39,26,0.6);
     }
 
     /* Menú secreto */
-    #menu {
-      max-width: 360px;
-      width: 100%;
-      padding: 25px 25px 30px 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    #menu h2 {
-      margin-bottom: 25px;
-      font-weight: 500;
-      font-size: 1.7em;
-      color: #1a73e8;
-    }
-
     #menu img {
-      width: 110px;
+      width: 100px;
       cursor: pointer;
-      border-radius: 12px;
+      border-radius: 8px;
       transition: transform 0.3s ease;
-      box-shadow: 0 3px 10px rgba(26,115,232,0.3);
     }
     #menu img:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(21,90,182,0.5);
-    }
-
-    /* Título de calculadora arriba */
-    #calculatorTitle {
-      font-size: 2.1em;
-      font-weight: 500;
-      margin-bottom: 20px;
-      color: #1a73e8;
-      user-select: none;
-      font-family: 'Roboto', Arial, sans-serif;
     }
   </style>
 </head>
 <body>
 
 <!-- Pantalla Inicial -->
-<div class="card" id="homeCard">
+<div class="card" id="homeCard" tabindex="0">
   <h2>Bienvenido</h2>
   <button onclick="showCard('loginCard')">Iniciar sesión</button>
   <button onclick="showCard('registerCard')">Registrarse</button>
 </div>
 
 <!-- Login -->
-<div class="card" id="loginCard">
+<div class="card" id="loginCard" tabindex="0">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
   <h2>Iniciar sesión</h2>
-  <input type="email" id="email" placeholder="Correo" autocomplete="email" />
+  <input type="email" id="email" placeholder="Correo" autocomplete="username" />
   <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" />
   <button onclick="login()">Entrar</button>
 </div>
 
 <!-- Registro -->
-<div class="card" id="registerCard">
+<div class="card" id="registerCard" tabindex="0">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
   <h2>Registro</h2>
   <input type="email" id="reg_email" placeholder="Correo" autocomplete="email" />
-  <input type="text" id="reg_nick" placeholder="Nick" autocomplete="username" />
+  <input type="text" id="reg_nick" placeholder="Nick" autocomplete="nickname" />
   <input type="password" id="reg_password" placeholder="Contraseña" autocomplete="new-password" />
   <button onclick="register()">Registrarse</button>
 </div>
 
 <!-- Calculadora -->
-<div class="card" id="calculator">
-  <div id="calculatorTitle">Google Calculator</div>
+<div class="card" id="calculator" tabindex="0">
+  <h1>Google Calculator</h1>
   <input type="text" id="calcDisplay" readonly />
   <div class="calc-grid" id="buttons"></div>
 </div>
 
 <!-- Menú secreto -->
-<div class="card" id="menu">
+<div class="card" id="menu" tabindex="0">
   <h2>🔒 Menú Secreto</h2>
   <div onclick="openInIframe('youtube.html')">
     <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
@@ -257,7 +258,9 @@ let userPassword = "";
 
 function showCard(id) {
   document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
-  document.getElementById(id).style.display = 'block';
+  const card = document.getElementById(id);
+  card.style.display = 'block';
+  card.focus();
 }
 
 async function getUsers() {
@@ -312,7 +315,7 @@ async function login() {
 // ---------------- CALCULADORA ----------------
 
 const display = document.getElementById("calcDisplay");
-const buttons = [
+const buttonsArr = [
   "7","8","9","/","sin",
   "4","5","6","*","cos",
   "1","2","3","-","tan",
@@ -320,11 +323,12 @@ const buttons = [
   "C"
 ];
 
-let expr = "";
-
-buttons.forEach(b => {
+// Crear botones en la calculadora
+const buttonsContainer = document.getElementById("buttons");
+buttonsArr.forEach(b => {
   const btn = document.createElement("button");
   btn.textContent = b;
+  if (b === "C") btn.classList.add("clear");
   btn.onclick = () => {
     if (b === "C") {
       expr = "";
@@ -350,31 +354,31 @@ buttons.forEach(b => {
     }
     display.value = expr;
   };
-  document.getElementById("buttons").appendChild(btn);
+  buttonsContainer.appendChild(btn);
 });
 
-// Habilitar teclado para la calculadora
-document.addEventListener("keydown", e => {
-  if (document.getElementById("calculator").style.display === "block") {
-    if (e.key.match(/[0-9+\-*/.=]/)) {
-      e.preventDefault();
-      if (e.key === "=" || e.key === "Enter") {
-        btnClick("=");
-      } else {
-        expr += e.key;
-        display.value = expr;
-      }
-    } else if (e.key === "Backspace") {
-      expr = expr.slice(0, -1);
+let expr = "";
+
+// Añadir soporte teclado para la calculadora
+window.addEventListener("keydown", e => {
+  if (document.getElementById("calculator").style.display !== "block") return;
+  const allowedKeys = "0123456789/*-+.=";
+  if (allowedKeys.includes(e.key)) {
+    if (e.key === "=") {
+      buttonsContainer.querySelector("button:nth-child(19)").click();
+    } else {
+      expr += e.key;
       display.value = expr;
     }
+    e.preventDefault();
+  } else if (e.key === "Backspace") {
+    expr = expr.slice(0, -1);
+    display.value = expr;
+    e.preventDefault();
   }
 });
 
-function btnClick(value) {
-  const btn = [...document.querySelectorAll("#buttons button")].find(b => b.textContent === value);
-  if (btn) btn.click();
-}
+// ---------------- IFRAME Y OTROS ----------------
 
 function openInIframe(url) {
   window.open(url, "_blank");
