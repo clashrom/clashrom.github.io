@@ -11,9 +11,25 @@
       background: #f8f9fa;
       margin: 0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+    }
+
+    #welcomeMsg {
+      font-size: 3.1em;
+      font-weight: 900;
+      margin: 54px 0 32px 0;
+      color: #00FF41;
+      user-select: none;
+      letter-spacing: 3px;
+      text-shadow: 0 0 16px #00FF41, 0 0 6px #00FF41;
+      font-family: 'Consolas', 'Roboto Mono', 'monospace', Arial, sans-serif;
+      text-align: center;
+      width: 100vw;
+      position: relative;
+      z-index: 10;
+      min-height: 1.8em;
     }
 
     .card {
@@ -199,63 +215,51 @@
       user-select: none;
       font-family: 'Roboto', Arial, sans-serif;
     }
-
-    /* Bienvenida hacker */
-    #welcomeMsg {
-      font-size: 2em;
-      font-weight: 700;
-      margin-bottom: 19px;
-      color: #00FF41;
-      user-select: none;
-      letter-spacing: 2px;
-      text-shadow: 0 0 6px #00FF41, 0 0 4px #00FF41;
-      font-family: 'Consolas', 'Roboto Mono', 'monospace', Arial, sans-serif;
-    }
   </style>
 </head>
 <body>
-
-<!-- Pantalla Inicial -->
-<div class="card" id="homeCard">
-  <h2>Bienvenido</h2>
-  <button onclick="showCard('loginCard')">Iniciar sesión</button>
-  <button onclick="showCard('registerCard')">Registrarse</button>
-</div>
-
-<!-- Login -->
-<div class="card" id="loginCard">
-  <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
-  <h2>Iniciar sesión</h2>
-  <input type="email" id="email" placeholder="Correo" autocomplete="email" />
-  <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" />
-  <button onclick="login()">Entrar</button>
-</div>
-
-<!-- Registro -->
-<div class="card" id="registerCard">
-  <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
-  <h2>Registro</h2>
-  <input type="email" id="reg_email" placeholder="Correo" autocomplete="email" />
-  <input type="text" id="reg_nick" placeholder="Nick" autocomplete="username" />
-  <input type="password" id="reg_password" placeholder="Contraseña" autocomplete="new-password" />
-  <button onclick="register()">Registrarse</button>
-</div>
-
-<!-- Calculadora -->
-<div class="card" id="calculator">
-  <div id="calculatorTitle">Google Calculator</div>
-  <input type="text" id="calcDisplay" readonly />
-  <div class="calc-grid" id="buttons"></div>
-</div>
-
-<!-- Menú secreto -->
-<div class="card" id="menu">
   <div id="welcomeMsg"></div>
-  <h2>🔒 Menú Secreto</h2>
-  <div onclick="openInIframe('youtube.html')">
-    <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
+
+  <!-- Pantalla Inicial -->
+  <div class="card" id="homeCard">
+    <h2>Bienvenido</h2>
+    <button onclick="showCard('loginCard')">Iniciar sesión</button>
+    <button onclick="showCard('registerCard')">Registrarse</button>
   </div>
-</div>
+
+  <!-- Login -->
+  <div class="card" id="loginCard">
+    <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
+    <h2>Iniciar sesión</h2>
+    <input type="email" id="email" placeholder="Correo" autocomplete="email" />
+    <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" />
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <!-- Registro -->
+  <div class="card" id="registerCard">
+    <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
+    <h2>Registro</h2>
+    <input type="email" id="reg_email" placeholder="Correo" autocomplete="email" />
+    <input type="text" id="reg_nick" placeholder="Nick" autocomplete="username" />
+    <input type="password" id="reg_password" placeholder="Contraseña" autocomplete="new-password" />
+    <button onclick="register()">Registrarse</button>
+  </div>
+
+  <!-- Calculadora -->
+  <div class="card" id="calculator">
+    <div id="calculatorTitle">Google Calculator</div>
+    <input type="text" id="calcDisplay" readonly />
+    <div class="calc-grid" id="buttons"></div>
+  </div>
+
+  <!-- Menú secreto -->
+  <div class="card" id="menu">
+    <h2>🔒 Menú Secreto</h2>
+    <div onclick="openInIframe('youtube.html')">
+      <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
+    </div>
+  </div>
 
 <script>
 const BIN_ID = '68360d738960c979a5a1e240';
@@ -395,7 +399,7 @@ function openInIframe(url) {
 const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&";
 let welcomeAnimInterval;
 
-function animateText(element, text, interval = 120, duration = 2000) {
+function animateText(element, text, interval = 120, duration = 2200) {
   let frame = 0;
   let revealTimeout;
   function randomize(i) {
