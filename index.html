@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Calculadora</title>
   <style>
     body {
@@ -101,8 +101,8 @@
 <div class="card" id="loginCard">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
   <h2>Iniciar sesión</h2>
-  <input type="email" id="email" placeholder="Correo">
-  <input type="password" id="password" placeholder="Contraseña">
+  <input type="email" id="email" placeholder="Correo" />
+  <input type="password" id="password" placeholder="Contraseña" />
   <button onclick="login()">Entrar</button>
 </div>
 
@@ -110,23 +110,24 @@
 <div class="card" id="registerCard">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
   <h2>Registro</h2>
-  <input type="email" id="reg_email" placeholder="Correo">
-  <input type="text" id="reg_nick" placeholder="Nick">
-  <input type="password" id="reg_password" placeholder="Contraseña">
+  <input type="email" id="reg_email" placeholder="Correo" />
+  <input type="text" id="reg_nick" placeholder="Nick" />
+  <input type="password" id="reg_password" placeholder="Contraseña" />
   <button onclick="register()">Registrarse</button>
 </div>
 
 <!-- Calculadora -->
 <div class="card" id="calculator">
-  <input type="text" id="calcDisplay" readonly>
+  <input type="text" id="calcDisplay" readonly />
   <div class="calc-grid" id="buttons"></div>
 </div>
 
 <!-- Menú secreto -->
 <div class="card" id="menu">
+  <button class="small-btn" onclick="showCard('calculator')">← Volver</button>
   <h2>🔒 Menú Secreto</h2>
   <div onclick="openInIframe('youtube.html')">
-    <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube">
+    <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
   </div>
 </div>
 
@@ -232,6 +233,64 @@ buttons.forEach(b => {
     display.value = expr;
   };
   document.getElementById("buttons").appendChild(btn);
+});
+
+// ---------------- Soporte teclado ----------------
+
+document.addEventListener('keydown', (e) => {
+  const key = e.key;
+
+  // Teclas válidas numéricas y de operaciones básicas
+  const validKeys = ['0','1','2','3','4','5','6','7','8','9','.','+','-','*','/'];
+
+  // Funciones especiales mapeadas a teclas
+  const funcKeys = {
+    'Enter': '=',
+    '=': '=',
+    'Backspace': 'C',
+    'c': 'C',
+    'C': 'C',
+  };
+
+  // Funciones científicas con letras
+  const sciKeys = {
+    's': 'sin',
+    'o': 'cos',
+    't': 'tan',
+    'l': 'log'
+  };
+
+  if (validKeys.includes(key)) {
+    expr += key;
+    display.value = expr;
+  } else if (funcKeys[key]) {
+    const b = funcKeys[key];
+    if (b === 'C') {
+      expr = '';
+      display.value = expr;
+    } else if (b === '=') {
+      if (expr === userPassword) {
+        showCard("menu");
+        return;
+      }
+      try {
+        expr = eval(expr.replace(/sin|cos|tan|log/g, m => {
+          return {
+            sin: "Math.sin",
+            cos: "Math.cos",
+            tan: "Math.tan",
+            log: "Math.log10"
+          }[m];
+        })).toString();
+      } catch {
+        expr = "Error";
+      }
+      display.value = expr;
+    }
+  } else if (sciKeys[key]) {
+    expr += sciKeys[key];
+    display.value = expr;
+  }
 });
 
 // ---------------- IFRAME ----------------
