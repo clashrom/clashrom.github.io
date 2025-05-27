@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Google Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link rel="icon" href="https://ssl.gstatic.com/onebox/calculator/favicon_128x128.ico" type="image/x-icon" />
+  <link rel="icon" href="https://ssl.gstatic.com/gb/images/i1_1967ca6a.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Roboto', Arial, sans-serif;
@@ -14,72 +14,66 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #202124;
     }
+
     .card {
       width: 100%;
       max-width: 360px;
       background: white;
-      padding: 30px;
+      padding: 30px 25px 35px 25px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
       display: none;
       border-radius: 12px;
       box-sizing: border-box;
     }
+
     #homeCard {
       display: block;
     }
-    h1 {
-      font-weight: 400;
-      margin-bottom: 20px;
-      color: #202124;
-    }
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
-      width: 100%;
+
+    input, button {
+      font-family: 'Roboto', Arial, sans-serif;
+      outline: none;
       border: none;
-      border-bottom: 1.5px solid #dadce0;
-      padding: 10px 5px;
+      box-sizing: border-box;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 10px 0;
       font-size: 16px;
-      margin: 15px 0 30px 0;
-      outline-offset: 2px;
-      outline-color: transparent;
-      transition: border-color 0.2s;
-      color: #202124;
-      background: transparent;
+      border: 1.8px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.25s ease;
     }
-    input::placeholder {
-      color: #80868b;
-    }
+
     input:focus {
-      border-bottom-color: #1a73e8;
-      outline-color: #1a73e8;
+      border-color: #1a73e8;
+      box-shadow: 0 0 6px #aecbfa;
     }
+
     button {
       width: 100%;
-      background-color: #1a73e8;
+      padding: 14px;
+      margin-top: 14px;
+      background: #1a73e8;
       color: white;
-      border: none;
-      padding: 12px;
+      border-radius: 8px;
       font-size: 16px;
-      font-weight: 500;
-      border-radius: 24px;
-      box-shadow: 0 3px 6px rgba(26,115,232,0.4);
       cursor: pointer;
-      transition: background-color 0.2s, box-shadow 0.2s;
-      user-select: none;
-      margin-top: 10px;
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(26,115,232,0.4);
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #155ab6;
-      box-shadow: 0 4px 8px rgba(21,90,182,0.5);
+      background: #155ab6;
+      box-shadow: 0 4px 10px rgba(21,90,182,0.6);
     }
-    button:active {
-      background-color: #0c3d91;
-      box-shadow: 0 2px 4px rgba(12,61,145,0.6);
-    }
+
+    /* Botones "volver" más sutiles */
     .small-btn {
       width: auto;
       background: transparent;
@@ -89,71 +83,126 @@
       padding: 0;
       box-shadow: none;
       border-radius: 0;
+      cursor: pointer;
+      transition: color 0.2s;
+      text-decoration: none;
+      border: none;
     }
     .small-btn:hover {
-      text-decoration: underline;
+      color: #155ab6;
+      text-decoration: none;
       background: transparent;
       box-shadow: none;
-      color: #155ab6;
     }
+
     /* Calculadora */
     #calculator {
-      display: block; /* Mostrar sólo cuando toque */
+      display: none;
       max-width: 360px;
       width: 100%;
-      margin: 0 auto;
-      padding: 30px;
-      background: white;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      padding: 25px 20px 30px 20px;
       border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.12);
       box-sizing: border-box;
       text-align: center;
     }
+
     #calcDisplay {
       width: 100%;
-      font-size: 1.8em;
+      font-size: 2em;
       text-align: right;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
+      padding: 14px 16px;
+      margin-bottom: 15px;
+      border: 1.8px solid #ccc;
+      border-radius: 12px;
       user-select: none;
-      background: #fefefe;
-      color: #202124;
+      background: #fafafa;
+      box-sizing: border-box;
+      font-weight: 500;
+      color: #222;
     }
+
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      gap: 8px;
     }
+
     .calc-grid button {
-      font-size: 1.2rem;
+      font-size: 1.3em;
       padding: 18px 0;
       border-radius: 50%;
       border: none;
-      background-color: #1a73e8; /* Azul Google */
-      color: white;
-      box-shadow: 0 3px 6px rgba(26,115,232,0.4);
-      transition: background-color 0.2s, box-shadow 0.2s;
-      user-select: none;
+      background: #dbe6f7;
+      color: #1a73e8;
+      font-weight: 600;
       cursor: pointer;
-      outline-offset: 2px;
-      outline-color: transparent;
+      box-shadow: 0 3px 6px rgba(26,115,232,0.3);
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+      user-select: none;
     }
     .calc-grid button:hover {
-      background-color: #155ab6;
-      box-shadow: 0 4px 8px rgba(21,90,182,0.5);
+      background: #b3c7f9;
+      box-shadow: 0 5px 12px rgba(21,90,182,0.5);
     }
     .calc-grid button:active {
-      background-color: #0c3d91;
-      box-shadow: 0 2px 4px rgba(12,61,145,0.6);
+      background: #7a9ef6;
+      box-shadow: 0 2px 5px rgba(21,90,182,0.8);
       color: white;
     }
+
+    /* Botón C más rectangular */
+    .calc-grid button:last-child {
+      border-radius: 10px;
+      grid-column: span 1;
+      background: #f4f6fa;
+      color: #555;
+      font-weight: 700;
+      box-shadow: none;
+    }
+    .calc-grid button:last-child:hover {
+      background: #d7dde9;
+      color: #333;
+      box-shadow: none;
+    }
+
+    /* Menú secreto */
+    #menu {
+      max-width: 360px;
+      width: 100%;
+      padding: 25px 25px 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    #menu h2 {
+      margin-bottom: 25px;
+      font-weight: 500;
+      font-size: 1.7em;
+      color: #1a73e8;
+    }
+
     #menu img {
-      width: 100px;
+      width: 110px;
       cursor: pointer;
       border-radius: 12px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 3px 10px rgba(26,115,232,0.3);
+    }
+    #menu img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(21,90,182,0.5);
+    }
+
+    /* Título de calculadora arriba */
+    #calculatorTitle {
+      font-size: 2.1em;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #1a73e8;
+      user-select: none;
+      font-family: 'Roboto', Arial, sans-serif;
     }
   </style>
 </head>
@@ -161,7 +210,7 @@
 
 <!-- Pantalla Inicial -->
 <div class="card" id="homeCard">
-  <h1>Bienvenido</h1>
+  <h2>Bienvenido</h2>
   <button onclick="showCard('loginCard')">Iniciar sesión</button>
   <button onclick="showCard('registerCard')">Registrarse</button>
 </div>
@@ -169,8 +218,8 @@
 <!-- Login -->
 <div class="card" id="loginCard">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
-  <h1>Iniciar sesión</h1>
-  <input type="email" id="email" placeholder="Correo" autocomplete="username" />
+  <h2>Iniciar sesión</h2>
+  <input type="email" id="email" placeholder="Correo" autocomplete="email" />
   <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" />
   <button onclick="login()">Entrar</button>
 </div>
@@ -178,22 +227,22 @@
 <!-- Registro -->
 <div class="card" id="registerCard">
   <button class="small-btn" onclick="showCard('homeCard')">← Volver</button>
-  <h1>Registro</h1>
+  <h2>Registro</h2>
   <input type="email" id="reg_email" placeholder="Correo" autocomplete="email" />
-  <input type="text" id="reg_nick" placeholder="Nick" autocomplete="nickname" />
+  <input type="text" id="reg_nick" placeholder="Nick" autocomplete="username" />
   <input type="password" id="reg_password" placeholder="Contraseña" autocomplete="new-password" />
   <button onclick="register()">Registrarse</button>
 </div>
 
 <!-- Calculadora -->
-<div class="card" id="calculator" style="display:none;">
-  <h1>Google Calculator</h1>
+<div class="card" id="calculator">
+  <div id="calculatorTitle">Google Calculator</div>
   <input type="text" id="calcDisplay" readonly />
   <div class="calc-grid" id="buttons"></div>
 </div>
 
 <!-- Menú secreto -->
-<div class="card" id="menu" style="display:none;">
+<div class="card" id="menu">
   <h2>🔒 Menú Secreto</h2>
   <div onclick="openInIframe('youtube.html')">
     <img src="https://brandemia.org/contenido/subidas/2017/10/logo_youtube-1-960x640.jpg" alt="YouTube" />
@@ -304,29 +353,32 @@ buttons.forEach(b => {
   document.getElementById("buttons").appendChild(btn);
 });
 
-// Permitir uso de teclado
+// Habilitar teclado para la calculadora
 document.addEventListener("keydown", e => {
   if (document.getElementById("calculator").style.display === "block") {
     if (e.key.match(/[0-9+\-*/.=]/)) {
       e.preventDefault();
-      if (e.key === "=" || e.key === "Enter") buttons.forEach(b => { if (b === "=") b && btnClick(b); });
-      else expr += e.key;
-      display.value = expr;
-    } else if (e.key.toLowerCase() === "c") {
-      e.preventDefault();
-      expr = "";
+      if (e.key === "=" || e.key === "Enter") {
+        btnClick("=");
+      } else {
+        expr += e.key;
+        display.value = expr;
+      }
+    } else if (e.key === "Backspace") {
+      expr = expr.slice(0, -1);
       display.value = expr;
     }
   }
 });
 
-function btnClick(label) {
-  const btns = document.querySelectorAll("#buttons button");
-  btns.forEach(btn => {
-    if (btn.textContent === label) btn.click();
-  });
+function btnClick(value) {
+  const btn = [...document.querySelectorAll("#buttons button")].find(b => b.textContent === value);
+  if (btn) btn.click();
 }
 
+function openInIframe(url) {
+  window.open(url, "_blank");
+}
 </script>
 
 </body>
