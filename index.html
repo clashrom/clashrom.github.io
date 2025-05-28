@@ -18,6 +18,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      padding: 1rem;
     }
 
     @keyframes backgroundMove {
@@ -66,6 +68,7 @@
       opacity: 1;
       transform: scale(1);
       transition: all 0.5s ease;
+      margin-bottom: 1rem;
     }
 
     .menu.hidden {
@@ -137,6 +140,15 @@
       background: rgba(0, 255, 255, 0.4);
     }
 
+    #ruta {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #00ffffcc;
+      max-width: 90vw;
+      word-break: break-word;
+      user-select: text;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
@@ -167,6 +179,9 @@
     <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
     <button onclick="applySettings()">Aplicar</button>
   </div>
+
+  <!-- Mostrar ruta si viene de 404 -->
+  <p id="ruta"></p>
 
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
@@ -204,6 +219,20 @@
       settingsPanel.classList.remove("show");
       menu.classList.remove("hidden");
     }
+
+    // Parte 404 y ruta original
+    const rutaOriginal = sessionStorage.getItem('redirectAfter404');
+    if (rutaOriginal) {
+      document.getElementById('ruta').textContent = `Has accedido a la ruta: ${rutaOriginal}`;
+      sessionStorage.removeItem('redirectAfter404');
+    }
+
+    // Cambia la URL a una ruta aleatoria sin añadir entrada al historial
+    const randomPath = Math.random().toString(36).substring(2, 10);
+    history.replaceState(null, '', `/${randomPath}`);
+
+    // Opcional: muestra la nueva URL en consola
+    console.log('URL reemplazada por:', location.href);
   </script>
 </body>
 </html>
