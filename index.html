@@ -162,7 +162,8 @@
     <button class="menu-button" onclick="window.open('twich.html', '_blank')">
       <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
     </button>
-    <button class="menu-button" onclick="window.open('https//eldardo.net/', '_blank')">
+    <!-- AQUÍ MODIFICADO: se quita onclick y se añade id="eldardo-btn" -->
+    <button class="menu-button" id="eldardo-btn">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
     </button>
   </div>
@@ -210,6 +211,27 @@
       settingsPanel.classList.remove("show");
       menu.classList.remove("hidden");
     }
+
+    // SCRIPT NUEVO PARA ELDARDO
+    function generarLetrasAzar(longitud) {
+      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      let resultado = '';
+      for (let i = 0; i < longitud; i++) {
+        resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+      return resultado;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const eldardoBtn = document.getElementById('eldardo-btn');
+      if (eldardoBtn) {
+        eldardoBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(5);
+          window.open('https://eldardo.net/' + letrasAzar, '_blank');
+        });
+      }
+    });
+    // FIN SCRIPT NUEVO PARA ELDARDO
   </script>
 </body>
 </html>
