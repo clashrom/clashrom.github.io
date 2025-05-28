@@ -10,57 +10,19 @@
       margin: 0;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+      animation: backgroundMove 20s infinite alternate;
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      animation: backgroundMove 20s infinite alternate;
-      color: white;
+      justify-content: center;
     }
 
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
-    }
-
-    .menu {
-      display: flex;
-      gap: 40px;
-      margin-top: 40px;
-      z-index: 1;
-      opacity: 0;
-      transform: scale(0.95);
-      pointer-events: none;
-      transition: all 0.5s ease;
-    }
-
-    .menu.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    .menu-button {
-      padding: 0;
-      border: none;
-      background: none;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .menu-button img {
-      display: block;
-      width: 220px;
-      height: 120px;
-      object-fit: cover;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border-radius: 12px;
-    }
-
-    .menu-button:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
 
     .fullscreen-img {
@@ -79,60 +41,117 @@
       display: none !important;
     }
 
-    .settings {
-      margin-top: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-      z-index: 1;
-    }
-
-    .settings input, .settings button {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 12px;
-      font-size: 16px;
-      width: 280px;
-      transition: all 0.3s ease;
-    }
-
-    .settings input:focus, .settings button:hover {
-      background: rgba(0, 255, 255, 0.2);
-      outline: none;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
-
-    #toggleMenuBtn {
-      margin-top: 25px;
-      padding: 10px 25px;
+    #toggleSettings {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
       background: rgba(0, 255, 255, 0.15);
       border: none;
-      border-radius: 16px;
+      border-radius: 12px;
       color: white;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
+      z-index: 10;
       transition: background 0.3s ease;
     }
 
-    #toggleMenuBtn:hover {
+    #toggleSettings:hover {
       background: rgba(0, 255, 255, 0.3);
+    }
+
+    .menu {
+      display: flex;
+      gap: 40px;
+      opacity: 1;
+      transform: scale(1);
+      transition: all 0.5s ease;
+    }
+
+    .menu.hidden {
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+    }
+
+    .menu-button {
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-button img {
+      width: 220px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .menu-button:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    .settings {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 16px;
+      align-items: center;
+      z-index: 2;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .settings.show {
+      display: flex;
+    }
+
+    .settings input {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 250px;
+      transition: 0.3s ease;
+    }
+
+    .settings button {
+      background: rgba(0, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .settings button:hover {
+      background: rgba(0, 255, 255, 0.4);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
+
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="image/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
-  <!-- Botón para alternar menú -->
-  <button id="toggleMenuBtn">Mostrar Menú</button>
+  <!-- Botón para mostrar ajustes -->
+  <button id="toggleSettings">⚙ Ajustes</button>
 
-  <!-- Menú con botones -->
+  <!-- Menú principal -->
   <div class="menu" id="menu">
     <button class="menu-button" onclick="window.open('youtube.html', '_blank')">
       <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
@@ -142,21 +161,19 @@
     </button>
   </div>
 
-  <!-- Interfaz de ajustes -->
-  <div class="settings">
+  <!-- Ajustes -->
+  <div class="settings" id="settingsPanel">
     <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
-    <button onclick="changeTitle()">Cambiar título</button>
-    <button onclick="resetTitle()">Título por defecto</button>
-
     <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
-    <button onclick="changeImage()">Cambiar imagen</button>
-    <button onclick="resetImage()">Imagen por defecto</button>
+    <button onclick="applySettings()">Aplicar</button>
   </div>
 
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
-    const toggleMenuBtn = document.getElementById("toggleMenuBtn");
+    const settingsPanel = document.getElementById("settingsPanel");
+    const toggleSettingsBtn = document.getElementById("toggleSettings");
+
     const defaultTitle = "Classroom";
     const defaultImage = "image/Screenshot 2025-05-07 11.39.48.png";
 
@@ -167,31 +184,25 @@
       }
     });
 
-    toggleMenuBtn.addEventListener("click", () => {
-      menu.classList.toggle("active");
-      toggleMenuBtn.textContent = menu.classList.contains("active") ? "Ocultar Menú" : "Mostrar Menú";
+    toggleSettingsBtn.addEventListener("click", () => {
+      menu.classList.add("hidden");
+      settingsPanel.classList.add("show");
     });
 
-    function changeTitle() {
+    function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
-      if (newTitle.trim() !== "") {
+      const newImage = document.getElementById("imageInput").value;
+
+      if (newTitle.trim()) {
         document.title = newTitle;
       }
-    }
 
-    function resetTitle() {
-      document.title = defaultTitle;
-    }
-
-    function changeImage() {
-      const newSrc = document.getElementById("imageInput").value;
-      if (newSrc.trim() !== "") {
-        fullscreenImage.src = newSrc;
+      if (newImage.trim()) {
+        fullscreenImage.src = newImage;
       }
-    }
 
-    function resetImage() {
-      fullscreenImage.src = defaultImage;
+      settingsPanel.classList.remove("show");
+      menu.classList.remove("hidden");
     }
   </script>
 </body>
