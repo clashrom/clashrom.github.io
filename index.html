@@ -200,16 +200,24 @@
       }
     });
 
-    // Animación de salida al pulsar el botón de ajustes
+    // MODIFICACIÓN: Toggle mostrar/ocultar ajustes y menú
     toggleSettingsBtn.addEventListener("click", () => {
-      menu.classList.remove("fade-out");
-      // Aplica animación de salida
-      menu.classList.add("fade-out");
-      setTimeout(() => {
-        menu.classList.add("hidden");
+      if (settingsPanel.classList.contains("show")) {
+        // Oculta ajustes y muestra menú
+        settingsPanel.classList.remove("show");
+        setTimeout(() => {
+          menu.classList.remove("hidden");
+          menu.classList.remove("fade-out");
+        }, 50);
+      } else {
         menu.classList.remove("fade-out");
-        settingsPanel.classList.add("show");
-      }, 500); // 0.5s igual que la animación
+        menu.classList.add("fade-out");
+        setTimeout(() => {
+          menu.classList.add("hidden");
+          menu.classList.remove("fade-out");
+          settingsPanel.classList.add("show");
+        }, 500);
+      }
     });
 
     // Animación de salida cuando das a "Aplicar"
@@ -231,7 +239,7 @@
       setTimeout(() => {
         menu.classList.remove("hidden");
         menu.classList.remove("fade-out");
-      }, 50); // pequeño delay para que no solape animaciones
+      }, 50);
     }
 
     // SCRIPT NUEVO PARA ELDARDO
