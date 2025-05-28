@@ -11,11 +11,12 @@
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       font-family: sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       height: 100vh;
       overflow: hidden;
       animation: backgroundMove 20s infinite alternate;
+      color: white;
     }
 
     @keyframes backgroundMove {
@@ -26,6 +27,7 @@
     .menu {
       display: flex;
       gap: 40px;
+      margin-top: 40px;
       z-index: 1;
     }
 
@@ -66,12 +68,42 @@
     .hidden {
       display: none;
     }
+
+    .settings {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .settings input, .settings button {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 16px;
+      width: 280px;
+      transition: all 0.3s ease;
+    }
+
+    .settings input:focus, .settings button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
   </style>
 </head>
 <body>
-  <!-- Imagen fullscreen que se muestra al inicio -->
+  <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="image/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
+  <!-- Botones de menú -->
   <div class="menu">
     <button class="menu-button" onclick="window.open('youtube.html', '_blank')">
       <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
@@ -81,15 +113,50 @@
     </button>
   </div>
 
+  <!-- Interfaz de ajustes -->
+  <div class="settings">
+    <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
+    <button onclick="changeTitle()">Cambiar título</button>
+    <button onclick="resetTitle()">Título por defecto</button>
+
+    <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+    <button onclick="changeImage()">Cambiar imagen</button>
+    <button onclick="resetImage()">Imagen por defecto</button>
+  </div>
+
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
+    const defaultTitle = "Classroom";
+    const defaultImage = "images/Screenshot 2025-05-07 11.39.48.png";
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
-        e.preventDefault(); // evita que Tab cambie el enfoque
+        e.preventDefault();
         fullscreenImage.classList.toggle("hidden");
       }
     });
+
+    function changeTitle() {
+      const newTitle = document.getElementById("titleInput").value;
+      if (newTitle.trim() !== "") {
+        document.title = newTitle;
+      }
+    }
+
+    function resetTitle() {
+      document.title = defaultTitle;
+    }
+
+    function changeImage() {
+      const newSrc = document.getElementById("imageInput").value;
+      if (newSrc.trim() !== "") {
+        fullscreenImage.src = newSrc;
+      }
+    }
+
+    function resetImage() {
+      fullscreenImage.src = defaultImage;
+    }
   </script>
 </body>
 </html>
