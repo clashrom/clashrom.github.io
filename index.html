@@ -2,257 +2,208 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classroom</title>
-  <link rel="icon" href="favicon-classroom.ico" type="image/x-icon" />
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
   <style>
-    /* Reset y base */
-    * {
-      box-sizing: border-box;
-    }
-    body, html {
-      margin: 0; padding: 0; height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f0f1f, #1a1a3f);
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
       color: white;
-      overflow: hidden;
-      user-select: none;
-    }
-    #rutaOriginal {
-      position: fixed;
-      top: 10px; left: 50%; transform: translateX(-50%);
-      font-size: 0.85rem;
-      color: #aabbcc;
-      z-index: 20;
-      user-select: text;
-    }
-    /* Menú central */
-    #menu {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+      animation: backgroundMove 20s infinite alternate;
       display: flex;
-      gap: 2rem;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      z-index: 15;
-    }
-    #menu.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    /* Botones imagen cuadrados */
-    .btn-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 0 8px rgba(255 255 255 / 0.15);
-      overflow: hidden;
-      background: #222944;
-      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .btn-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 16px;
-      pointer-events: none;
-      user-select: none;
-    }
-    .btn-img:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 15px #58a6ff;
+
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
-    /* Imagen fullscreen toggle */
-    #fullscreenImage {
+    .fullscreen-img {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      display: none;
-      z-index: 30;
-      cursor: pointer;
-      user-select: none;
-    }
-    #fullscreenImage.visible {
+      z-index: 9999;
       display: block;
+      transition: opacity 0.5s ease;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #toggleSettings {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: rgba(0, 255, 255, 0.15);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s ease;
+    }
+
+    #toggleSettings:hover {
+      background: rgba(0, 255, 255, 0.3);
+    }
+
+    .menu {
+      display: flex;
+      gap: 40px;
+      opacity: 1;
+      transform: scale(1);
+      transition: all 0.5s ease;
+    }
+
+    .menu.hidden {
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+    }
+
+    .menu-button {
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-button img {
+      width: 220px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .menu-button:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    .settings {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 16px;
+      align-items: center;
+      z-index: 2;
       animation: fadeIn 0.5s ease forwards;
     }
+
+    .settings.show {
+      display: flex;
+    }
+
+    .settings input {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 250px;
+      transition: 0.3s ease;
+    }
+
+    .settings button {
+      background: rgba(0, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .settings button:hover {
+      background: rgba(0, 255, 255, 0.4);
+    }
+
     @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    /* Botón para abrir ajustes */
-    #btnSettings {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: #112244cc;
-      border: none;
-      color: white;
-      padding: 10px 16px;
-      font-size: 1rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      z-index: 25;
-      user-select: none;
-    }
-    #btnSettings:hover {
-      background: #1e3fffcc;
-    }
-
-    /* Panel ajustes */
-    #settingsPanel {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: #222a55ee;
-      border-radius: 20px;
-      padding: 20px 30px;
-      box-shadow: 0 0 20px #1e3fffbb;
-      color: white;
-      font-size: 1rem;
-      display: none;
-      z-index: 40;
-      width: 320px;
-      user-select: text;
-    }
-    #settingsPanel.visible {
-      display: block;
-      animation: fadeIn 0.4s ease forwards;
-    }
-    #settingsPanel label {
-      display: block;
-      margin-bottom: 10px;
-    }
-    #settingsPanel button {
-      margin-top: 15px;
-      padding: 10px 18px;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      background: #1e3fffcc;
-      color: white;
-      transition: background-color 0.3s ease;
-    }
-    #settingsPanel button:hover {
-      background: #3355ffcc;
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
 
-<div id="rutaOriginal"></div>
+  <!-- Imagen fullscreen -->
+  <img id="fullscreenImage" class="fullscreen-img" src="image/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
-<!-- Menú botones -->
-<div id="menu">
-  <div class="btn-img" id="btnYoutube" title="YouTube">
-    <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube" />
+  <!-- Botón para mostrar ajustes -->
+  <button id="toggleSettings">⚙ Ajustes</button>
+
+  <!-- Menú principal -->
+  <div class="menu" id="menu">
+    <button class="menu-button" onclick="window.open('youtube.html', '_blank')">
+      <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
+    </button>
+    <button class="menu-button" onclick="window.open('minecraft.html', '_blank')">
+      <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
+    </button>
   </div>
-  <div class="btn-img" id="btnMinecraft" title="Minecraft">
-    <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft" />
+
+  <!-- Ajustes -->
+  <div class="settings" id="settingsPanel">
+    <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
+    <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+    <button onclick="applySettings()">Aplicar</button>
   </div>
-</div>
 
-<!-- Botón abrir ajustes -->
-<button id="btnSettings" title="Ajustes">⚙️ Ajustes</button>
+  <script>
+    const fullscreenImage = document.getElementById("fullscreenImage");
+    const menu = document.getElementById("menu");
+    const settingsPanel = document.getElementById("settingsPanel");
+    const toggleSettingsBtn = document.getElementById("toggleSettings");
 
-<!-- Panel ajustes -->
-<div id="settingsPanel">
-  <label>
-    <input type="checkbox" id="toggleFullscreenImage" />
-    Mostrar imagen fullscreen al cargar
-  </label>
-  <button id="applySettings">Aplicar</button>
-</div>
+    const defaultTitle = "Classroom";
+    const defaultImage = "image/Screenshot 2025-05-07 11.39.48.png";
 
-<!-- Imagen fullscreen (oculta por defecto) -->
-<img id="fullscreenImage" src="image/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        fullscreenImage.classList.toggle("hidden");
+      }
+    });
 
-<script>
-  // Mostrar ruta original si viene de 404.html
-  const rutaOriginal = sessionStorage.getItem('redirectAfter404');
-  const rutaDiv = document.getElementById('rutaOriginal');
-  if (rutaOriginal) {
-    rutaDiv.textContent = `Has accedido a la ruta: ${rutaOriginal}`;
-    sessionStorage.removeItem('redirectAfter404');
-  } else {
-    rutaDiv.textContent = '';
-  }
+    toggleSettingsBtn.addEventListener("click", () => {
+      menu.classList.add("hidden");
+      settingsPanel.classList.add("show");
+    });
 
-  // Cambia la URL a una ruta aleatoria sin añadir al historial
-  const randomPath = Math.random().toString(36).substring(2, 10);
-  history.replaceState(null, '', `/${randomPath}`);
+    function applySettings() {
+      const newTitle = document.getElementById("titleInput").value;
+      const newImage = document.getElementById("imageInput").value;
 
-  // Referencias DOM
-  const menu = document.getElementById('menu');
-  const btnYoutube = document.getElementById('btnYoutube');
-  const btnMinecraft = document.getElementById('btnMinecraft');
-  const btnSettings = document.getElementById('btnSettings');
-  const settingsPanel = document.getElementById('settingsPanel');
-  const applySettings = document.getElementById('applySettings');
-  const fullscreenImage = document.getElementById('fullscreenImage');
-  const toggleFullscreenImageCheckbox = document.getElementById('toggleFullscreenImage');
+      if (newTitle.trim()) {
+        document.title = newTitle;
+      }
 
-  // Abrir enlaces en pestañas nuevas
-  btnYoutube.addEventListener('click', () => {
-    window.open('youtube.html', '_blank');
-  });
-  btnMinecraft.addEventListener('click', () => {
-    window.open('minecraft.html', '_blank');
-  });
+      if (newImage.trim()) {
+        fullscreenImage.src = newImage;
+      }
 
-  // Toggle panel ajustes + animar menú y botón ajustes
-  btnSettings.addEventListener('click', () => {
-    const isVisible = settingsPanel.classList.toggle('visible');
-    if (isVisible) {
-      menu.classList.add('hidden');
-      btnSettings.textContent = '✖ Cerrar';
-    } else {
-      menu.classList.remove('hidden');
-      btnSettings.textContent = '⚙️ Ajustes';
+      settingsPanel.classList.remove("show");
+      menu.classList.remove("hidden");
     }
-  });
-
-  // Aplicar ajustes
-  applySettings.addEventListener('click', () => {
-    // Mostrar u ocultar imagen fullscreen según checkbox
-    if (toggleFullscreenImageCheckbox.checked) {
-      fullscreenImage.classList.add('visible');
-    } else {
-      fullscreenImage.classList.remove('visible');
-    }
-
-    // Cerrar panel ajustes y mostrar menú
-    settingsPanel.classList.remove('visible');
-    menu.classList.remove('hidden');
-    btnSettings.textContent = '⚙️ Ajustes';
-  });
-
-  // Mostrar/ocultar imagen fullscreen con tecla TAB
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      fullscreenImage.classList.toggle('visible');
-    }
-  });
-
-  // Ocultar imagen fullscreen al clickear en ella
-  fullscreenImage.addEventListener('click', () => {
-    fullscreenImage.classList.remove('visible');
-  });
-
-  // Inicial: ocultar imagen fullscreen
-  fullscreenImage.classList.remove('visible');
-</script>
-
+  </script>
 </body>
 </html>
