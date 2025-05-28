@@ -74,6 +74,16 @@
       pointer-events: none;
     }
 
+    /* Animación de salida */
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1);}
+      to { opacity: 0; transform: scale(0.95);}
+    }
+    .menu.fade-out {
+      animation: fadeOut 0.5s forwards;
+      pointer-events: none;
+    }
+
     .menu-button {
       padding: 0;
       border: none;
@@ -162,7 +172,6 @@
     <button class="menu-button" onclick="window.open('twich.html', '_blank')">
       <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
     </button>
-    <!-- AQUÍ MODIFICADO: se quita onclick y se añade id="eldardo-btn" -->
     <button class="menu-button" id="eldardo-btn">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
     </button>
@@ -172,7 +181,7 @@
   <div class="settings" id="settingsPanel">
     <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
     <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
-    <button onclick="applySettings()">Aplicar</button>
+    <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
 
   <script>
@@ -191,11 +200,19 @@
       }
     });
 
+    // Animación de salida al pulsar el botón de ajustes
     toggleSettingsBtn.addEventListener("click", () => {
-      menu.classList.add("hidden");
-      settingsPanel.classList.add("show");
+      menu.classList.remove("fade-out");
+      // Aplica animación de salida
+      menu.classList.add("fade-out");
+      setTimeout(() => {
+        menu.classList.add("hidden");
+        menu.classList.remove("fade-out");
+        settingsPanel.classList.add("show");
+      }, 500); // 0.5s igual que la animación
     });
 
+    // Animación de salida cuando das a "Aplicar"
     function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
       const newImage = document.getElementById("imageInput").value;
@@ -208,8 +225,13 @@
         fullscreenImage.src = newImage;
       }
 
+      // Oculta ajustes
       settingsPanel.classList.remove("show");
-      menu.classList.remove("hidden");
+      // Muestra el menú tras una pequeña pausa para el efecto
+      setTimeout(() => {
+        menu.classList.remove("hidden");
+        menu.classList.remove("fade-out");
+      }, 50); // pequeño delay para que no solape animaciones
     }
 
     // SCRIPT NUEVO PARA ELDARDO
