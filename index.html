@@ -10,21 +10,57 @@
       margin: 0;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       font-family: sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      color: white;
-      animation: backgroundMove 20s infinite alternate;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 1rem;
+      height: 100vh;
+      overflow: hidden;
+      animation: backgroundMove 20s infinite alternate;
+      color: white;
     }
 
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
+    }
+
+    .menu {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      z-index: 1;
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+      transition: all 0.5s ease;
+    }
+
+    .menu.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .menu-button {
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-button img {
+      display: block;
+      width: 220px;
+      height: 120px;
+      object-fit: cover;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .menu-button:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
 
     .fullscreen-img {
@@ -43,127 +79,60 @@
       display: none !important;
     }
 
-    #toggleSettings {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: rgba(0, 255, 255, 0.15);
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 10;
-      transition: background 0.3s ease;
-    }
-
-    #toggleSettings:hover {
-      background: rgba(0, 255, 255, 0.3);
-    }
-
-    .menu {
-      display: flex;
-      gap: 40px;
-      opacity: 1;
-      transform: scale(1);
-      transition: all 0.5s ease;
-      margin-bottom: 1rem;
-    }
-
-    .menu.hidden {
-      opacity: 0;
-      transform: scale(0.95);
-      pointer-events: none;
-    }
-
-    .menu-button {
-      padding: 0;
-      border: none;
-      background: none;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .menu-button img {
-      width: 220px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 12px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .menu-button:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    }
-
     .settings {
-      display: none;
-      flex-direction: column;
-      gap: 15px;
+      margin-top: 20px;
       background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
+      padding: 20px;
       border-radius: 16px;
-      align-items: center;
-      z-index: 2;
-      animation: fadeIn 0.5s ease forwards;
-    }
-
-    .settings.show {
       display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      z-index: 1;
     }
 
-    .settings input {
+    .settings input, .settings button {
       background: rgba(255, 255, 255, 0.1);
       color: white;
       border: none;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 16px;
-      width: 250px;
-      transition: 0.3s ease;
-    }
-
-    .settings button {
-      background: rgba(0, 255, 255, 0.2);
-      color: white;
-      border: none;
-      padding: 10px 20px;
+      padding: 10px 15px;
       border-radius: 12px;
       font-size: 16px;
+      width: 280px;
+      transition: all 0.3s ease;
+    }
+
+    .settings input:focus, .settings button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    #toggleMenuBtn {
+      margin-top: 25px;
+      padding: 10px 25px;
+      background: rgba(0, 255, 255, 0.15);
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: 18px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: background 0.3s ease;
     }
 
-    .settings button:hover {
-      background: rgba(0, 255, 255, 0.4);
-    }
-
-    #ruta {
-      margin-top: 1rem;
-      font-size: 1.1rem;
-      color: #00ffffcc;
-      max-width: 90vw;
-      word-break: break-word;
-      user-select: text;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    #toggleMenuBtn:hover {
+      background: rgba(0, 255, 255, 0.3);
     }
   </style>
 </head>
 <body>
-
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="image/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
-  <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings">⚙ Ajustes</button>
+  <!-- Botón para alternar menú -->
+  <button id="toggleMenuBtn">Mostrar Menú</button>
 
-  <!-- Menú principal -->
+  <!-- Menú con botones -->
   <div class="menu" id="menu">
     <button class="menu-button" onclick="window.open('youtube.html', '_blank')">
       <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
@@ -173,22 +142,21 @@
     </button>
   </div>
 
-  <!-- Ajustes -->
-  <div class="settings" id="settingsPanel">
+  <!-- Interfaz de ajustes -->
+  <div class="settings">
     <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
-    <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
-    <button onclick="applySettings()">Aplicar</button>
-  </div>
+    <button onclick="changeTitle()">Cambiar título</button>
+    <button onclick="resetTitle()">Título por defecto</button>
 
-  <!-- Mostrar ruta si viene de 404 -->
-  <p id="ruta"></p>
+    <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+    <button onclick="changeImage()">Cambiar imagen</button>
+    <button onclick="resetImage()">Imagen por defecto</button>
+  </div>
 
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
-    const settingsPanel = document.getElementById("settingsPanel");
-    const toggleSettingsBtn = document.getElementById("toggleSettings");
-
+    const toggleMenuBtn = document.getElementById("toggleMenuBtn");
     const defaultTitle = "Classroom";
     const defaultImage = "image/Screenshot 2025-05-07 11.39.48.png";
 
@@ -199,40 +167,32 @@
       }
     });
 
-    toggleSettingsBtn.addEventListener("click", () => {
-      menu.classList.add("hidden");
-      settingsPanel.classList.add("show");
+    toggleMenuBtn.addEventListener("click", () => {
+      menu.classList.toggle("active");
+      toggleMenuBtn.textContent = menu.classList.contains("active") ? "Ocultar Menú" : "Mostrar Menú";
     });
 
-    function applySettings() {
+    function changeTitle() {
       const newTitle = document.getElementById("titleInput").value;
-      const newImage = document.getElementById("imageInput").value;
-
-      if (newTitle.trim()) {
+      if (newTitle.trim() !== "") {
         document.title = newTitle;
       }
+    }
 
-      if (newImage.trim()) {
-        fullscreenImage.src = newImage;
+    function resetTitle() {
+      document.title = defaultTitle;
+    }
+
+    function changeImage() {
+      const newSrc = document.getElementById("imageInput").value;
+      if (newSrc.trim() !== "") {
+        fullscreenImage.src = newSrc;
       }
-
-      settingsPanel.classList.remove("show");
-      menu.classList.remove("hidden");
     }
 
-    // Parte 404 y ruta original
-    const rutaOriginal = sessionStorage.getItem('redirectAfter404');
-    if (rutaOriginal) {
-      document.getElementById('ruta').textContent = `Has accedido a la ruta: ${rutaOriginal}`;
-      sessionStorage.removeItem('redirectAfter404');
+    function resetImage() {
+      fullscreenImage.src = defaultImage;
     }
-
-    // Cambia la URL a una ruta aleatoria sin añadir entrada al historial
-    const randomPath = Math.random().toString(36).substring(2, 10);
-    history.replaceState(null, '', `/${randomPath}`);
-
-    // Opcional: muestra la nueva URL en consola
-    console.log('URL reemplazada por:', location.href);
   </script>
 </body>
 </html>
