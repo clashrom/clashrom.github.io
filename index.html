@@ -18,6 +18,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      padding: 1rem;
     }
 
     @keyframes backgroundMove {
@@ -66,6 +68,7 @@
       opacity: 1;
       transform: scale(1);
       transition: all 0.5s ease;
+      z-index: 5;
     }
 
     .menu.hidden {
@@ -103,7 +106,7 @@
       padding: 30px;
       border-radius: 16px;
       align-items: center;
-      z-index: 2;
+      z-index: 20;
       animation: fadeIn 0.5s ease forwards;
     }
 
@@ -141,6 +144,16 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+
+    /* Estilo para mostrar la ruta cuando venga de 404 */
+    #ruta {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #00ffff;
+      z-index: 15;
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -168,15 +181,34 @@
     <button onclick="applySettings()">Aplicar</button>
   </div>
 
+  <!-- Mensaje de ruta cuando venga de 404 -->
+  <p id="ruta"></p>
+
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
+    const rutaElem = document.getElementById("ruta");
 
     const defaultTitle = "Classroom";
     const defaultImage = "image/Screenshot 2025-05-07 11.39.48.png";
 
+    // Mostrar ruta si viene de 404
+    const rutaOriginal = sessionStorage.getItem('redirectAfter404');
+    if (rutaOriginal) {
+      rutaElem.textContent = `Has accedido a la ruta: ${rutaOriginal}`;
+      sessionStorage.removeItem('redirectAfter404');
+    }
+
+    // Cambiar la URL a una ruta aleatoria sin añadir al historial
+    const randomPath = Math.random().toString(36).substring(2, 10);
+    history.replaceState(null, '', `/${randomPath}`);
+
+    // Mostrar la nueva URL en consola (opcional)
+    console.log('URL reemplazada por:', location.href);
+
+    // Toggle fullscreen image con Tab
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
