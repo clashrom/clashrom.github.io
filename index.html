@@ -9,7 +9,6 @@
     body {
       margin: 0;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -29,29 +28,25 @@
     }
 
     .menu-button {
-      width: 140px;
-      height: 140px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      padding: 0;
+      border: none;
+      background: none;
       cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(10px);
-    }
-
-    .menu-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-      background: rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
     }
 
     .menu-button img {
-      width: 64px;
-      height: 64px;
-      object-fit: contain;
+      display: block;
+      width: 220px;
+      height: 120px;
+      object-fit: cover;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .menu-button:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
   </style>
 </head>
@@ -61,7 +56,7 @@
       <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
     </button>
     <button class="menu-button" onclick="location.href='minecraft.html'">
-      <img src="https://upload.wikimedia.org/wikipedia/en/9/95/Minecraft_launcher_icon.svg" alt="Minecraft">
+      <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
     </button>
   </div>
 </body>
