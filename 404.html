@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirigiendo...</title>
+  <script>
+    // Guarda la ruta que el usuario pidió para usar en index.html si quieres
+    sessionStorage.setItem('redirectAfter404', location.pathname + location.search + location.hash);
+    // Redirige al index
+    location.replace('/');
+  </script>
+</head>
+<body>
+  <p>Redirigiendo a la página principal...</p>
+</body>
+</html>
