@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classroom</title>
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
   <style>
     body {
       margin: 0;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,6 +26,7 @@
     .menu {
       display: flex;
       gap: 40px;
+      z-index: 1;
     }
 
     .menu-button {
@@ -48,9 +50,28 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
+
+    .fullscreen-img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 9999;
+      display: block;
+      transition: opacity 0.5s ease;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Imagen fullscreen que se muestra al inicio -->
+  <img id="fullscreenImage" class="fullscreen-img" src="image/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
+
   <div class="menu">
     <button class="menu-button" onclick="window.open('youtube.html', '_blank')">
       <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
@@ -59,5 +80,16 @@
       <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
     </button>
   </div>
+
+  <script>
+    const fullscreenImage = document.getElementById("fullscreenImage");
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault(); // evita que Tab cambie el enfoque
+        fullscreenImage.classList.toggle("hidden");
+      }
+    });
+  </script>
 </body>
 </html>
