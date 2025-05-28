@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Classroom</title>
-  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png" />
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: sans-serif;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
       overflow: hidden;
+      animation: backgroundMove 20s infinite alternate;
+    }
+
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
     .menu {
@@ -25,49 +29,39 @@
     }
 
     .menu-button {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      border-radius: 20px;
-      padding: 30px;
-      width: 150px;
-      height: 150px;
+      width: 140px;
+      height: 140px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.3s ease, background 0.3s ease;
+      transition: transform 0.3s, box-shadow 0.3s;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
 
     .menu-button:hover {
-      transform: scale(1.1);
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .menu-button img {
       width: 64px;
       height: 64px;
-      margin-bottom: 10px;
-    }
-
-    .menu-button span {
-      font-size: 1.1rem;
-      font-weight: bold;
+      object-fit: contain;
     }
   </style>
 </head>
 <body>
   <div class="menu">
     <button class="menu-button" onclick="location.href='youtube.html'">
-      <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube" />
-      <span>YouTube</span>
+      <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
     </button>
     <button class="menu-button" onclick="location.href='minecraft.html'">
-      <img src="https://static.wikia.nocookie.net/logopedia/images/e/e3/Minecraft_Launcher.svg/revision/latest/scale-to-width-down/250?cb=20230616222246" alt="Minecraft" />
-      <span>Minecraft</span>
+      <img src="https://upload.wikimedia.org/wikipedia/en/9/95/Minecraft_launcher_icon.svg" alt="Minecraft">
     </button>
   </div>
 </body>
