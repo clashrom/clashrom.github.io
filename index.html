@@ -84,6 +84,15 @@
       pointer-events: none;
     }
 
+    /* Animación de entrada atractiva */
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: scale(0.95);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    .menu.fade-in {
+      animation: fadeInMenu 0.5s forwards;
+    }
+
     .menu-button {
       padding: 0;
       border: none;
@@ -200,14 +209,18 @@
       }
     });
 
-    // MODIFICACIÓN: Toggle mostrar/ocultar ajustes y menú
+    // Toggle mostrar/ocultar ajustes y menú con animaciones guapas
     toggleSettingsBtn.addEventListener("click", () => {
       if (settingsPanel.classList.contains("show")) {
-        // Oculta ajustes y muestra menú
+        // Oculta ajustes y muestra menú con animación de entrada
         settingsPanel.classList.remove("show");
         setTimeout(() => {
           menu.classList.remove("hidden");
           menu.classList.remove("fade-out");
+          menu.classList.add("fade-in");
+          setTimeout(() => {
+            menu.classList.remove("fade-in");
+          }, 500);
         }, 50);
       } else {
         menu.classList.remove("fade-out");
@@ -233,12 +246,15 @@
         fullscreenImage.src = newImage;
       }
 
-      // Oculta ajustes
+      // Oculta ajustes y muestra menú con animación de entrada
       settingsPanel.classList.remove("show");
-      // Muestra el menú tras una pequeña pausa para el efecto
       setTimeout(() => {
         menu.classList.remove("hidden");
         menu.classList.remove("fade-out");
+        menu.classList.add("fade-in");
+        setTimeout(() => {
+          menu.classList.remove("fade-in");
+        }, 500);
       }, 50);
     }
 
