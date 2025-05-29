@@ -38,36 +38,71 @@
       text-shadow: 0 2px 14px #7b1f1f88;
     }
 
-    input, button {
+    /* Botón de ajustes (Cambiar imagen) */
+    #publish-text {
+      position: fixed;
+      top: 10%;
+      left: 20px;
+      z-index: 1000;
+      background: #220101;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 19px;
+      user-select: none;
+      padding: 10px 26px;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #ff525233, 0 0 0 3px #ff525244;
+      border: 2px solid #ff5252;
+      transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+    }
+    #publish-text:hover {
+      background: #320404;
+      box-shadow: 0 4px 24px #ff525277, 0 0 0 4px #ff525288;
+      border: 2px solid #fff;
+    }
+
+    /* Buscador/input */
+    input {
+      width: 300px;
+      background: #170000;
+      color: #fff;
+      border: 2px solid #ff5252;
+      box-shadow: 0 2px 8px #ff525233, 0 0 0 2px #ff525222;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      font-weight: bold;
       padding: 10px;
       font-size: 16px;
       border-radius: 10px;
       margin: 5px;
-      border: none;
       outline: none;
     }
-    input {
-      width: 300px;
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      border: none;
-      box-shadow: 0 2px 6px #7b1f1f33;
-      transition: background 0.3s;
-    }
     input:focus {
-      background: rgba(255, 255, 255, 0.18);
+      background: #240101;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 16px #ff525277, 0 0 0 4px #ff525244;
     }
+
+    /* Botón de buscar */
     button {
-      background: rgba(255, 0, 0, 0.3);
-      color: white;
-      border: none;
+      background: #220101;
+      color: #fff;
+      border: 2px solid #ff5252;
       cursor: pointer;
       text-transform: uppercase;
-      box-shadow: 0 2px 6px #7b1f1f33;
-      transition: background 0.3s;
+      box-shadow: 0 2px 8px #ff525233;
+      font-weight: bold;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      margin: 5px;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      outline: none;
     }
     button:hover {
-      background: rgba(255, 0, 0, 0.5);
+      background: #320404;
+      border: 2px solid #fff;
+      box-shadow: 0 6px 20px #ff525277;
     }
 
     #resultados {
@@ -156,27 +191,6 @@
     }
     #upload-popup button:hover {
       background: #b71c1c;
-    }
-
-    /* Texto flotante para cambiar imagen */
-    #publish-text {
-      position: fixed;
-      top: 10%;
-      left: 20px;
-      z-index: 1000;
-      background: rgba(255,0,0,0.0);
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 19px;
-      user-select: none;
-      padding: 8px 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px #7b1f1f33;
-      transition: background 0.3s;
-    }
-    #publish-text:hover {
-      background: rgba(255, 0, 0, 0.2);
     }
   </style>
 </head>
