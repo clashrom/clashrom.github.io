@@ -2,32 +2,83 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Français 2º F</title>
+  <title>Classroom</title>
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <style>
-    :root {
-      --twitch-purple: #9147ff;
-      --dark-bg: #0e0e10;
-      --light-text: #e3e3e3;
-    }
-
     body {
       margin: 0;
-      background-color: var(--dark-bg);
-      color: var(--light-text);
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #2d1446, #9147ff 50%, #25124d);
+      font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+      animation: backgroundMove 20s infinite alternate;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      justify-content: flex-start;
+      padding-top: 40px;
     }
-
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
     h1 {
-      margin: 20px;
-      color: var(--twitch-purple);
+      color: #a259ff;
+      font-family: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
+      font-weight: 900;
+      font-size: 38px;
+      margin-bottom: 20px;
+      margin-top: 30px;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 14px #9147ff99;
     }
 
+    /* Botón principal y su hover */
+    button, .stream-button, .chat-toggle-btn, .open-popup-btn {
+      background: #191037;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #9147ff;
+      box-shadow: 0 2px 12px #9147ff33, 0 0 0 3px #9147ff22;
+      padding: 10px;
+      margin: 5px;
+      transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+      outline: none;
+    }
+    button:hover, .stream-button:hover, .chat-toggle-btn:hover, .open-popup-btn:hover {
+      background: #442584;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 24px #9147ff77, 0 0 0 4px #9147ff44;
+    }
+
+    /* Input */
+    input {
+      width: 300px;
+      background: #25124d;
+      color: #fff;
+      border: 2px solid #9147ff;
+      box-shadow: 0 2px 8px #9147ff33, 0 0 0 2px #9147ff22;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      font-weight: bold;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      margin: 5px;
+      outline: none;
+    }
+    input:focus {
+      background: #341f5d;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 16px #9147ff77, 0 0 0 4px #9147ff44;
+    }
+
+    /* Stream list y contenedores */
     .stream-list {
       display: flex;
       flex-wrap: wrap;
@@ -35,32 +86,45 @@
       gap: 15px;
       margin-bottom: 30px;
     }
-
     .stream-button {
+      background: rgba(40, 0, 60, 0.85);
+      padding: 10px;
+      border-radius: 12px;
       width: 200px;
-      height: 112px;
-      border: none;
       cursor: pointer;
-      background-color: transparent;
+      text-align: left;
+      box-shadow: 0 0 10px #9147ff33;
+      transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+      border: 2px solid #9147ff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       position: relative;
     }
-
+    .stream-button:hover {
+      background: rgba(110, 60, 180, 0.95);
+      box-shadow: 0 0 20px #9147ff88;
+      border: 2px solid #fff;
+    }
     .stream-button img {
       width: 100%;
-      height: 100%;
       border-radius: 8px;
-      object-fit: cover;
+    }
+    .stream-button span {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #e5ccff;
     }
 
-    .stream-button span {
-      position: absolute;
-      bottom: 5px;
-      left: 10px;
-      background: rgba(0,0,0,0.6);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 14px;
-      color: var(--light-text);
+    .add-icon {
+      font-size: 50px;
+      color: #fff;
+      background: #3b2667;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
 
     .stream-player-container {
@@ -72,32 +136,27 @@
       position: relative;
       transition: all 0.3s ease;
     }
-
     iframe {
       border: none;
       border-radius: 8px;
       transition: all 0.5s ease;
     }
-
     #twitchFrame {
       flex: 3;
       height: 500px;
       transition: all 0.5s ease;
     }
-
     #chatFrame {
       flex: 1;
       height: 500px;
       transition: all 0.5s ease;
     }
-
     .chat-hidden #chatFrame {
       width: 0;
       opacity: 0;
       pointer-events: none;
       flex: 0;
     }
-
     .chat-hidden #twitchFrame {
       flex: 1;
       width: 100%;
@@ -107,21 +166,20 @@
       position: absolute;
       right: -40px;
       top: 10px;
-      background-color: var(--twitch-purple);
-      border: none;
+      background-color: #9147ff;
+      border: 2px solid #9147ff;
       color: white;
       padding: 10px;
       cursor: pointer;
       border-radius: 6px;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s;
+      z-index: 10;
     }
-
     .chat-toggle-btn .material-symbols-outlined {
       font-size: 24px;
       display: inline-block;
       transition: transform 0.3s ease;
     }
-
     .rotated {
       transform: rotate(180deg);
     }
@@ -130,28 +188,62 @@
       position: absolute;
       left: -40px;
       top: 10px;
-      background-color: var(--twitch-purple);
-      border: none;
+      background-color: #9147ff;
+      border: 2px solid #9147ff;
       color: white;
       padding: 10px;
       cursor: pointer;
       border-radius: 6px;
+      z-index: 10;
     }
 
+    /* Popup y overlay */
     #popup {
       display: none;
       position: fixed;
       top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #1f1f23;
+      background: #25124d;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px black;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px #9147ff55;
       z-index: 1000;
+      text-align: center;
+      border: 2px solid #9147ff;
       animation: popupAppear 0.6s ease-out forwards;
     }
-
+    #popup input {
+      width: 300px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #9147ff;
+      background: #2e185b;
+      color: #fff;
+    }
+    #popup button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #9147ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin: 5px;
+    }
+    #popup button:hover {
+      background: #b388ff;
+      color: #191037;
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+    }
     @keyframes popupAppear {
       0% {
         top: -150px;
@@ -171,42 +263,6 @@
         transform: translateX(-50%) scale(1) rotate(0deg);
         opacity: 1;
       }
-    }
-
-    #popup input {
-      width: 300px;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    #popup button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: var(--twitch-purple);
-      color: white;
-      border: none;
-      border-radius: 6px;
-    }
-
-    #overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 999;
-    }
-
-    .add-icon {
-      font-size: 50px;
-      color: white;
-      background: #3b3b3b;
-      border-radius: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
     }
   </style>
 </head>
@@ -338,4 +394,3 @@
   </script>
 </body>
 </html>
-
