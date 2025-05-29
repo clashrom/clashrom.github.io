@@ -172,13 +172,13 @@
 
   <!-- Menú principal -->
   <div class="menu" id="menu">
-    <button class="menu-button" onclick="window.open('youtube.html', '_blank')">
+    <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
       <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
     </button>
-    <button class="menu-button" onclick="window.open('minecraft.html', '_blank')">
+    <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
       <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
     </button>
-    <button class="menu-button" onclick="window.open('twich.html', '_blank')">
+    <button class="menu-button" onclick="abrirEnIframe('twich.html')">
       <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
     </button>
     <button class="menu-button" id="eldardo-btn">
@@ -256,6 +256,28 @@
           menu.classList.remove("fade-in");
         }, 500);
       }, 50);
+    }
+
+    // NUEVO: Abre contenido en iframe en about:blank en otra pestaña
+    function abrirEnIframe(url) {
+      const nuevaPestana = window.open('about:blank', '_blank');
+      if (nuevaPestana) {
+        nuevaPestana.document.write(`
+          <html>
+            <head>
+              <title>${url}</title>
+              <style>
+                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                iframe { border:none; width:100vw; height:100vh; display:block; }
+              </style>
+            </head>
+            <body>
+              <iframe src="${url}" allow="autoplay; fullscreen"></iframe>
+            </body>
+          </html>
+        `);
+        nuevaPestana.document.close();
+      }
     }
 
     // SCRIPT NUEVO PARA ELDARDO
