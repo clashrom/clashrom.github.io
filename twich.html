@@ -1,1 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Classroom</title>
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #2d1446, #9147ff 50%, #25124d);
+      font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+      animation: backgroundMove 20s infinite alternate;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 40px;
+    }
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    h1 {
+      color: #a259ff;
+      font-family: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
+      font-weight: 900;
+      font-size: 38px;
+      margin-bottom: 20px;
+      margin-top: 30px;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 14px #9147ff99;
+    }
 
+    /* Botón principal y su hover */
+    button, .stream-button, .chat-toggle-btn, .open-popup-btn {
+      background: #191037;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #9147ff;
+      box-shadow: 0 2px 12px #9147ff33, 0 0 0 3px #9147ff22;
+      padding: 10px;
+      margin: 5px;
+      transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+      outline: none;
+    }
+    button:hover, .stream-button:hover, .chat-toggle-btn:hover, .open-popup-btn:hover {
+      background: #442584;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 24px #9147ff77, 0 0 0 4px #9147ff44;
+    }
+
+    /* Input */
+    input {
+      width: 300px;
+      background: #25124d;
+      color: #fff;
+      border: 2px solid #9147ff;
+      box-shadow: 0 2px 8px #9147ff33, 0 0 0 2px #9147ff22;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      font-weight: bold;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      margin: 5px;
+      outline: none;
+    }
+    input:focus {
+      background: #341f5d;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 16px #9147ff77, 0 0 0 4px #9147ff44;
+    }
+
+    /* Stream list y contenedores */
+    .stream-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .stream-button {
+      background: rgba(40, 0, 60, 0.85);
+      padding: 10px;
+      border-radius: 12px;
+      width: 200px;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 0 0 10px #9147ff33;
+      transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+      border: 2px solid #9147ff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+    .stream-button:hover {
+      background: rgba(110, 60, 180, 0.95);
+      box-shadow: 0 0 20px #9147ff88;
+      border: 2px solid #fff;
+    }
+    .stream-button img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .stream-button span {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #e5ccff;
+    }
+
+    .add-icon {
+      font-size: 50px;
+      color: #fff;
+      background: #3b2667;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .stream-player-container {
+      display: flex;
+      gap: 10px;
+      width: 90%;
+      max-width: 1200px;
+      margin-bottom: 40px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    iframe {
+      border: none;
+      border-radius: 8px;
+      transition: all 0.5s ease;
+    }
+    #twitchFrame {
+      flex: 3;
+      height: 500px;
+      transition: all 0.5s ease;
+    }
+    #chatFrame {
+      flex: 1;
+      height: 500px;
+      transition: all 0.5s ease;
+    }
+    .chat-hidden #chatFrame {
+      width: 0;
+      opacity: 0;
+      pointer-events: none;
+      flex: 0;
+    }
+    .chat-hidden #twitchFrame {
+      flex: 1;
+      width: 100%;
+    }
+
+    .chat-toggle-btn {
+      position: absolute;
+      right: -40px;
+      top: 10px;
+      background-color: #9147ff;
+      border: 2px solid #9147ff;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.3s ease, background 0.3s;
+      z-index: 10;
+    }
+    .chat-toggle-btn .material-symbols-outlined {
+      font-size: 24px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .rotated {
+      transform: rotate(180deg);
+    }
+
+    .open-popup-btn {
+      position: absolute;
+      left: -40px;
+      top: 10px;
+      background-color: #9147ff;
+      border: 2px solid #9147ff;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      z-index: 10;
+    }
+
+    /* Popup y overlay */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #25124d;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px #9147ff55;
+      z-index: 1000;
+      text-align: center;
+      border: 2px solid #9147ff;
+      animation: popupAppear 0.6s ease-out forwards;
+    }
+    #popup input {
+      width: 300px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #9147ff;
+      background: #2e185b;
+      color: #fff;
+    }
+    #popup button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #9147ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin: 5px;
+    }
+    #popup button:hover {
+      background: #b388ff;
+      color: #191037;
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+    }
+    @keyframes popupAppear {
+      0% {
+        top: -150px;
+        left: 50%;
+        transform: translateX(-50%) scale(0.3) rotate(180deg);
+        opacity: 0;
+      }
+      50% {
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%) scale(0.6) rotate(90deg);
+        opacity: 0.5;
+      }
+      100% {
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Ver Twitch en vivo</h1>
+
+  <div class="stream-list" id="streamList"></div>
+
+  <div class="stream-player-container" id="playerContainer" style="display:none;">
+    <button class="open-popup-btn" onclick="openStreamInNewTab()">↗</button>
+    <iframe id="twitchFrame" allowfullscreen></iframe>
+    <iframe id="chatFrame"></iframe>
+    <button class="chat-toggle-btn" onclick="toggleChat()">
+      <span id="chatIcon" class="material-symbols-outlined">keyboard_tab</span>
+    </button>
+  </div>
+
+  <div id="overlay" onclick="closePopup()"></div>
+  <div id="popup">
+    <h2>Añadir tu canal de Twitch</h2>
+    <input type="text" id="customLink" placeholder="https://www.twitch.tv/usuario">
+    <br>
+    <button onclick="addCustomStream()">Ver</button>
+  </div>
+
+  <script>
+    const streamers = ["rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51"];
+    const streamList = document.getElementById("streamList");
+    const twitchFrame = document.getElementById("twitchFrame");
+    const chatFrame = document.getElementById("chatFrame");
+    const playerContainer = document.getElementById("playerContainer");
+    const chatIcon = document.getElementById("chatIcon");
+
+    function createStreamerButton(name) {
+      const btn = document.createElement("button");
+      btn.className = "stream-button";
+
+      const img = document.createElement("img");
+      img.src = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${name}-320x180.jpg`;
+      img.onerror = function () {
+        this.src = "https://static-cdn.jtvnw.net/assets/offline_screen-1920x1080.png";
+      };
+
+      const label = document.createElement("span");
+      label.innerText = name;
+
+      btn.appendChild(img);
+      btn.appendChild(label);
+      btn.onclick = () => showStream(name);
+
+      return btn;
+    }
+
+    function showStream(channel) {
+      playerContainer.style.display = "flex";
+      twitchFrame.src = `https://player.twitch.tv/?channel=${channel}&parent=${location.hostname}`;
+      chatFrame.src = `https://www.twitch.tv/embed/${channel}/chat?parent=${location.hostname}`;
+      playerContainer.classList.remove("chat-hidden");
+      chatIcon.classList.remove("rotated");
+    }
+
+    streamers.forEach(name => {
+      streamList.appendChild(createStreamerButton(name));
+    });
+
+    const addBtn = document.createElement("button");
+    addBtn.className = "stream-button";
+
+    const addIcon = document.createElement("div");
+    addIcon.className = "add-icon";
+    addIcon.innerHTML = "+";
+
+    const addLabel = document.createElement("span");
+    addLabel.innerText = "Añade tu directo";
+
+    addBtn.appendChild(addIcon);
+    addBtn.appendChild(addLabel);
+    addBtn.onclick = () => {
+      openPopup();
+    };
+    streamList.appendChild(addBtn);
+
+    function addCustomStream() {
+      const url = document.getElementById("customLink").value;
+      const match = url.match(/twitch\.tv\/([^\/\?]+)/);
+      if (match && match[1]) {
+        showStream(match[1]);
+        closePopup();
+      } else {
+        alert("Por favor ingresa un link válido de Twitch.");
+      }
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.animation = "none"; // Remove previous animation
+      document.getElementById("popup").style.display = "none"; // Hide the popup
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    function openPopup() {
+      document.getElementById("popup").style.display = "block"; // Show the popup
+      document.getElementById("popup").style.animation = "popupAppear 0.6s ease-out forwards"; // Apply the animation
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    function toggleChat() {
+      playerContainer.classList.toggle("chat-hidden");
+      chatIcon.classList.toggle("rotated");
+    }
+
+    function openStreamInNewTab() {
+      const channelMatch = twitchFrame.src.match(/channel=([^&]+)/);
+      if (!channelMatch) return;
+      const channel = channelMatch[1];
+      const url = `about:blank`;
+      const newWindow = window.open(url);
+      if (newWindow) {
+        newWindow.document.write(`
+          <body style="margin:0; background:#0e0e10; display:flex; height:100vh;">
+            <iframe src="https://player.twitch.tv/?channel=${channel}&parent=${location.hostname}" 
+                    style="flex:2; border:none;" allowfullscreen></iframe>
+            <iframe src="https://www.twitch.tv/embed/${channel}/chat?parent=${location.hostname}" 
+                    style="flex:1; border:none;"></iframe>
+          </body>
+        `);
+        newWindow.document.title = "...";
+      }
+    }
+  </script>
+</body>
+</html>
