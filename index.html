@@ -74,7 +74,6 @@
       pointer-events: none;
     }
 
-    /* Animación de salida */
     @keyframes fadeOut {
       from { opacity: 1; transform: scale(1);}
       to { opacity: 0; transform: scale(0.95);}
@@ -84,7 +83,6 @@
       pointer-events: none;
     }
 
-    /* Animación de entrada atractiva */
     @keyframes fadeInMenu {
       from { opacity: 0; transform: scale(0.95);}
       to { opacity: 1; transform: scale(1);}
@@ -183,6 +181,10 @@
     </button>
     <button class="menu-button" id="eldardo-btn">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
+    </button>
+    <!-- Nuevo botón CrazyGames -->
+    <button class="menu-button" id="crazygames-btn">
+      <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
     </button>
   </div>
 
@@ -300,6 +302,19 @@
       }
     });
     // FIN SCRIPT NUEVO PARA ELDARDO
+
+    // SCRIPT NUEVO PARA CRAZYGAMES
+    document.addEventListener('DOMContentLoaded', function() {
+      const crazygamesBtn = document.getElementById('crazygames-btn');
+      if (crazygamesBtn) {
+        crazygamesBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(8); // 8 letras aleatorias
+          window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
+        });
+      }
+    });
+    // FIN SCRIPT NUEVO PARA CRAZYGAMES
+
   </script>
 </body>
 </html>
