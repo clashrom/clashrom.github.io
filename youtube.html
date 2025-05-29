@@ -8,152 +8,173 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=publish" />
   <style>
-    body { 
-      background: linear-gradient(-45deg, #111, #222, #333, #444); 
-      background-size: 400% 400%; 
-      animation: gradientBackground 10s ease infinite;
-      color: white; 
-      font-family: 'Roboto', sans-serif; 
-      text-align: center; 
-      padding-top: 40px; 
-      overflow: hidden; /* Evita scroll cuando la imagen está en pantalla completa */
-    }
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #320000, #7b1f1f, #3e1a1a);
+    font-family: sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+    animation: backgroundMove 20s infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px;
+  }
 
-    @keyframes gradientBackground {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  @keyframes backgroundMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
 
-    h1 {
-      color: #d32f2f;
-      font-family: 'Bungee Tint', sans-serif; /* Fuente personalizada */
-      font-size: 36px; /* Título más grande */
-      margin-bottom: 20px;
-    }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 4px;
-      margin: 5px;
-      border: 1px solid #dadce0;
-    }
-    input {
-      width: 300px;
-    }
-    button {
-      background: #d32f2f;
-      color: white;
-      border: none;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-    button:hover {
-      background: #a62a2a;
-    }
-    #resultados {
-      margin-top: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      max-height: 500px; /* Altura máxima ajustable */
-      overflow-y: auto; /* Scroll vertical */
-      padding-right: 10px; /* Espacio para el scrollbar */
-    }
-    .video {
-      background: #222;
-      padding: 10px;
-      border-radius: 8px;
-      width: 200px;
-      cursor: pointer;
-      text-align: left;
-    }
-    .video:hover {
-      background: #333;
-    }
-    .video img {
-      width: 100%;
-      border-radius: 6px;
-    }
-    .titulo {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #ccc;
-    }
-    #fullscreen-image {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 99999; /* Siempre encima de todo */
-    }
-    #fullscreen-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* Mantiene la proporción de la imagen */
-      pointer-events: none; /* Evita arrastrar la imagen */
-      user-select: none; /* Evita seleccionar la imagen */
-    }
-    #upload-popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #222; /* Fondo oscuro */
-      border: 2px solid #d32f2f; /* Borde rojo */
-      border-radius: 10px;
-      padding: 20px;
-      width: 300px;
-      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4); /* Sombra */
-      z-index: 10000; /* Encima de todo */
-      text-align: center;
-    }
-    #upload-popup p {
-      color: white; /* Texto en blanco */
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    #upload-popup button {
-      margin: 10px;
-      width: 100px;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 4px;
-      border: none;
-      background: #d32f2f; /* Botón rojo */
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #upload-popup button:hover {
-      background: #a62a2a; /* Efecto hover */
-    }
+  h1 {
+    color: #ff5252;
+    font-family: 'Bungee Tint', sans-serif;
+    font-size: 36px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    text-shadow: 0 2px 14px #7b1f1f88;
+  }
 
-    /* Posicionamiento del botón de upload (modificación solicitada) */
-    #publish-button {
-      position: fixed;
-      top: 10%;
-      left: 20px;
-      z-index: 1000;
-      background: #d32f2f;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 10px;
-      cursor: pointer;
-    }
-    #publish-button:hover {
-      background: #a62a2a;
-    }
-  </style>
+  input, button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    margin: 5px;
+    border: none;
+    outline: none;
+  }
+  input {
+    width: 300px;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    border: none;
+    box-shadow: 0 2px 6px #7b1f1f33;
+    transition: background 0.3s;
+  }
+  input:focus {
+    background: rgba(255, 255, 255, 0.18);
+  }
+  button {
+    background: rgba(255, 0, 0, 0.3);
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px #7b1f1f33;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+
+  #resultados {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+
+  .video {
+    background: rgba(40, 0, 0, 0.85);
+    padding: 10px;
+    border-radius: 12px;
+    width: 200px;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 0 10px #7b1f1f33;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .video:hover {
+    background: rgba(80, 10, 10, 0.95);
+    box-shadow: 0 0 20px #ff525288;
+  }
+  .video img {
+    width: 100%;
+    border-radius: 8px;
+  }
+  .titulo {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #ff9e9e;
+  }
+
+  #fullscreen-image {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(30, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+  }
+  #fullscreen-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  #upload-popup {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(80, 0, 0, 0.98);
+    border: 2px solid #ff5252;
+    border-radius: 16px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0px 8px 24px #7b1f1f55;
+    z-index: 10000;
+    text-align: center;
+  }
+  #upload-popup p {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  #upload-popup button {
+    margin: 10px;
+    width: 100px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background: #ff5252;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  #upload-popup button:hover {
+    background: #b71c1c;
+  }
+
+  #publish-button {
+    position: fixed;
+    top: 10%;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(255, 0, 0, 0.4);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px #7b1f1f33;
+    transition: background 0.3s;
+  }
+  #publish-button:hover {
+    background: rgba(255, 0, 0, 0.7);
+  }
+</style>
 </head>
 <body>
   <h1>Buscador privado de YouTube</h1>
