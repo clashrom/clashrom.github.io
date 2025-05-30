@@ -168,27 +168,40 @@
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings">⚙ Ajustes</button>
 
-  <!-- Menú principal -->
-  <div class="menu" id="menu">
-    <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
-      <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
-    </button>
-    <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
-      <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
-    </button>
-    <button class="menu-button" onclick="abrirEnIframe('twich.html')">
-      <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
-    </button>
-    <button class="menu-button" id="eldardo-btn">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
-    </button>
-    <button class="menu-button" id="crazygames-btn">
-      <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
-    </button>
-    <!-- Nuevo botón LibreFutbolTV -->
-    <button class="menu-button" id="librefutboltv-btn">
-      <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
-    </button>
+  <!-- Menú principal con secciones -->
+  <div style="display: flex; flex-direction: column; gap: 40px;" id="menu">
+
+    <!-- Sección Entretenimiento -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <h2 style="margin-bottom: 12px;">Entretenimiento</h2>
+      <div class="menu" style="gap: 40px;">
+        <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
+          <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
+        </button>
+        <button class="menu-button" onclick="abrirEnIframe('twich.html')">
+          <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
+        </button>
+        <button class="menu-button" id="librefutboltv-btn">
+          <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
+        </button>
+      </div>
+    </div>
+
+    <!-- Sección Juegos -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <h2 style="margin-bottom: 12px;">Juegos</h2>
+      <div class="menu" style="gap: 40px;">
+        <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
+          <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
+        </button>
+        <button class="menu-button" id="eldardo-btn">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
+        </button>
+        <button class="menu-button" id="crazygames-btn">
+          <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Ajustes -->
