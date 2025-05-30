@@ -68,13 +68,14 @@
       display: inline-flex;
       gap: 40px;
       overflow-x: auto;
+      overflow-y: visible;        /* <--- permite hover fuera del contenedor */
       white-space: nowrap;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-behavior: smooth;
       width: 100%;
       box-sizing: border-box;
-      padding: 10px 0;
+      padding: 18px 0;           /* <--- espacio para hover */
     }
     .menu-buttons-row::-webkit-scrollbar {
       display: none;
@@ -100,7 +101,6 @@
       user-select: none;
       box-shadow: 0 2px 16px #0007;
       padding: 0;
-      /* Por defecto oculto, se muestra con JS */
       visibility: hidden;
       pointer-events: none;
     }
@@ -379,15 +379,12 @@
       setTimeout(() => updateArrows(row), 340);
     }
 
-    // Mostrar/ocultar flechas según overflow y posición de scroll
     function updateArrows(row) {
       const rowEl = document.getElementById(row + '-row');
       const leftArrow = document.getElementById(row + '-arrow-left');
       const rightArrow = document.getElementById(row + '-arrow-right');
       if (!rowEl || !leftArrow || !rightArrow) return;
-      // Si hay overflow horizontal
       const canScroll = rowEl.scrollWidth > rowEl.clientWidth + 2;
-      // Si está al principio/final
       const atStart = Math.abs(rowEl.scrollLeft) < 4;
       const atEnd = rowEl.scrollLeft + rowEl.clientWidth >= rowEl.scrollWidth - 4;
       if (canScroll) {
@@ -399,7 +396,6 @@
       }
     }
 
-    // Actualizar flechas al cargar y al redimensionar
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
@@ -407,7 +403,6 @@
     window.addEventListener('resize', updateAllArrows);
     document.addEventListener('DOMContentLoaded', function() {
       updateAllArrows();
-      // Eldardo
       const eldardoBtn = document.getElementById('eldardo-btn');
       if (eldardoBtn) {
         eldardoBtn.addEventListener('click', function() {
@@ -415,7 +410,6 @@
           window.open('https://eldardo.net/' + letrasAzar, '_blank');
         });
       }
-      // Crazygames
       const crazygamesBtn = document.getElementById('crazygames-btn');
       if (crazygamesBtn) {
         crazygamesBtn.addEventListener('click', function() {
@@ -423,14 +417,12 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
-      // Librefutboltv
       const librefutboltvBtn = document.getElementById('librefutboltv-btn');
       if (librefutboltvBtn) {
         librefutboltvBtn.addEventListener('click', function() {
           abrirEnIframe('https://librefutboltv.su/');
         });
       }
-      // Actualizar flechas al hacer scroll
       ['ent-row', 'juegos-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
