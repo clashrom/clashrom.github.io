@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classroom</title>
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-  <!-- Fuente moderna -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -81,35 +80,47 @@
       display: none;
     }
     .carousel-arrow {
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.20);
       border: none;
       color: white;
-      font-size: 38px;
-      width: 44px;
-      height: 88px;
+      width: 56px;
+      height: 90px;
       cursor: pointer;
       z-index: 5;
       border-radius: 14px;
-      transition: background .2s;
+      transition: background .2s, opacity .2s;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      opacity: 0.7;
+      opacity: 0.75;
       outline: none;
       user-select: none;
+      box-shadow: 0 2px 16px #0007;
+      padding: 0;
+      /* Por defecto oculto, se muestra con JS */
+      visibility: hidden;
+      pointer-events: none;
     }
-    .carousel-arrow:hover {
-      background: rgba(0,255,255,0.4);
+    .carousel-arrow svg {
+      display: block;
+      width: 38px;
+      height: 38px;
+      stroke-width: 3.5;
+      stroke: #00ffff;
+      fill: none;
+    }
+    .carousel-arrow.left { left: -28px; }
+    .carousel-arrow.right { right: -28px; }
+    .carousel-arrow.visible {
+      visibility: visible !important;
+      pointer-events: auto;
+    }
+    .carousel-arrow:active {
+      background: rgba(0,255,255,0.08);
       opacity: 1;
-    }
-    .carousel-arrow.left {
-      left: -20px;
-    }
-    .carousel-arrow.right {
-      right: -20px;
     }
     .menu-button {
       padding: 0;
@@ -142,7 +153,6 @@
       letter-spacing: 2px;
       text-shadow: 0 2px 12px #000, 0 0px 2px #222;
       color: #fff;
-      /* Opcional: un acento azul tech */
       border-left: 5px solid #00ffff66;
       padding-left: 12px;
     }
@@ -202,9 +212,12 @@
         height: 80px;
       }
       .carousel-arrow {
-        font-size: 28px;
-        width: 34px;
+        width: 36px;
         height: 60px;
+      }
+      .carousel-arrow svg {
+        width: 28px;
+        height: 28px;
       }
       .section-title {
         font-size: 1.2rem;
@@ -229,7 +242,9 @@
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Entretenimiento</div>
       <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">&#8592;</button>
+        <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <div class="menu-buttons-row" id="ent-row">
           <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
             <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
@@ -241,7 +256,9 @@
             <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
           </button>
         </div>
-        <button class="carousel-arrow right" onclick="scrollRow('ent', 1)" aria-label="Derecha">&#8594;</button>
+        <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
 
@@ -249,7 +266,9 @@
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Juegos</div>
       <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">&#8592;</button>
+        <button class="carousel-arrow left" id="juegos-arrow-left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <div class="menu-buttons-row" id="juegos-row">
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
@@ -261,7 +280,9 @@
             <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
           </button>
         </div>
-        <button class="carousel-arrow right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">&#8594;</button>
+        <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -279,9 +300,6 @@
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
 
-    const defaultTitle = "Classroom";
-    const defaultImage = "images/Screenshot 2025-05-07 11.39.48.png";
-
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
@@ -289,10 +307,8 @@
       }
     });
 
-    // Toggle mostrar/ocultar ajustes y menú con animaciones guapas
     toggleSettingsBtn.addEventListener("click", () => {
       if (settingsPanel.classList.contains("show")) {
-        // Oculta ajustes y muestra menú con animación de entrada
         settingsPanel.classList.remove("show");
         setTimeout(() => {
           menu.classList.remove("hidden");
@@ -313,20 +329,11 @@
       }
     });
 
-    // Animación de salida cuando das a "Aplicar"
     function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
       const newImage = document.getElementById("imageInput").value;
-
-      if (newTitle.trim()) {
-        document.title = newTitle;
-      }
-
-      if (newImage.trim()) {
-        fullscreenImage.src = newImage;
-      }
-
-      // Oculta ajustes y muestra menú con animación de entrada
+      if (newTitle.trim()) document.title = newTitle;
+      if (newImage.trim()) fullscreenImage.src = newImage;
       settingsPanel.classList.remove("show");
       setTimeout(() => {
         menu.classList.remove("hidden");
@@ -338,7 +345,6 @@
       }, 50);
     }
 
-    // NUEVO: Abre contenido en iframe en about:blank en otra pestaña
     function abrirEnIframe(url) {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -361,21 +367,76 @@
       }
     }
 
-    // Carrusel scroll para filas de botones
     function scrollRow(row, dir) {
-      // dir: 1 = derecha, -1 = izquierda
       const rowEl = document.getElementById(row + '-row');
       if (!rowEl) return;
       const button = rowEl.querySelector('.menu-button');
       if (!button) return;
-      // desplazamiento igual al ancho de un botón + el gap
       const gap = 40;
       let buttonWidth = button.offsetWidth || 220;
       let scrollAmount = buttonWidth + gap;
       rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
+      setTimeout(() => updateArrows(row), 340);
     }
 
-    // SCRIPT NUEVO PARA ELDARDO
+    // Mostrar/ocultar flechas según overflow y posición de scroll
+    function updateArrows(row) {
+      const rowEl = document.getElementById(row + '-row');
+      const leftArrow = document.getElementById(row + '-arrow-left');
+      const rightArrow = document.getElementById(row + '-arrow-right');
+      if (!rowEl || !leftArrow || !rightArrow) return;
+      // Si hay overflow horizontal
+      const canScroll = rowEl.scrollWidth > rowEl.clientWidth + 2;
+      // Si está al principio/final
+      const atStart = Math.abs(rowEl.scrollLeft) < 4;
+      const atEnd = rowEl.scrollLeft + rowEl.clientWidth >= rowEl.scrollWidth - 4;
+      if (canScroll) {
+        leftArrow.classList.toggle('visible', !atStart);
+        rightArrow.classList.toggle('visible', !atEnd);
+      } else {
+        leftArrow.classList.remove('visible');
+        rightArrow.classList.remove('visible');
+      }
+    }
+
+    // Actualizar flechas al cargar y al redimensionar
+    function updateAllArrows() {
+      updateArrows('ent');
+      updateArrows('juegos');
+    }
+    window.addEventListener('resize', updateAllArrows);
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAllArrows();
+      // Eldardo
+      const eldardoBtn = document.getElementById('eldardo-btn');
+      if (eldardoBtn) {
+        eldardoBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(5);
+          window.open('https://eldardo.net/' + letrasAzar, '_blank');
+        });
+      }
+      // Crazygames
+      const crazygamesBtn = document.getElementById('crazygames-btn');
+      if (crazygamesBtn) {
+        crazygamesBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(8);
+          window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
+        });
+      }
+      // Librefutboltv
+      const librefutboltvBtn = document.getElementById('librefutboltv-btn');
+      if (librefutboltvBtn) {
+        librefutboltvBtn.addEventListener('click', function() {
+          abrirEnIframe('https://librefutboltv.su/');
+        });
+      }
+      // Actualizar flechas al hacer scroll
+      ['ent-row', 'juegos-row'].forEach(rowId => {
+        const el = document.getElementById(rowId);
+        if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
+      });
+    });
+
     function generarLetrasAzar(longitud) {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       let resultado = '';
@@ -384,38 +445,6 @@
       }
       return resultado;
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const eldardoBtn = document.getElementById('eldardo-btn');
-      if (eldardoBtn) {
-        eldardoBtn.addEventListener('click', function() {
-          const letrasAzar = generarLetrasAzar(5);
-          window.open('https://eldardo.net/' + letrasAzar, '_blank');
-        });
-      }
-    });
-
-    // SCRIPT NUEVO PARA CRAZYGAMES
-    document.addEventListener('DOMContentLoaded', function() {
-      const crazygamesBtn = document.getElementById('crazygames-btn');
-      if (crazygamesBtn) {
-        crazygamesBtn.addEventListener('click', function() {
-          const letrasAzar = generarLetrasAzar(8); // 8 letras aleatorias
-          window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
-        });
-      }
-    });
-
-    // BOTÓN NUEVO PARA LIBREFUTBOLTV
-    document.addEventListener('DOMContentLoaded', function() {
-      const librefutboltvBtn = document.getElementById('librefutboltv-btn');
-      if (librefutboltvBtn) {
-        librefutboltvBtn.addEventListener('click', function() {
-          abrirEnIframe('https://librefutboltv.su/');
-        });
-      }
-    });
-
   </script>
 </body>
 </html>
