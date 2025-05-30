@@ -19,12 +19,10 @@
       align-items: center;
       justify-content: center;
     }
-
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
-
     .fullscreen-img {
       position: fixed;
       top: 0;
@@ -36,11 +34,9 @@
       display: block;
       transition: opacity 0.5s ease;
     }
-
     .hidden {
       display: none !important;
     }
-
     #toggleSettings {
       position: fixed;
       top: 20px;
@@ -55,50 +51,71 @@
       z-index: 10;
       transition: background 0.3s ease;
     }
-
     #toggleSettings:hover {
       background: rgba(0, 255, 255, 0.3);
     }
-
-    .menu {
+    .menu-buttons-row-wrapper {
       display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+      margin-bottom: 25px;
+    }
+    .menu-buttons-row {
+      display: inline-flex;
       gap: 40px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 0;
+    }
+    .menu-buttons-row::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-arrow {
+      background: rgba(0,0,0,0.3);
+      border: none;
+      color: white;
+      font-size: 38px;
+      width: 44px;
+      height: 88px;
+      cursor: pointer;
+      z-index: 5;
+      border-radius: 14px;
+      transition: background .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.7;
+      outline: none;
+      user-select: none;
+    }
+    .carousel-arrow:hover {
+      background: rgba(0,255,255,0.4);
       opacity: 1;
-      transform: scale(1);
-      transition: all 0.5s ease;
     }
-
-    .menu.hidden {
-      opacity: 0;
-      transform: scale(0.95);
-      pointer-events: none;
+    .carousel-arrow.left {
+      left: -20px;
     }
-
-    @keyframes fadeOut {
-      from { opacity: 1; transform: scale(1);}
-      to { opacity: 0; transform: scale(0.95);}
+    .carousel-arrow.right {
+      right: -20px;
     }
-    .menu.fade-out {
-      animation: fadeOut 0.5s forwards;
-      pointer-events: none;
-    }
-
-    @keyframes fadeInMenu {
-      from { opacity: 0; transform: scale(0.95);}
-      to { opacity: 1; transform: scale(1);}
-    }
-    .menu.fade-in {
-      animation: fadeInMenu 0.5s forwards;
-    }
-
     .menu-button {
       padding: 0;
       border: none;
       background: none;
       cursor: pointer;
       transition: transform 0.3s ease;
+      display: inline-block;
     }
-
     .menu-button img {
       width: 220px;
       height: 120px;
@@ -106,12 +123,10 @@
       border-radius: 12px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .menu-button:hover img {
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-
     .settings {
       display: none;
       flex-direction: column;
@@ -123,11 +138,9 @@
       z-index: 2;
       animation: fadeIn 0.5s ease forwards;
     }
-
     .settings.show {
       display: flex;
     }
-
     .settings input {
       background: rgba(255, 255, 255, 0.1);
       color: white;
@@ -138,7 +151,6 @@
       width: 250px;
       transition: 0.3s ease;
     }
-
     .settings button {
       background: rgba(0, 255, 255, 0.2);
       color: white;
@@ -149,14 +161,32 @@
       cursor: pointer;
       transition: 0.3s ease;
     }
-
     .settings button:hover {
       background: rgba(0, 255, 255, 0.4);
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
+    }
+    @media (max-width: 1000px) {
+      .menu-button img {
+        width: 180px;
+        height: 100px;
+      }
+      .menu-buttons-row-wrapper {
+        max-width: 98vw;
+      }
+    }
+    @media (max-width: 700px) {
+      .menu-button img {
+        width: 135px;
+        height: 80px;
+      }
+      .carousel-arrow {
+        font-size: 28px;
+        width: 34px;
+        height: 60px;
+      }
     }
   </style>
 </head>
@@ -174,32 +204,40 @@
     <!-- Sección Entretenimiento -->
     <div style="display: flex; flex-direction: column; align-items: center;">
       <h2 style="margin-bottom: 12px;">Entretenimiento</h2>
-      <div class="menu" style="gap: 40px;">
-        <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
-          <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
-        </button>
-        <button class="menu-button" onclick="abrirEnIframe('twich.html')">
-          <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
-        </button>
-        <button class="menu-button" id="librefutboltv-btn">
-          <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
-        </button>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">&#8592;</button>
+        <div class="menu-buttons-row" id="ent-row">
+          <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
+            <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('twich.html')">
+            <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
+          </button>
+          <button class="menu-button" id="librefutboltv-btn">
+            <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
+          </button>
+        </div>
+        <button class="carousel-arrow right" onclick="scrollRow('ent', 1)" aria-label="Derecha">&#8594;</button>
       </div>
     </div>
 
     <!-- Sección Juegos -->
     <div style="display: flex; flex-direction: column; align-items: center;">
       <h2 style="margin-bottom: 12px;">Juegos</h2>
-      <div class="menu" style="gap: 40px;">
-        <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
-          <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
-        </button>
-        <button class="menu-button" id="eldardo-btn">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
-        </button>
-        <button class="menu-button" id="crazygames-btn">
-          <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
-        </button>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">&#8592;</button>
+        <div class="menu-buttons-row" id="juegos-row">
+          <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
+            <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
+          </button>
+          <button class="menu-button" id="eldardo-btn">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
+          </button>
+          <button class="menu-button" id="crazygames-btn">
+            <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
+          </button>
+        </div>
+        <button class="carousel-arrow right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">&#8594;</button>
       </div>
     </div>
   </div>
@@ -299,6 +337,20 @@
       }
     }
 
+    // Carrusel scroll para filas de botones
+    function scrollRow(row, dir) {
+      // dir: 1 = derecha, -1 = izquierda
+      const rowEl = document.getElementById(row + '-row');
+      if (!rowEl) return;
+      const button = rowEl.querySelector('.menu-button');
+      if (!button) return;
+      // desplazamiento igual al ancho de un botón + el gap
+      const gap = 40;
+      let buttonWidth = button.offsetWidth || 220;
+      let scrollAmount = buttonWidth + gap;
+      rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
+    }
+
     // SCRIPT NUEVO PARA ELDARDO
     function generarLetrasAzar(longitud) {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -318,7 +370,6 @@
         });
       }
     });
-    // FIN SCRIPT NUEVO PARA ELDARDO
 
     // SCRIPT NUEVO PARA CRAZYGAMES
     document.addEventListener('DOMContentLoaded', function() {
@@ -330,7 +381,6 @@
         });
       }
     });
-    // FIN SCRIPT NUEVO PARA CRAZYGAMES
 
     // BOTÓN NUEVO PARA LIBREFUTBOLTV
     document.addEventListener('DOMContentLoaded', function() {
@@ -341,7 +391,6 @@
         });
       }
     });
-    // FIN BOTÓN NUEVO PARA LIBREFUTBOLTV
 
   </script>
 </body>
