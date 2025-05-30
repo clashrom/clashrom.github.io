@@ -124,7 +124,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
+      height: 60px;
+      width: 60px;
+      margin: 0 auto 8px;
     }
 
     .stream-player-container {
@@ -322,6 +324,10 @@
       chatFrame.src = `https://www.twitch.tv/embed/${channel}/chat?parent=${location.hostname}`;
       playerContainer.classList.remove("chat-hidden");
       chatIcon.classList.remove("rotated");
+      // Scroll automático al reproductor
+      setTimeout(() => {
+        playerContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 200);
     }
 
     streamers.forEach(name => {
