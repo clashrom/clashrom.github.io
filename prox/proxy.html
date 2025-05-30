@@ -1,79 +1,85 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
   <title>Classroom</title>
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f3f4;
+      background-color: #202124;
+      font-family: 'Roboto', sans-serif;
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      color: #202124;
+      margin: 0;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    form {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    input[type="text"] {
-      width: 300px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-    button {
-      padding: 10px 16px;
-      background-color: #1a73e8;
-      color: white;
+
+    input {
+      padding: 12px 20px;
+      width: 90%;
+      max-width: 500px;
       border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      margin-left: 10px;
+      border-radius: 30px;
+      font-size: 16px;
+      background: #303134;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      background: #1a73e8;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #0c57d3;
+
+    #loading {
+      display: none;
+      margin-top: 10px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>Buscar en la web</h1>
-  <form id="proxyForm">
-    <input type="text" id="searchInput" placeholder="Introduce una URL o término de búsqueda">
-    <button type="submit">Ir</button>
-  </form>
+  <h1>Classroom</h1>
+  <input type="text" id="url" placeholder="Buscar o introducir URL..." />
+  <button onclick="openSite()">Ir</button>
+  <div id="loading">Cargando sitio...</div>
 
+  <script src="https://cdn.jsdelivr.net/gh/titaniumnetwork-dev/Ultraviolet@main/uv/uv.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/titaniumnetwork-dev/Ultraviolet@main/uv/uv.config.js"></script>
   <script>
-    const proxyUrl = "https://mi-proxy.glitch.me"; // Cambia esto por la URL de tu proxy real
+    const proxy = new UVServiceWorker();
 
-    document.getElementById('proxyForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const input = document.getElementById('searchInput').value.trim();
+    // Iniciar el service worker
+    navigator.serviceWorker.register('https://cdn.jsdelivr.net/gh/titaniumnetwork-dev/Ultraviolet@main/uv/sw.js', {
+      scope: __uv$config.prefix
+    }).then(() => {
+      proxy.init();
+    });
+
+    function openSite() {
+      const input = document.getElementById("url").value.trim();
       let url = input;
 
-      // Si no es una URL válida, busca en Google
-      if (!input.startsWith('http://') && !input.startsWith('https://') && !input.includes('.')) {
-        url = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
-      } else if (!input.startsWith('http')) {
-        url = 'http://' + input;
+      if (!url.startsWith("http")) {
+        if (url.includes(".") && !url.includes(" ")) {
+          url = "https://" + url;
+        } else {
+          url = "https://www.google.com/search?q=" + encodeURIComponent(url);
+        }
       }
 
-      // Redirige usando el proxy
-      window.location.href = `${proxyUrl}/service/${btoa(url)}`;
-    });
+      const finalURL = __uv$config.prefix + __uv$config.encodeUrl(url);
+      window.location.href = finalURL;
+    }
   </script>
 </body>
 </html>
