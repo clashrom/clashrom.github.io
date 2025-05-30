@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classroom</title>
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+  <!-- Fuente moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      font-family: sans-serif;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
       height: 100vh;
       overflow: hidden;
       color: white;
@@ -50,6 +52,7 @@
       cursor: pointer;
       z-index: 10;
       transition: background 0.3s ease;
+      font-family: inherit;
     }
     #toggleSettings:hover {
       background: rgba(0, 255, 255, 0.3);
@@ -127,6 +130,22 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
+    .section-title {
+      width: 100%;
+      max-width: 900px;
+      text-align: left;
+      margin-bottom: 12px;
+      margin-left: 10px;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #000, 0 0px 2px #222;
+      color: #fff;
+      /* Opcional: un acento azul tech */
+      border-left: 5px solid #00ffff66;
+      padding-left: 12px;
+    }
     .settings {
       display: none;
       flex-direction: column;
@@ -173,7 +192,7 @@
         width: 180px;
         height: 100px;
       }
-      .menu-buttons-row-wrapper {
+      .menu-buttons-row-wrapper, .section-title {
         max-width: 98vw;
       }
     }
@@ -186,6 +205,11 @@
         font-size: 28px;
         width: 34px;
         height: 60px;
+      }
+      .section-title {
+        font-size: 1.2rem;
+        margin-left: 5px;
+        padding-left: 6px;
       }
     }
   </style>
@@ -202,8 +226,8 @@
   <div style="display: flex; flex-direction: column; gap: 40px;" id="menu">
 
     <!-- Sección Entretenimiento -->
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <h2 style="margin-bottom: 12px;">Entretenimiento</h2>
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Entretenimiento</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">&#8592;</button>
         <div class="menu-buttons-row" id="ent-row">
@@ -222,8 +246,8 @@
     </div>
 
     <!-- Sección Juegos -->
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <h2 style="margin-bottom: 12px;">Juegos</h2>
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Juegos</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">&#8592;</button>
         <div class="menu-buttons-row" id="juegos-row">
