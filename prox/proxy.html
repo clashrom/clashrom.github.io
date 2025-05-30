@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Proxy Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input[type="text"] {
+            width: 400px;
+            padding: 8px;
+        }
+        input[type="submit"] {
+            padding: 8px 16px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscar a través de un Proxy</h1>
+    <form id="proxyForm">
+        <input type="text" id="urlInput" placeholder="Introduce la URL que quieres visitar..." required>
+        <input type="submit" value="Ir">
+    </form>
+    <iframe id="proxyFrame"></iframe>
 
+    <script>
+        document.getElementById('proxyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var url = document.getElementById('urlInput').value;
+            // Aquí deberías poner la URL de tu backend proxy, por ejemplo: /proxy?url=
+            // Este es solo un ejemplo, debes implementar el backend para que funcione de verdad
+            var proxyUrl = 'https://TU_BACKEND_PROXY?url=' + encodeURIComponent(url);
+            document.getElementById('proxyFrame').src = proxyUrl;
+        });
+    </script>
+</body>
+</html>
