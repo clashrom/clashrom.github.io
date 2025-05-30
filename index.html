@@ -68,14 +68,14 @@
       display: inline-flex;
       gap: 40px;
       overflow-x: auto;
-      overflow-y: visible;        /* <--- permite hover fuera del contenedor */
+      overflow-y: visible;
       white-space: nowrap;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-behavior: smooth;
       width: 100%;
       box-sizing: border-box;
-      padding: 18px 0;           /* <--- espacio para hover */
+      padding: 18px 0;
     }
     .menu-buttons-row::-webkit-scrollbar {
       display: none;
@@ -279,6 +279,9 @@
           <button class="menu-button" id="crazygames-btn">
             <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
           </button>
+          <button class="menu-button" id="poki-btn">
+            <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
+          </button>
         </div>
         <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
           <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -415,6 +418,14 @@
         crazygamesBtn.addEventListener('click', function() {
           const letrasAzar = generarLetrasAzar(8);
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
+        });
+      }
+      // SCRIPT NUEVO PARA POKI
+      const pokiBtn = document.getElementById('poki-btn');
+      if (pokiBtn) {
+        pokiBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(8);
+          window.open('https://poki.com/' + letrasAzar, '_blank');
         });
       }
       const librefutboltvBtn = document.getElementById('librefutboltv-btn');
