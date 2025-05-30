@@ -1,45 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Web Proxy Simple</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-        }
-        input[type="text"] {
-            width: 400px;
-            padding: 8px;
-        }
-        input[type="submit"] {
-            padding: 8px 16px;
-        }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: 1px solid #ccc;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buscador Torry</title>
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      min-width: 100vw;
+      overflow-x: hidden;
+    }
+    body {
+      background: linear-gradient(135deg, #0c2910, #2b6330, #243e24);
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      height: 100vh;
+      color: #eaffea;
+      animation: backgroundMove 20s infinite alternate;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100vw;
+      min-width: 100vw;
+      overflow-x: hidden;
+    }
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .buscador-container {
+      margin-top: 60px;
+      background: rgba(0,255,0,0.10);
+      padding: 40px 30px 30px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0,128,0,0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 95vw;
+      max-width: 500px;
+    }
+    h1 {
+      color: #aaffaa;
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #021, 0 0px 2px #242;
+      margin: 0 0 10px 0;
+    }
+    form {
+      display: flex;
+      width: 100%;
+      gap: 12px;
+      justify-content: center;
+    }
+    input[type="text"] {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 70%;
+      font-size: 1.1rem;
+      background: rgba(0, 255, 0, 0.12);
+      color: #eaffea;
+      outline: none;
+      transition: background 0.3s;
+    }
+    input[type="text"]:focus {
+      background: rgba(0,255,0,0.22);
+    }
+    button {
+      background: linear-gradient(135deg, #1fff50, #22c55e);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 1.1rem;
+      font-family: inherit;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      box-shadow: 0 2px 8px #040;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #21e16b, #15803d);
+    }
+    .iframe-container {
+      margin-top: 40px;
+      width: 95vw;
+      max-width: 900px;
+      height: 70vh;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px 0 rgba(0,128,0,0.25);
+      background: #121;
+      display: none;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+    @media (max-width: 700px) {
+      .buscador-container {
+        padding: 20px 5px 15px 5px;
+        margin-top: 30px;
+        max-width: 98vw;
+      }
+      .iframe-container {
+        max-width: 99vw;
+        height: 55vh;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Buscar a través de un Proxy</h1>
-    <form id="proxyForm">
-        <input type="text" id="urlInput" placeholder="Introduce la URL que quieres visitar..." required>
-        <input type="submit" value="Ir">
+  <div class="buscador-container">
+    <h1>Buscador Torry.io</h1>
+    <form id="torry-form">
+      <input type="text" id="query" placeholder="Buscar en Torry.io..." autocomplete="off" required>
+      <button type="submit">Buscar</button>
     </form>
-    <iframe id="proxyFrame"></iframe>
-
-    <script>
-        document.getElementById('proxyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var url = document.getElementById('urlInput').value;
-            // Aquí deberías poner la URL de tu backend proxy, por ejemplo: /proxy?url=
-            // Este es solo un ejemplo, debes implementar el backend para que funcione de verdad
-            var proxyUrl = 'https://TU_BACKEND_PROXY?url=' + encodeURIComponent(url);
-            document.getElementById('proxyFrame').src = proxyUrl;
-        });
-    </script>
+  </div>
+  <div class="iframe-container" id="results-container">
+    <iframe id="results-iframe" title="Resultados Torry.io"></iframe>
+  </div>
+  <script>
+    const form = document.getElementById('torry-form');
+    const queryInput = document.getElementById('query');
+    const iframeContainer = document.getElementById('results-container');
+    const iframe = document.getElementById('results-iframe');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const q = queryInput.value.trim();
+      if(q){
+        iframe.src = 'https://www.torry.io/search/' + encodeURIComponent(q);
+        iframeContainer.style.display = 'block';
+      }
+    });
+  </script>
 </body>
 </html>
