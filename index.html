@@ -86,6 +86,9 @@
       font-size: 1.2em;
       transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
+    .margen-grande-arriba {
+      margin-top: 90px; /* Puedes aumentar este valor si quieres más espacio */
+    }
     .section-title {
       margin-left: 64px;
       width: calc(100vw - 64px);
@@ -294,7 +297,7 @@
   <!-- Menú principal con secciones -->
   <div id="menu">
     <!-- Sección Entretenimiento -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+    <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Entretenimiento</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
@@ -381,7 +384,6 @@
 
     // Animación para el botón de ajustes según scroll - ¡FIX universal!
     function updateAjustesButton() {
-      // Soporta todos los casos posibles de scroll vertical
       const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       if (scrollTop < 2) {
         toggleSettingsBtn.classList.remove('compact');
