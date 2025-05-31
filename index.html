@@ -108,7 +108,7 @@
       padding-left: 12px;
       margin-right: 0;
     }
-    /* --- El resto de tus estilos igual que antes --- */
+    /* ... El resto de tu CSS igual ... */
     .menu-buttons-row-wrapper {
       display: flex;
       align-items: center;
@@ -311,7 +311,6 @@
           <button class="menu-button" onclick="abrirEnIframe('twich.html')">
             <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
           </button>
-          <!-- Nuevo botón Kick -->
           <button class="menu-button" onclick="abrirEnIframe('kick.html')">
             <img src="https://i.pinimg.com/736x/75/3a/80/753a8026311b908da737fab513be953a.jpg" alt="Kick">
           </button>
@@ -347,6 +346,24 @@
           </button>
         </div>
         <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN HERRAMIENTAS -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Herramientas</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="herramientas-arrow-left" onclick="scrollRow('herramientas', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="herramientas-row">
+          <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
+            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador Seguro">
+          </button>
+        </div>
+        <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
           <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -476,6 +493,7 @@
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
+      updateArrows('herramientas');
     }
     window.addEventListener('resize', updateAllArrows);
     document.addEventListener('DOMContentLoaded', function() {
@@ -508,7 +526,7 @@
           abrirEnIframe('https://librefutboltv.su/');
         });
       }
-      ['ent-row', 'juegos-row'].forEach(rowId => {
+      ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
