@@ -12,21 +12,18 @@
       padding: 0;
       width: 100vw;
       min-width: 100vw;
+      height: 100vh;
       overflow-x: hidden;
+      overflow-y: auto;
     }
     body {
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       color: white;
       animation: backgroundMove 20s infinite alternate;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
       width: 100vw;
       min-width: 100vw;
-      overflow-x: hidden;
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
@@ -108,7 +105,6 @@
       padding-left: 12px;
       margin-right: 0;
     }
-    /* ... El resto de tu CSS igual ... */
     .menu-buttons-row-wrapper {
       display: flex;
       align-items: center;
