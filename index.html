@@ -60,19 +60,55 @@
       z-index: 10;
       transition: background 0.3s ease;
       font-family: inherit;
-    }
-    #toggleSettings:hover {
-      background: rgba(0, 255, 255, 0.3);
-    }
-    #menu {
       display: flex;
-      flex-direction: column;
-      gap: 40px;
-      align-items: stretch;
-      width: 100vw;
-      min-width: 100vw;
-      box-sizing: border-box;
+      align-items: center;
+      gap: 6px;
     }
+    #toggleSettings .ajustes-text {
+      display: inline-block;
+      opacity: 1;
+      max-width: 200px;
+      margin-left: 5px;
+      transform: translateX(0);
+      transition: 
+        opacity 0.3s cubic-bezier(.4,2,.6,1), 
+        max-width 0.35s cubic-bezier(.4,2,.6,1),
+        margin-left 0.3s cubic-bezier(.4,2,.6,1),
+        transform 0.3s cubic-bezier(.4,2,.6,1);
+      white-space: nowrap;
+      pointer-events: auto;
+    }
+    #toggleSettings.compact .ajustes-text {
+      opacity: 0;
+      max-width: 0px;
+      margin-left: 0;
+      transform: translateX(-12px);
+      pointer-events: none;
+    }
+    #toggleSettings .gear-icon {
+      font-size: 1.2em;
+      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
+    }
+    .section-title {
+      margin-left: 64px;
+      width: calc(100vw - 64px);
+      max-width: calc(100vw - 64px);
+      box-sizing: border-box;
+      padding-left: 24px;
+      padding-right: 24px;
+      text-align: left;
+      margin-bottom: 12px;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #000, 0 0px 2px #222;
+      color: #fff;
+      border-left: 5px solid #00ffff66;
+      padding-left: 12px;
+      margin-right: 0;
+    }
+    /* --- El resto de tus estilos igual que antes --- */
     .menu-buttons-row-wrapper {
       display: flex;
       align-items: center;
@@ -168,25 +204,6 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-    .section-title {
-      margin-left: 64px;
-      width: calc(100vw - 64px);
-      max-width: calc(100vw - 64px);
-      box-sizing: border-box;
-      padding-left: 24px;
-      padding-right: 24px;
-      text-align: left;
-      margin-bottom: 12px;
-      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-      font-size: 2.1rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 12px #000, 0 0px 2px #222;
-      color: #fff;
-      border-left: 5px solid #00ffff66;
-      padding-left: 12px;
-      margin-right: 0;
-    }
     .settings {
       display: none;
       flex-direction: column;
@@ -276,7 +293,7 @@
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
   <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings">⚙ Ajustes</button>
+  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
   <!-- Menú principal con secciones -->
   <div id="menu">
@@ -348,6 +365,17 @@
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
+
+    // Animación para el botón de ajustes según scroll
+    function updateAjustesButton() {
+      if (window.scrollY === 0) {
+        toggleSettingsBtn.classList.remove('compact');
+      } else {
+        toggleSettingsBtn.classList.add('compact');
+      }
+    }
+    window.addEventListener('DOMContentLoaded', updateAjustesButton);
+    window.addEventListener('scroll', updateAjustesButton);
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
