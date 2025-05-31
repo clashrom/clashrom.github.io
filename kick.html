@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Kick Live</title>
+  <link rel="icon" href="https://kick.com/favicon.ico" type="image/png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto Condensed', sans-serif;
+      background: linear-gradient(135deg, #021b0d, #00ff8f, #021b0d);
+      background-size: 400% 400%;
+      animation: backgroundMove 20s infinite alternate;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-y: auto;
+      padding-top: 40px;
+    }
+
+    @keyframes backgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #00ff8f;
+      text-shadow: 0 2px 12px #00ff8f99;
+    }
+
+    input, button {
+      font-size: 16px;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    input {
+      background: #012f1a;
+      border: 2px solid #00ff8f;
+      color: white;
+      width: 300px;
+    }
+
+    input:focus {
+      border-color: white;
+      background: #014d2b;
+    }
+
+    button {
+      background: #014d2b;
+      border: 2px solid #00ff8f;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #00ff8f;
+      color: black;
+    }
+
+    .stream-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px;
+    }
+
+    .stream-button {
+      background: #012f1a;
+      border: 2px solid #00ff8f;
+      width: 200px;
+      padding: 10px;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    .stream-button:hover {
+      background: #00ff8f;
+      color: black;
+    }
+
+    .stream-button img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .stream-player-container {
+      margin: 40px 10px;
+      width: 95%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ff8f88;
+      transition: 0.5s;
+    }
+
+    #popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #012f1a;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px #00ff8f55;
+      z-index: 1000;
+      text-align: center;
+      border: 2px solid #00ff8f;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <h1>🟢 Ver Kick en vivo</h1>
+
+  <div class="stream-list" id="streamList"></div>
+
+  <div class="stream-player-container" id="playerContainer" style="display:none;">
+    <iframe id="kickFrame" allowfullscreen></iframe>
+  </div>
+
+  <div id="overlay" onclick="closePopup()"></div>
+  <div id="popup">
+    <h2>Añadir tu canal de Kick</h2>
+    <input type="text" id="customLink" placeholder="https://kick.com/usuario">
+    <br>
+    <button onclick="addCustomStream()">Ver</button>
+  </div>
+
+  <script>
+    const streamers = ["xqc", "adinross", "trainwreckstv", "brucedropemoff", "karchez", "ibai"];
+    const streamList = document.getElementById("streamList");
+    const kickFrame = document.getElementById("kickFrame");
+    const playerContainer = document.getElementById("playerContainer");
+
+    function createStreamerButton(name) {
+      const btn = document.createElement("button");
+      btn.className = "stream-button";
+      const img = document.createElement("img");
+      img.src = `https://kick.com/${name}/thumb`;
+      img.onerror = function () {
+        this.src = "https://kick.com/favicon.ico";
+      };
+      const span = document.createElement("span");
+      span.textContent = name;
+      btn.appendChild(img);
+      btn.appendChild(span);
+      btn.onclick = () => {
+        kickFrame.src = `https://kick.com/embed/${name}`;
+        playerContainer.style.display = "flex";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      };
+      streamList.appendChild(btn);
+    }
+
+    function addCustomStream() {
+      const input = document.getElementById("customLink");
+      const url = input.value.trim();
+      if (url.startsWith("https://kick.com/")) {
+        const name = url.replace("https://kick.com/", "").split("/")[0];
+        kickFrame.src = `https://kick.com/embed/${name}`;
+        playerContainer.style.display = "flex";
+        closePopup();
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      } else {
+        alert("URL inválida. Usa: https://kick.com/usuario");
+      }
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    function openPopup() {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    // Crear botones por defecto
+    streamers.forEach(createStreamerButton);
+
+    // Agregar botón para agregar manualmente
+    const addBtn = document.createElement("button");
+    addBtn.className = "stream-button";
+    addBtn.innerHTML = '<span style="font-size:40px;">➕</span><span>Añadir canal</span>';
+    addBtn.onclick = openPopup;
+    streamList.appendChild(addBtn);
+  </script>
+</body>
+</html>
