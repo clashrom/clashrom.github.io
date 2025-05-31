@@ -60,6 +60,13 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      min-width: 56px; /* asegura ancho mínimo para icono */
+    }
+    #toggleSettings .gear-icon {
+      min-width: 24px;
+      text-align: center;
+      font-size: 1.2em;
+      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
     #toggleSettings .ajustes-text {
       display: inline-block;
@@ -82,12 +89,8 @@
       transform: translateX(-12px);
       pointer-events: none;
     }
-    #toggleSettings .gear-icon {
-      font-size: 1.2em;
-      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
-    }
     .margen-grande-arriba {
-      margin-top: 90px; /* Puedes aumentar este valor si quieres más espacio */
+      margin-top: 90px;
     }
     .section-title {
       margin-left: 64px;
@@ -382,7 +385,7 @@
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
 
-    // Animación para el botón de ajustes según scroll - ¡FIX universal!
+    // Animación para el botón de ajustes según scroll - icono solo si bajas, texto si subes
     function updateAjustesButton() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       if (scrollTop < 2) {
@@ -392,8 +395,6 @@
       }
     }
     window.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('DOMContentLoaded', updateAjustesButton);
 
     document.addEventListener("keydown", (e) => {
