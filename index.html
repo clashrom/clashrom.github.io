@@ -379,16 +379,20 @@
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
 
-    // Animación para el botón de ajustes según scroll
+    // Animación para el botón de ajustes según scroll - ¡FIX universal!
     function updateAjustesButton() {
-      if (window.scrollY === 0) {
+      // Soporta todos los casos posibles de scroll vertical
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      if (scrollTop < 2) {
         toggleSettingsBtn.classList.remove('compact');
       } else {
         toggleSettingsBtn.classList.add('compact');
       }
     }
-    window.addEventListener('DOMContentLoaded', updateAjustesButton);
-    window.addEventListener('scroll', updateAjustesButton);
+    window.addEventListener('scroll', updateAjustesButton, {passive:true});
+    document.addEventListener('scroll', updateAjustesButton, {passive:true});
+    document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
+    document.addEventListener('DOMContentLoaded', updateAjustesButton);
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
