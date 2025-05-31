@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reproductor HTML5</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #uploadLabel {
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #6200ea;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #uploadLabel:hover {
+      background-color: #3700b3;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    #gameContainer {
+      width: 90%;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .infoBar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #9c27b0;
+      padding: 10px 20px;
+      color: white;
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+    }
+
+    .gameName {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .toggleBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: white;
+    }
+
+    .fullscreen iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 9;
+    }
+
+    .fullscreen .infoBar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <label id="uploadLabel" for="fileInput">Subir archivo HTML5</label>
+  <input type="file" id="fileInput" accept=".html">
+
+  <div id="gameContainer">
+    <iframe id="gameFrame"></iframe>
+    <div class="infoBar" id="infoBar">
+      <span class="gameName" id="gameName">Sin juego</span>
+      <button class="toggleBtn" id="toggleBtn" title="Pantalla completa">⛶</button>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const gameFrame = document.getElementById('gameFrame');
+    const gameName = document.getElementById('gameName');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const gameContainer = document.getElementById('gameContainer');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file && file.type === 'text/html') {
+        const url = URL.createObjectURL(file);
+        gameFrame.src = url;
+        gameName.textContent = file.name;
+      }
+    });
+
+    let fullscreen = false;
+
+    toggleBtn.addEventListener('click', () => {
+      fullscreen = !fullscreen;
+      if (fullscreen) {
+        gameContainer.classList.add('fullscreen');
+        toggleBtn.textContent = '🡼'; // Icono para reducir
+        toggleBtn.title = 'Salir de pantalla completa';
+      } else {
+        gameContainer.classList.remove('fullscreen');
+        toggleBtn.textContent = '⛶'; // Icono para expandir
+        toggleBtn.title = 'Pantalla completa';
+      }
+    });
+  </script>
+
+</body>
+</html>
