@@ -205,24 +205,30 @@
     }
     /* Panel de Ajustes centrado y con altura mínima */
     .settings {
-      display: none;
-      flex-direction: column;
-      gap: 18px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 34px 34px 22px 34px;
-      border-radius: 16px;
-      align-items: center;
-      z-index: 2;
-      animation: fadeIn 0.5s ease forwards;
-      justify-content: center;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 350px;
-      min-height: 350px;    /* <--- Ajuste importante */
-      box-shadow: 0 8px 40px #000a;
-    }
+  display: none;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 34px 34px 22px 34px;
+  border-radius: 16px;
+  align-items: center;
+  z-index: 2;
+  animation: fadeIn 0.5s ease forwards;
+  justify-content: center;
+  position: fixed;
+  inset: 0; /* Ocupa toda la ventana */
+  margin: auto; /* Centra el panel visualmente */
+  min-width: 350px;
+  max-width: 95vw;
+  min-height: 350px;
+  max-height: 95vh;
+  box-shadow: 0 8px 40px #000a;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: none; /* Quita el translate para centrar con margin:auto */
+}
     .settings-row {
       display: flex;
       flex-direction: row;
