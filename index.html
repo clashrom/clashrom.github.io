@@ -184,19 +184,14 @@
       background: rgba(0,255,255,0.08);
       opacity: 1;
     }
-    /* --- ANIMACIÓN OLA --- */
     .menu-button {
-      opacity: 0;
-      transform: translateY(60px) scale(0.9);
-      animation: waveIn 0.7s cubic-bezier(.22,1.5,.47,1.01) forwards;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: inline-block;
     }
-    @keyframes waveIn {
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-    /* --- FIN ANIMACIÓN OLA --- */
     .menu-button img {
       width: 220px;
       height: 120px;
@@ -221,14 +216,12 @@
       animation: fadeIn 0.5s ease forwards;
       justify-content: center;
       position: fixed;
-      inset: 0;
-      margin: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       min-width: 350px;
-      max-width: 95vw;
-      min-height: 350px;
-      max-height: 95vh;
+      min-height: 350px;    /* <--- Ajuste importante */
       box-shadow: 0 8px 40px #000a;
-      transform: none;
     }
     .settings-row {
       display: flex;
@@ -431,15 +424,6 @@
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
   <script>
-    // ANIMACIÓN OLA PARA LOS BOTONES
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.menu-buttons-row').forEach(row => {
-        row.querySelectorAll('.menu-button').forEach((btn, idx) => {
-          btn.style.animationDelay = (idx * 0.11) + "s";
-        });
-      });
-    });
-    // RESTO DEL JS ORIGINAL
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
