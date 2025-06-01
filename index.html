@@ -343,6 +343,10 @@
           <button class="menu-button" id="poki-btn">
             <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
           </button>
+          <!-- Nuevo botón Tanuki Sunset -->
+          <button class="menu-button" id="tanuki-btn">
+            <img src="https://i.ytimg.com/vi/et0YhBBihNk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCAaq7w2UYWEIOIkTmbBwLocL358w" alt="Tanuki Sunset">
+          </button>
         </div>
         <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
           <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -359,7 +363,7 @@
         </button>
         <div class="menu-buttons-row" id="herramientas-row">
           <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
-            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador Seguro">
+            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
           </button>
         </div>
         <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
@@ -526,6 +530,13 @@
       if (librefutboltvBtn) {
         librefutboltvBtn.addEventListener('click', function() {
           abrirEnIframe('https://librefutboltv.su/');
+        });
+      }
+      // SCRIPT NUEVO PARA TANUKI SUNSET
+      const tanukiBtn = document.getElementById('tanuki-btn');
+      if (tanukiBtn) {
+        tanukiBtn.addEventListener('click', function() {
+          abrirEnIframe('https://rewindgames.itch.io/tanuki-sunset');
         });
       }
       ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
