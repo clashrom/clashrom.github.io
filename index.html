@@ -213,6 +213,34 @@
       align-items: center;
       z-index: 2;
       animation: fadeIn 0.5s ease forwards;
+      justify-content: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 350px;
+    }
+    .settings-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+    .default-btn {
+      background: rgba(0, 255, 255, 0.18);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .default-btn:hover {
+      background: rgba(0, 255, 255, 0.32);
     }
     .settings.show {
       display: flex;
@@ -375,8 +403,14 @@
 
   <!-- Ajustes -->
   <div class="settings" id="settingsPanel">
-    <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
-    <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+    <div class="settings-row">
+      <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
+      <button class="default-btn" type="button" onclick="setDefaultTitle()">Default</button>
+    </div>
+    <div class="settings-row">
+      <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+      <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
+    </div>
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
 
@@ -443,6 +477,15 @@
           menu.classList.remove("fade-in");
         }, 500);
       }, 50);
+    }
+
+    function setDefaultTitle() {
+      document.getElementById("titleInput").value = "";
+      document.title = "Classroom";
+    }
+    function setDefaultImage() {
+      document.getElementById("imageInput").value = "";
+      document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
     }
 
     function abrirEnIframe(url) {
@@ -536,7 +579,7 @@
       const buckshotBtn = document.getElementById('buckshotroulette-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
-          abrirEnIframe('https://buckshotroulette.com/home');
+          abrirEnIframe('https://buckshotroulette.online/steam/');
         });
       }
       ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
