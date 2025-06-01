@@ -203,7 +203,7 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-    /* Panel de Ajustes centrado */
+    /* Panel de Ajustes centrado y con altura mínima */
     .settings {
       display: none;
       flex-direction: column;
@@ -220,6 +220,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       min-width: 350px;
+      min-height: 350px;    /* <--- Ajuste importante */
       box-shadow: 0 8px 40px #000a;
     }
     .settings-row {
@@ -319,7 +320,7 @@
         max-width: calc(100vw - 8px);
         padding-left: 6px;
       }
-      .settings { min-width: 95vw; }
+      .settings { min-width: 95vw; min-height: 200px; }
       .settings input { width: 80vw; }
     }
   </style>
