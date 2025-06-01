@@ -24,21 +24,11 @@
       animation: backgroundMove 20s infinite alternate;
       width: 100vw;
       min-width: 100vw;
-      /* Elimina margen grande arriba */
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
-    /* --- Centrado total del menú --- */
-    .centered-wrapper {
-      min-height: 100vh;
-      min-width: 100vw;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    /* --- Resto de tu CSS igual --- */
     .fullscreen-img {
       position: fixed;
       top: 0;
@@ -50,7 +40,9 @@
       display: block;
       transition: opacity 0.5s ease;
     }
-    .hidden { display: none !important; }
+    .hidden {
+      display: none !important;
+    }
     #toggleSettings {
       position: fixed;
       top: 20px;
@@ -94,10 +86,13 @@
       font-size: 1.2em;
       transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
+    .margen-grande-arriba {
+      margin-top: 90px; /* Puedes aumentar este valor si quieres más espacio */
+    }
     .section-title {
-      margin-left: 0;
-      width: 100%;
-      max-width: 100%;
+      margin-left: 64px;
+      width: calc(100vw - 64px);
+      max-width: calc(100vw - 64px);
       box-sizing: border-box;
       padding-left: 24px;
       padding-right: 24px;
@@ -116,8 +111,9 @@
     .menu-buttons-row-wrapper {
       display: flex;
       align-items: center;
-      width: 100%;
-      max-width: 100%;
+      margin-left: 32px;
+      width: calc(100vw - 32px);
+      max-width: calc(100vw - 32px);
       box-sizing: border-box;
       padding-left: 0;
       padding-right: 0;
@@ -125,7 +121,6 @@
       margin-bottom: 25px;
       min-height: 180px;
       margin-right: 0;
-      margin-left: 0;
     }
     .menu-buttons-row {
       display: inline-flex;
@@ -141,54 +136,500 @@
       min-width: 100%;
       box-sizing: border-box;
       padding: 32px 0;
-      margin: 0;
+      margin-left: 0;
+      margin-right: 0;
     }
-    .menu-buttons-row::-webkit-scrollbar { display: none; }
-    /* El resto igual que tu archivo original... */
-    /* ... */
+    .menu-buttons-row::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-arrow {
+      background: rgba(0,0,0,0.20);
+      border: none;
+      color: white;
+      width: 56px;
+      height: 90px;
+      cursor: pointer;
+      z-index: 5;
+      border-radius: 14px;
+      transition: background .2s, opacity .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.75;
+      outline: none;
+      user-select: none;
+      box-shadow: 0 2px 16px #0007;
+      padding: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .carousel-arrow svg {
+      display: block;
+      width: 38px;
+      height: 38px;
+      stroke-width: 3.5;
+      stroke: #00ffff;
+      fill: none;
+    }
+    .carousel-arrow.left { left: -28px; }
+    .carousel-arrow.right { right: -28px; }
+    .carousel-arrow.visible {
+      visibility: visible !important;
+      pointer-events: auto;
+    }
+    .carousel-arrow:active {
+      background: rgba(0,255,255,0.08);
+      opacity: 1;
+    }
+    .menu-button {
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+    .menu-button img {
+      width: 220px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .menu-button:hover img {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+    .settings {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 34px 34px 22px 34px;
+      border-radius: 16px;
+      align-items: center;
+      z-index: 2;
+      animation: fadeIn 0.5s ease forwards;
+      justify-content: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 350px;
+      box-shadow: 0 8px 40px #000a;
+    }
+    .settings-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+    .default-btn, .aboutblank-btn {
+      background: rgba(0, 255, 255, 0.18);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .aboutblank-btn {
+      padding: 8px 18px;
+      font-size: 15px;
+      margin-top: 4px;
+    }
+    .default-btn:hover, .aboutblank-btn:hover {
+      background: rgba(0, 255, 255, 0.32);
+    }
+    .settings.show {
+      display: flex;
+    }
+    .settings input {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 250px;
+      transition: 0.3s ease;
+      text-align: center;
+    }
+    .settings button {
+      background: rgba(0, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .settings button:hover {
+      background: rgba(0, 255, 255, 0.4);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
     @media (max-width: 1000px) {
-      .menu-button img { width: 180px; height: 100px; }
-      .menu-buttons-row-wrapper { max-width: 100vw; width: 100vw; margin-left: 0; }
-      .section-title { margin-left: 0; width: 100vw; max-width: 100vw; }
-      .menu-buttons-row { max-width: 100vw; }
+      .menu-button img {
+        width: 180px;
+        height: 100px;
+      }
+      .menu-buttons-row-wrapper {
+        max-width: calc(100vw - 12px);
+        width: calc(100vw - 12px);
+        margin-left: 6px;
+      }
+      .section-title {
+        margin-left: 24px;
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px);
+      }
+      .menu-buttons-row {
+        max-width: 100vw;
+      }
     }
     @media (max-width: 700px) {
-      .menu-button img { width: 135px; height: 80px; }
-      .section-title { font-size: 1.2rem; margin-left: 0; width: 100vw; max-width: 100vw; padding-left: 6px; }
+      .menu-button img {
+        width: 135px;
+        height: 80px;
+      }
+      .carousel-arrow {
+        width: 36px;
+        height: 60px;
+      }
+      .carousel-arrow svg {
+        width: 28px;
+        height: 28px;
+      }
+      .section-title {
+        font-size: 1.2rem;
+        margin-left: 8px;
+        width: calc(100vw - 8px);
+        max-width: calc(100vw - 8px);
+        padding-left: 6px;
+      }
       .settings { min-width: 95vw; }
       .settings input { width: 80vw; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
+
+  <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
-  <div class="centered-wrapper">
-    <div id="menu">
-      <!-- Sección Entretenimiento -->
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <div class="section-title">Entretenimiento</div>
-        <div class="menu-buttons-row-wrapper">
-          <!-- ... Opciones de Entretenimiento ... -->
+
+  <!-- Menú principal con secciones -->
+  <div id="menu">
+    <!-- Sección Entretenimiento -->
+    <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Entretenimiento</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="ent-row">
+          <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
+            <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('twich.html')">
+            <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('kick.html')">
+            <img src="https://i.pinimg.com/736x/75/3a/80/753a8026311b908da737fab513be953a.jpg" alt="Kick">
+          </button>
+          <button class="menu-button" id="librefutboltv-btn">
+            <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
+          </button>
         </div>
+        <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
-      <!-- Sección Juegos -->
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <div class="section-title">Juegos</div>
-        <div class="menu-buttons-row-wrapper">
-          <!-- ... Opciones de Juegos ... -->
+    </div>
+
+    <!-- Sección Juegos -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Juegos</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="juegos-arrow-left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="juegos-row">
+          <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
+            <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
+          </button>
+          <button class="menu-button" id="eldardo-btn">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
+          </button>
+          <button class="menu-button" id="crazygames-btn">
+            <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
+          </button>
+          <button class="menu-button" id="poki-btn">
+            <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
+          </button>
+          <!-- NUEVO BOTÓN -->
+          <button class="menu-button" id="buckshotroulette-btn">
+            <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
+          </button>
         </div>
+        <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
-      <!-- Sección Herramientas -->
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <div class="section-title">Herramientas</div>
-        <div class="menu-buttons-row-wrapper">
-          <!-- ... Opciones de Herramientas ... -->
+    </div>
+
+    <!-- SECCIÓN HERRAMIENTAS -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Herramientas</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="herramientas-arrow-left" onclick="scrollRow('herramientas', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="herramientas-row">
+          <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
+            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
+          </button>
         </div>
+        <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </div>
-  <!-- Ajustes, scripts, etc. igual que en tu archivo actual -->
-  <!-- ...copia aquí el resto de tu HTML y scripts de index.html... -->
+
+  <!-- Ajustes -->
+  <div class="settings" id="settingsPanel">
+    <div class="settings-row">
+      <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
+      <button class="default-btn" type="button" onclick="setDefaultTitle()">Default</button>
+    </div>
+    <div class="settings-row">
+      <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+      <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
+    </div>
+    <div class="settings-row">
+      <button class="aboutblank-btn" type="button" onclick="openAboutBlankIframe()">about:blank</button>
+    </div>
+    <button id="applyBtn" onclick="applySettings()">Aplicar</button>
+  </div>
+
+  <script>
+    const fullscreenImage = document.getElementById("fullscreenImage");
+    const menu = document.getElementById("menu");
+    const settingsPanel = document.getElementById("settingsPanel");
+    const toggleSettingsBtn = document.getElementById("toggleSettings");
+
+    // Animación para el botón de ajustes según scroll - ¡FIX universal!
+    function updateAjustesButton() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      if (scrollTop < 2) {
+        toggleSettingsBtn.classList.remove('compact');
+      } else {
+        toggleSettingsBtn.classList.add('compact');
+      }
+    }
+    window.addEventListener('scroll', updateAjustesButton, {passive:true});
+    document.addEventListener('scroll', updateAjustesButton, {passive:true});
+    document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
+    document.addEventListener('DOMContentLoaded', updateAjustesButton);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        fullscreenImage.classList.toggle("hidden");
+      }
+    });
+
+    toggleSettingsBtn.addEventListener("click", () => {
+      if (settingsPanel.classList.contains("show")) {
+        settingsPanel.classList.remove("show");
+        setTimeout(() => {
+          menu.classList.remove("hidden");
+          menu.classList.remove("fade-out");
+          menu.classList.add("fade-in");
+          setTimeout(() => {
+            menu.classList.remove("fade-in");
+          }, 500);
+        }, 50);
+      } else {
+        menu.classList.remove("fade-out");
+        menu.classList.add("fade-out");
+        setTimeout(() => {
+          menu.classList.add("hidden");
+          menu.classList.remove("fade-out");
+          settingsPanel.classList.add("show");
+        }, 500);
+      }
+    });
+
+    function applySettings() {
+      const newTitle = document.getElementById("titleInput").value;
+      const newImage = document.getElementById("imageInput").value;
+      if (newTitle.trim()) document.title = newTitle;
+      if (newImage.trim()) fullscreenImage.src = newImage;
+      settingsPanel.classList.remove("show");
+      setTimeout(() => {
+        menu.classList.remove("hidden");
+        menu.classList.remove("fade-out");
+        menu.classList.add("fade-in");
+        setTimeout(() => {
+          menu.classList.remove("fade-in");
+        }, 500);
+      }, 50);
+    }
+
+    function setDefaultTitle() {
+      document.getElementById("titleInput").value = "";
+      document.title = "Classroom";
+    }
+    function setDefaultImage() {
+      document.getElementById("imageInput").value = "";
+      document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
+    }
+
+    function openAboutBlankIframe() {
+      const nuevaPestana = window.open('about:blank', '_blank');
+      if (nuevaPestana) {
+        nuevaPestana.document.write(`
+          <html>
+            <head>
+              <title>Classroom</title>
+              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+              <style>
+                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                iframe { border:none; width:100vw; height:100vh; display:block; }
+              </style>
+            </head>
+            <body>
+              <iframe src="https://merx111.github.io/" allow="autoplay; fullscreen"></iframe>
+            </body>
+          </html>
+        `);
+        nuevaPestana.document.close();
+      }
+    }
+
+    function abrirEnIframe(url) {
+      const nuevaPestana = window.open('about:blank', '_blank');
+      if (nuevaPestana) {
+        nuevaPestana.document.write(`
+          <html>
+            <head>
+              <title>Classroom</title>
+              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+              <style>
+                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                iframe { border:none; width:100vw; height:100vh; display:block; }
+              </style>
+            </head>
+            <body>
+              <iframe src="${url}" allow="autoplay; fullscreen"></iframe>
+            </body>
+          </html>
+        `);
+        nuevaPestana.document.close();
+      }
+    }
+
+    function scrollRow(row, dir) {
+      const rowEl = document.getElementById(row + '-row');
+      if (!rowEl) return;
+      const button = rowEl.querySelector('.menu-button');
+      if (!button) return;
+      const gap = 40;
+      let buttonWidth = button.offsetWidth || 220;
+      let scrollAmount = buttonWidth + gap;
+      rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
+      setTimeout(() => updateArrows(row), 340);
+    }
+
+    function updateArrows(row) {
+      const rowEl = document.getElementById(row + '-row');
+      const leftArrow = document.getElementById(row + '-arrow-left');
+      const rightArrow = document.getElementById(row + '-arrow-right');
+      if (!rowEl || !leftArrow || !rightArrow) return;
+      const canScroll = rowEl.scrollWidth > rowEl.clientWidth + 2;
+      const atStart = Math.abs(rowEl.scrollLeft) < 4;
+      const atEnd = rowEl.scrollLeft + rowEl.clientWidth >= rowEl.scrollWidth - 4;
+      if (canScroll) {
+        leftArrow.classList.toggle('visible', !atStart);
+        rightArrow.classList.toggle('visible', !atEnd);
+      } else {
+        leftArrow.classList.remove('visible');
+        rightArrow.classList.remove('visible');
+      }
+    }
+
+    function updateAllArrows() {
+      updateArrows('ent');
+      updateArrows('juegos');
+      updateArrows('herramientas');
+    }
+    window.addEventListener('resize', updateAllArrows);
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAllArrows();
+      const eldardoBtn = document.getElementById('eldardo-btn');
+      if (eldardoBtn) {
+        eldardoBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(5);
+          window.open('https://eldardo.net/' + letrasAzar, '_blank');
+        });
+      }
+      const crazygamesBtn = document.getElementById('crazygames-btn');
+      if (crazygamesBtn) {
+        crazygamesBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(8);
+          window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
+        });
+      }
+      // SCRIPT NUEVO PARA POKI
+      const pokiBtn = document.getElementById('poki-btn');
+      if (pokiBtn) {
+        pokiBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(8);
+          window.open('https://poki.com/' + letrasAzar, '_blank');
+        });
+      }
+      const librefutboltvBtn = document.getElementById('librefutboltv-btn');
+      if (librefutboltvBtn) {
+        librefutboltvBtn.addEventListener('click', function() {
+          abrirEnIframe('https://librefutboltv.su/');
+        });
+      }
+      // NUEVO PARA BUCKSHOT ROULETTE
+      const buckshotBtn = document.getElementById('buckshotroulette-btn');
+      if (buckshotBtn) {
+        buckshotBtn.addEventListener('click', function() {
+          abrirEnIframe('https://buckshotroulette.online/steam/');
+        });
+      }
+      ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
+        const el = document.getElementById(rowId);
+        if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
+      });
+    });
+
+    function generarLetrasAzar(longitud) {
+      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      let resultado = '';
+      for (let i = 0; i < longitud; i++) {
+        resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+      return resultado;
+    }
+  </script>
 </body>
 </html>
