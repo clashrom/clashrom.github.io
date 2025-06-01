@@ -86,18 +86,8 @@
       font-size: 1.2em;
       transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
-    /* CENTRAR MENÚ PRINCIPAL */
-    #menu-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      width: 100vw;
-    }
-    #menu-center > div {
-      width: 100%;
-      max-width: 900px;
+    .margen-grande-arriba {
+      margin-top: 90px; /* Mantén el margen superior aquí */
     }
     .section-title {
       margin-left: 64px;
@@ -213,6 +203,7 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
+    /* Panel de Ajustes centrado */
     .settings {
       display: none;
       flex-direction: column;
@@ -307,9 +298,6 @@
       .menu-buttons-row {
         max-width: 100vw;
       }
-      #menu-center > div {
-        max-width: 99vw;
-      }
     }
     @media (max-width: 700px) {
       .menu-button img {
@@ -333,24 +321,20 @@
       }
       .settings { min-width: 95vw; }
       .settings input { width: 80vw; }
-      #menu-center > div {
-        max-width: 100vw;
-      }
     }
   </style>
 </head>
 <body>
-
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
-  <!-- Menú principal centrado -->
-  <div id="menu-center">
+  <!-- Menú principal con secciones -->
+  <div id="menu">
     <!-- Sección Entretenimiento -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+    <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Entretenimiento</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
@@ -375,7 +359,6 @@
         </button>
       </div>
     </div>
-
     <!-- Sección Juegos -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Juegos</div>
@@ -406,7 +389,6 @@
         </button>
       </div>
     </div>
-
     <!-- SECCIÓN HERRAMIENTAS -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Herramientas</div>
@@ -425,8 +407,7 @@
       </div>
     </div>
   </div>
-
-  <!-- Ajustes -->
+  <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
       <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
@@ -441,13 +422,11 @@
     </div>
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
-
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
-    const menu = document.getElementById("menu-center");
+    const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
-
     function updateAjustesButton() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       if (scrollTop < 2) {
@@ -460,14 +439,12 @@
     document.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('DOMContentLoaded', updateAjustesButton);
-
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
         fullscreenImage.classList.toggle("hidden");
       }
     });
-
     toggleSettingsBtn.addEventListener("click", () => {
       if (settingsPanel.classList.contains("show")) {
         settingsPanel.classList.remove("show");
@@ -489,7 +466,6 @@
         }, 500);
       }
     });
-
     function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
       const newImage = document.getElementById("imageInput").value;
@@ -505,7 +481,6 @@
         }, 500);
       }, 50);
     }
-
     function setDefaultTitle() {
       document.getElementById("titleInput").value = "";
       document.title = "Classroom";
@@ -514,7 +489,6 @@
       document.getElementById("imageInput").value = "";
       document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
     }
-
     function openAboutBlankIframe() {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -536,7 +510,6 @@
         nuevaPestana.document.close();
       }
     }
-
     function abrirEnIframe(url) {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -558,7 +531,6 @@
         nuevaPestana.document.close();
       }
     }
-
     function scrollRow(row, dir) {
       const rowEl = document.getElementById(row + '-row');
       if (!rowEl) return;
@@ -570,7 +542,6 @@
       rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
       setTimeout(() => updateArrows(row), 340);
     }
-
     function updateArrows(row) {
       const rowEl = document.getElementById(row + '-row');
       const leftArrow = document.getElementById(row + '-arrow-left');
@@ -587,7 +558,6 @@
         rightArrow.classList.remove('visible');
       }
     }
-
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
@@ -636,7 +606,6 @@
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
     });
-
     function generarLetrasAzar(longitud) {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       let resultado = '';
