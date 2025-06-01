@@ -279,19 +279,6 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-    /* NUEVO: CENTRAR MENU */
-    #menu-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 70vh;
-      width: 100vw;
-    }
-    #menu-center > div {
-      width: 100%;
-      max-width: 850px;
-    }
     @media (max-width: 1000px) {
       .menu-button img {
         width: 180px;
@@ -309,9 +296,6 @@
       }
       .menu-buttons-row {
         max-width: 100vw;
-      }
-      #menu-center > div {
-        max-width: 99vw;
       }
     }
     @media (max-width: 700px) {
@@ -336,9 +320,6 @@
       }
       .settings { min-width: 95vw; }
       .settings input { width: 80vw; }
-      #menu-center > div {
-        max-width: 100vw;
-      }
     }
   </style>
 </head>
@@ -350,8 +331,8 @@
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
-  <!-- NUEVO: Menú centrado -->
-  <div id="menu-center">
+  <!-- Menú principal con secciones -->
+  <div id="menu">
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Entretenimiento</div>
@@ -419,7 +400,7 @@
         </button>
         <div class="menu-buttons-row" id="herramientas-row">
           <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
-            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navega[...]">
+            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
           </button>
         </div>
         <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
@@ -447,7 +428,7 @@
 
   <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
-    const menu = document.getElementById("menu-center");
+    const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
 
