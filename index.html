@@ -228,7 +228,7 @@
       width: 100%;
       justify-content: center;
     }
-    .default-btn {
+    .default-btn, .aboutblank-btn {
       background: rgba(0, 255, 255, 0.18);
       color: #fff;
       border: none;
@@ -239,7 +239,12 @@
       transition: background 0.2s;
       font-family: inherit;
     }
-    .default-btn:hover {
+    .aboutblank-btn {
+      padding: 8px 18px;
+      font-size: 15px;
+      margin-top: 4px;
+    }
+    .default-btn:hover, .aboutblank-btn:hover {
       background: rgba(0, 255, 255, 0.32);
     }
     .settings.show {
@@ -411,6 +416,9 @@
       <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
       <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
     </div>
+    <div class="settings-row">
+      <button class="aboutblank-btn" type="button" onclick="openAboutBlank()">about:blank</button>
+    </div>
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
 
@@ -486,6 +494,12 @@
     function setDefaultImage() {
       document.getElementById("imageInput").value = "";
       document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
+    }
+    function openAboutBlank() {
+      const win = window.open('about:blank', '_blank');
+      if (win) {
+        win.location.href = "https://merx111.github.io/";
+      }
     }
 
     function abrirEnIframe(url) {
