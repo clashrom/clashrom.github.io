@@ -184,14 +184,19 @@
       background: rgba(0,255,255,0.08);
       opacity: 1;
     }
+    /* --- ANIMACIÓN OLA --- */
     .menu-button {
-      padding: 0;
-      border: none;
-      background: none;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      display: inline-block;
+      opacity: 0;
+      transform: translateY(60px) scale(0.9);
+      animation: waveIn 0.7s cubic-bezier(.22,1.5,.47,1.01) forwards;
     }
+    @keyframes waveIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    /* --- FIN ANIMACIÓN OLA --- */
     .menu-button img {
       width: 220px;
       height: 120px;
@@ -205,30 +210,26 @@
     }
     /* Panel de Ajustes centrado y con altura mínima */
     .settings {
-  display: none;
-  flex-direction: column;
-  gap: 18px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 34px 34px 22px 34px;
-  border-radius: 16px;
-  align-items: center;
-  z-index: 2;
-  animation: fadeIn 0.5s ease forwards;
-  justify-content: center;
-  position: fixed;
-  inset: 0; /* Ocupa toda la ventana */
-  margin: auto; /* Centra el panel visualmente */
-  min-width: 350px;
-  max-width: 95vw;
-  min-height: 350px;
-  max-height: 95vh;
-  box-shadow: 0 8px 40px #000a;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transform: none; /* Quita el translate para centrar con margin:auto */
-}
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 34px 34px 22px 34px;
+      border-radius: 16px;
+      align-items: center;
+      z-index: 2;
+      animation: fadeIn 0.5s ease forwards;
+      justify-content: center;
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      min-width: 350px;
+      max-width: 95vw;
+      min-height: 350px;
+      max-height: 95vh;
+      box-shadow: 0 8px 40px #000a;
+      transform: none;
+    }
     .settings-row {
       display: flex;
       flex-direction: row;
@@ -430,6 +431,15 @@
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
   <script>
+    // ANIMACIÓN OLA PARA LOS BOTONES
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.menu-buttons-row').forEach(row => {
+        row.querySelectorAll('.menu-button').forEach((btn, idx) => {
+          btn.style.animationDelay = (idx * 0.11) + "s";
+        });
+      });
+    });
+    // RESTO DEL JS ORIGINAL
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
