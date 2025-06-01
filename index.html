@@ -206,9 +206,9 @@
     .settings {
       display: none;
       flex-direction: column;
-      gap: 15px;
+      gap: 18px;
       background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
+      padding: 34px 34px 22px 34px;
       border-radius: 16px;
       align-items: center;
       z-index: 2;
@@ -219,6 +219,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       min-width: 350px;
+      box-shadow: 0 8px 40px #000a;
     }
     .settings-row {
       display: flex;
@@ -259,6 +260,7 @@
       font-size: 16px;
       width: 250px;
       transition: 0.3s ease;
+      text-align: center;
     }
     .settings button {
       background: rgba(0, 255, 255, 0.2);
@@ -316,6 +318,8 @@
         max-width: calc(100vw - 8px);
         padding-left: 6px;
       }
+      .settings { min-width: 95vw; }
+      .settings input { width: 80vw; }
     }
   </style>
 </head>
@@ -417,7 +421,7 @@
       <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
     </div>
     <div class="settings-row">
-      <button class="aboutblank-btn" type="button" onclick="openAboutBlank()">about:blank</button>
+      <button class="aboutblank-btn" type="button" onclick="openAboutBlankIframe()">about:blank</button>
     </div>
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
@@ -495,10 +499,26 @@
       document.getElementById("imageInput").value = "";
       document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
     }
-    function openAboutBlank() {
-      const win = window.open('about:blank', '_blank');
-      if (win) {
-        win.location.href = "https://merx111.github.io/";
+
+    function openAboutBlankIframe() {
+      const nuevaPestana = window.open('about:blank', '_blank');
+      if (nuevaPestana) {
+        nuevaPestana.document.write(`
+          <html>
+            <head>
+              <title>Classroom</title>
+              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+              <style>
+                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                iframe { border:none; width:100vw; height:100vh; display:block; }
+              </style>
+            </head>
+            <body>
+              <iframe src="https://merx111.github.io/" allow="autoplay; fullscreen"></iframe>
+            </body>
+          </html>
+        `);
+        nuevaPestana.document.close();
       }
     }
 
