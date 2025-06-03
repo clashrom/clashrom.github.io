@@ -25,6 +25,15 @@
       width: 100vw;
       min-width: 100vw;
     }
+    #bg-particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      background: transparent;
+      display: block;
+    }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
@@ -205,30 +214,30 @@
     }
     /* Panel de Ajustes centrado y con altura mínima */
     .settings {
-  display: none;
-  flex-direction: column;
-  gap: 18px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 34px 34px 22px 34px;
-  border-radius: 16px;
-  align-items: center;
-  z-index: 2;
-  animation: fadeIn 0.5s ease forwards;
-  justify-content: center;
-  position: fixed;
-  inset: 0; /* Ocupa toda la ventana */
-  margin: auto; /* Centra el panel visualmente */
-  min-width: 350px;
-  max-width: 95vw;
-  min-height: 350px;
-  max-height: 95vh;
-  box-shadow: 0 8px 40px #000a;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transform: none; /* Quita el translate para centrar con margin:auto */
-}
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 34px 34px 22px 34px;
+      border-radius: 16px;
+      align-items: center;
+      z-index: 2;
+      animation: fadeIn 0.5s ease forwards;
+      justify-content: center;
+      position: fixed;
+      inset: 0; /* Ocupa toda la ventana */
+      margin: auto; /* Centra el panel visualmente */
+      min-width: 350px;
+      max-width: 95vw;
+      min-height: 350px;
+      max-height: 95vh;
+      box-shadow: 0 8px 40px #000a;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: none; /* Quita el translate para centrar con margin:auto */
+    }
     .settings-row {
       display: flex;
       flex-direction: row;
@@ -332,6 +341,7 @@
   </style>
 </head>
 <body>
+  <canvas id="bg-particles"></canvas>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
@@ -339,288 +349,144 @@
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
   <!-- Menú principal con secciones -->
+  <!-- ... resto de tu código HTML igual ... -->
+
   <div id="menu">
-    <!-- Sección Entretenimiento -->
-    <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
-      <div class="section-title">Entretenimiento</div>
-      <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
-          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="menu-buttons-row" id="ent-row">
-          <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
-            <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
-          </button>
-          <button class="menu-button" onclick="abrirEnIframe('twich.html')">
-            <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
-          </button>
-          <button class="menu-button" onclick="abrirEnIframe('kick.html')">
-            <img src="https://i.pinimg.com/736x/75/3a/80/753a8026311b908da737fab513be953a.jpg" alt="Kick">
-          </button>
-          <button class="menu-button" id="librefutboltv-btn">
-            <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
-          </button>
-        </div>
-        <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
-          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-    <!-- Sección Juegos -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
-      <div class="section-title">Juegos</div>
-      <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" id="juegos-arrow-left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">
-          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="menu-buttons-row" id="juegos-row">
-          <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
-            <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
-          </button>
-          <button class="menu-button" id="eldardo-btn">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
-          </button>
-          <button class="menu-button" id="crazygames-btn">
-            <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
-          </button>
-          <button class="menu-button" id="poki-btn">
-            <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
-          </button>
-          <!-- NUEVO BOTÓN -->
-          <button class="menu-button" id="buckshotroulette-btn">
-            <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
-          </button>
-        </div>
-        <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
-          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-    <!-- SECCIÓN HERRAMIENTAS -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
-      <div class="section-title">Herramientas</div>
-      <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" id="herramientas-arrow-left" onclick="scrollRow('herramientas', -1)" aria-label="Izquierda">
-          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="menu-buttons-row" id="herramientas-row">
-          <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
-            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navega[...]">
-          </button>
-        </div>
-        <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
-          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
+  <!-- ... tu menú ... -->
   </div>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
-    <div class="settings-row">
-      <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
-      <button class="default-btn" type="button" onclick="setDefaultTitle()">Default</button>
-    </div>
-    <div class="settings-row">
-      <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
-      <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
-    </div>
-    <div class="settings-row">
-      <button class="aboutblank-btn" type="button" onclick="openAboutBlankIframe()">about:blank</button>
-    </div>
-    <button id="applyBtn" onclick="applySettings()">Aplicar</button>
+    <!-- ... panel de ajustes ... -->
   </div>
   <script>
-    const fullscreenImage = document.getElementById("fullscreenImage");
-    const menu = document.getElementById("menu");
-    const settingsPanel = document.getElementById("settingsPanel");
-    const toggleSettingsBtn = document.getElementById("toggleSettings");
-    function updateAjustesButton() {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      if (scrollTop < 2) {
-        toggleSettingsBtn.classList.remove('compact');
-      } else {
-        toggleSettingsBtn.classList.add('compact');
+    // ... tu código JS original ...
+  </script>
+  <script>
+  // Fondo animado de puntos conectados por líneas al estar cerca
+  (function() {
+    const POINTS = 80;           // Número de puntos
+    const SPEED = 0.6;           // Velocidad máxima (px/frame)
+    const LINE_DIST = 150;       // Distancia máxima para conectar puntos (px)
+    const LINE_OPACITY = 0.25;   // Opacidad máxima de las líneas
+    const POINT_RADIUS = 2.2;    // Radio de cada punto
+    const COLOR = "#00ffff";     // Color de líneas y puntos
+
+    let canvas, ctx, width, height, dpr;
+
+    function resizeCanvas() {
+      dpr = window.devicePixelRatio || 1;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.scale(dpr, dpr);
+    }
+
+    function randomPoint() {
+      const angle = Math.random() * 2 * Math.PI;
+      const speed = Math.random() * SPEED + 0.1;
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed
+      };
+    }
+
+    let points = [];
+    function resetPoints() {
+      points = [];
+      for (let i = 0; i < POINTS; i++) points.push(randomPoint());
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Líneas entre puntos cercanos
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < points.length; j++) {
+          const dx = points[i].x - points[j].x;
+          const dy = points[i].y - points[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < LINE_DIST) {
+            ctx.save();
+            ctx.globalAlpha = LINE_OPACITY * (1 - dist / LINE_DIST);
+            ctx.strokeStyle = COLOR;
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.moveTo(points[i].x, points[i].y);
+            ctx.lineTo(points[j].x, points[j].y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+      }
+
+      // Dibuja los puntos
+      for (const p of points) {
+        ctx.save();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = COLOR;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, POINT_RADIUS, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       }
     }
-    window.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.addEventListener('DOMContentLoaded', updateAjustesButton);
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        fullscreenImage.classList.toggle("hidden");
-      }
-    });
-    toggleSettingsBtn.addEventListener("click", () => {
-      if (settingsPanel.classList.contains("show")) {
-        settingsPanel.classList.remove("show");
-        setTimeout(() => {
-          menu.classList.remove("hidden");
-          menu.classList.remove("fade-out");
-          menu.classList.add("fade-in");
-          setTimeout(() => {
-            menu.classList.remove("fade-in");
-          }, 500);
-        }, 50);
-      } else {
-        menu.classList.remove("fade-out");
-        menu.classList.add("fade-out");
-        setTimeout(() => {
-          menu.classList.add("hidden");
-          menu.classList.remove("fade-out");
-          settingsPanel.classList.add("show");
-        }, 500);
-      }
-    });
-    function applySettings() {
-      const newTitle = document.getElementById("titleInput").value;
-      const newImage = document.getElementById("imageInput").value;
-      if (newTitle.trim()) document.title = newTitle;
-      if (newImage.trim()) fullscreenImage.src = newImage;
-      settingsPanel.classList.remove("show");
-      setTimeout(() => {
-        menu.classList.remove("hidden");
-        menu.classList.remove("fade-out");
-        menu.classList.add("fade-in");
-        setTimeout(() => {
-          menu.classList.remove("fade-in");
-        }, 500);
-      }, 50);
-    }
-    function setDefaultTitle() {
-      document.getElementById("titleInput").value = "";
-      document.title = "Classroom";
-    }
-    function setDefaultImage() {
-      document.getElementById("imageInput").value = "";
-      document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
-    }
-    function openAboutBlankIframe() {
-      const nuevaPestana = window.open('about:blank', '_blank');
-      if (nuevaPestana) {
-        nuevaPestana.document.write(`
-          <html>
-            <head>
-              <title>Classroom</title>
-              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-              <style>
-                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                iframe { border:none; width:100vw; height:100vh; display:block; }
-              </style>
-            </head>
-            <body>
-              <iframe src="https://merx111.github.io/" allow="autoplay; fullscreen"></iframe>
-            </body>
-          </html>
-        `);
-        nuevaPestana.document.close();
+
+    function update() {
+      for (const p of points) {
+        p.x += p.vx;
+        p.y += p.vy;
+        // Rebote en los bordes
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+        // Mantener dentro del canvas
+        p.x = Math.max(0, Math.min(width, p.x));
+        p.y = Math.max(0, Math.min(height, p.y));
       }
     }
-    function abrirEnIframe(url) {
-      const nuevaPestana = window.open('about:blank', '_blank');
-      if (nuevaPestana) {
-        nuevaPestana.document.write(`
-          <html>
-            <head>
-              <title>Classroom</title>
-              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-              <style>
-                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                iframe { border:none; width:100vw; height:100vh; display:block; }
-              </style>
-            </head>
-            <body>
-              <iframe src="${url}" allow="autoplay; fullscreen"></iframe>
-            </body>
-          </html>
-        `);
-        nuevaPestana.document.close();
-      }
+
+    function animate() {
+      update();
+      draw();
+      requestAnimationFrame(animate);
     }
-    function scrollRow(row, dir) {
-      const rowEl = document.getElementById(row + '-row');
-      if (!rowEl) return;
-      const button = rowEl.querySelector('.menu-button');
-      if (!button) return;
-      const gap = 40;
-      let buttonWidth = button.offsetWidth || 220;
-      let scrollAmount = buttonWidth + gap;
-      rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
-      setTimeout(() => updateArrows(row), 340);
-    }
-    function updateArrows(row) {
-      const rowEl = document.getElementById(row + '-row');
-      const leftArrow = document.getElementById(row + '-arrow-left');
-      const rightArrow = document.getElementById(row + '-arrow-right');
-      if (!rowEl || !leftArrow || !rightArrow) return;
-      const canScroll = rowEl.scrollWidth > rowEl.clientWidth + 2;
-      const atStart = Math.abs(rowEl.scrollLeft) < 4;
-      const atEnd = rowEl.scrollLeft + rowEl.clientWidth >= rowEl.scrollWidth - 4;
-      if (canScroll) {
-        leftArrow.classList.toggle('visible', !atStart);
-        rightArrow.classList.toggle('visible', !atEnd);
-      } else {
-        leftArrow.classList.remove('visible');
-        rightArrow.classList.remove('visible');
+
+    function initParticlesBackground() {
+      canvas = document.getElementById("bg-particles");
+      if (!canvas) {
+        canvas = document.createElement("canvas");
+        canvas.id = "bg-particles";
+        document.body.insertBefore(canvas, document.body.firstChild);
       }
-    }
-    function updateAllArrows() {
-      updateArrows('ent');
-      updateArrows('juegos');
-      updateArrows('herramientas');
-    }
-    window.addEventListener('resize', updateAllArrows);
-    document.addEventListener('DOMContentLoaded', function() {
-      updateAllArrows();
-      const eldardoBtn = document.getElementById('eldardo-btn');
-      if (eldardoBtn) {
-        eldardoBtn.addEventListener('click', function() {
-          const letrasAzar = generarLetrasAzar(5);
-          window.open('https://eldardo.net/' + letrasAzar, '_blank');
-        });
-      }
-      const crazygamesBtn = document.getElementById('crazygames-btn');
-      if (crazygamesBtn) {
-        crazygamesBtn.addEventListener('click', function() {
-          const letrasAzar = generarLetrasAzar(8);
-          window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
-        });
-      }
-      // SCRIPT NUEVO PARA POKI
-      const pokiBtn = document.getElementById('poki-btn');
-      if (pokiBtn) {
-        pokiBtn.addEventListener('click', function() {
-          const letrasAzar = generarLetrasAzar(8);
-          window.open('https://poki.com/' + letrasAzar, '_blank');
-        });
-      }
-      const librefutboltvBtn = document.getElementById('librefutboltv-btn');
-      if (librefutboltvBtn) {
-        librefutboltvBtn.addEventListener('click', function() {
-          abrirEnIframe('https://librefutboltv.su/');
-        });
-      }
-      // NUEVO PARA BUCKSHOT ROULETTE
-      const buckshotBtn = document.getElementById('buckshotroulette-btn');
-      if (buckshotBtn) {
-        buckshotBtn.addEventListener('click', function() {
-          abrirEnIframe('https://buckshotroulette.com/home');
-        });
-      }
-      ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
-        const el = document.getElementById(rowId);
-        if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
+      ctx = canvas.getContext("2d");
+      resizeCanvas();
+      resetPoints();
+
+      Object.assign(canvas.style, {
+        position: "fixed",
+        top: 0, left: 0, width: "100vw", height: "100vh",
+        zIndex: "-1", pointerEvents: "none", background: "transparent"
       });
-    });
-    function generarLetrasAzar(longitud) {
-      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-      let resultado = '';
-      for (let i = 0; i < longitud; i++) {
-        resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-      }
-      return resultado;
+
+      window.addEventListener("resize", () => {
+        resizeCanvas();
+        resetPoints();
+      });
+
+      animate();
     }
+
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      setTimeout(initParticlesBackground, 1);
+    } else {
+      document.addEventListener("DOMContentLoaded", initParticlesBackground);
+    }
+  })();
   </script>
 </body>
 </html>
