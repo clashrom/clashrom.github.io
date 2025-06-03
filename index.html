@@ -24,6 +24,17 @@
       animation: backgroundMove 20s infinite alternate;
       width: 100vw;
       min-width: 100vw;
+      position: relative;
+    }
+    /* Overlay para aplicar el color del usuario */
+    #colorOverlay {
+      position: fixed;
+      z-index: 1;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      background: transparent;
+      transition: background 0.5s;
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
@@ -51,11 +62,11 @@
       background: rgba(0, 255, 255, 0.15);
       border: none;
       border-radius: 12px;
-      color: white;
+      color: var(--primary-color, #fff);
       font-size: 16px;
       cursor: pointer;
       z-index: 10;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, color 0.3s;
       font-family: inherit;
       display: flex;
       align-items: center;
@@ -87,7 +98,7 @@
       transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
     .margen-grande-arriba {
-      margin-top: 90px; /* Mantén el margen superior aquí */
+      margin-top: 90px;
     }
     .section-title {
       margin-left: 64px;
@@ -145,7 +156,7 @@
     .carousel-arrow {
       background: rgba(0,0,0,0.20);
       border: none;
-      color: white;
+      color: var(--primary-color, #fff);
       width: 56px;
       height: 90px;
       cursor: pointer;
@@ -171,7 +182,7 @@
       width: 38px;
       height: 38px;
       stroke-width: 3.5;
-      stroke: #00ffff;
+      stroke: var(--primary-color, #00ffff);
       fill: none;
     }
     .carousel-arrow.left { left: -28px; }
@@ -203,7 +214,22 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-    /* Panel de Ajustes centrado y con altura mínima */
+    /* Colorea los botones principales según la variable */
+    .default-btn, .aboutblank-btn, .settings button, #toggleSettings, .carousel-arrow, .menu-button {
+      color: var(--primary-color, #fff) !important;
+      /* el fondo original se conserva (para saturación, etc.) */
+    }
+    .default-btn, .aboutblank-btn, .settings button {
+      border: 1.5px solid var(--primary-color, #00ffff);
+    }
+    .aboutblank-btn {
+      padding: 8px 18px;
+      font-size: 15px;
+      margin-top: 4px;
+    }
+    .default-btn:hover, .aboutblank-btn:hover, .settings button:hover {
+      background: rgba(0, 255, 255, 0.32);
+    }
     .settings {
       display: none;
       flex-direction: column;
@@ -216,8 +242,8 @@
       animation: fadeIn 0.5s ease forwards;
       justify-content: center;
       position: fixed;
-      inset: 0; /* Ocupa toda la ventana */
-      margin: auto; /* Centra el panel visualmente */
+      inset: 0;
+      margin: auto;
       min-width: 350px;
       max-width: 95vw;
       min-height: 350px;
@@ -227,7 +253,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      transform: none; /* Quita el translate para centrar con margin:auto */
+      transform: none;
     }
     .settings-row {
       display: flex;
@@ -236,28 +262,6 @@
       gap: 10px;
       width: 100%;
       justify-content: center;
-    }
-    .default-btn, .aboutblank-btn {
-      background: rgba(0, 255, 255, 0.18);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 15px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-family: inherit;
-    }
-    .aboutblank-btn {
-      padding: 8px 18px;
-      font-size: 15px;
-      margin-top: 4px;
-    }
-    .default-btn:hover, .aboutblank-btn:hover {
-      background: rgba(0, 255, 255, 0.32);
-    }
-    .settings.show {
-      display: flex;
     }
     .settings input {
       background: rgba(255, 255, 255, 0.1);
@@ -270,18 +274,8 @@
       transition: 0.3s ease;
       text-align: center;
     }
-    .settings button {
-      background: rgba(0, 255, 255, 0.2);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-    .settings button:hover {
-      background: rgba(0, 255, 255, 0.4);
+    .settings.show {
+      display: flex;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
@@ -332,6 +326,8 @@
   </style>
 </head>
 <body>
+  <!-- Overlay para color del usuario -->
+  <div id="colorOverlay"></div>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
@@ -418,8 +414,8 @@
   <div class="settings" id="settingsPanel">
     <!-- NUEVA OPCIÓN: Elegir color de fondo (color picker) -->
     <div class="settings-row">
-      <label for="colorPicker" style="color:white;">Color de fondo:</label>
-      <input type="color" id="colorPicker" name="colorPicker" value="#0f0c29" style="width: 40px; height: 40px; border: none; background: none;">
+      <label for="colorPicker" style="color:white;">Color de la web:</label>
+      <input type="color" id="colorPicker" name="colorPicker" value="#00ffff" style="width: 40px; height: 40px; border: none; background: none;">
       <button class="default-btn" type="button" onclick="resetColor()">Default</button>
     </div>
     <div class="settings-row">
@@ -436,17 +432,29 @@
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
   <script>
-    // --- Script del color picker ---
+    // --- Color Picker y Overlay ---
     const colorPicker = document.getElementById('colorPicker');
-    const originalBg = document.body.style.background;
+    const colorOverlay = document.getElementById('colorOverlay');
+    const defaultColor = "#00ffff";
+
+    // Función para actualizar overlay y variables CSS
+    function setThemeColor(hex) {
+      // Cambia overlay (fondo) con transparencia
+      colorOverlay.style.background = hex + "33"; // 20% transparencia
+      // Cambia color principal de botones y decoraciones
+      document.body.style.setProperty('--primary-color', hex);
+    }
     colorPicker.addEventListener('input', function() {
-      document.body.style.background = colorPicker.value;
+      setThemeColor(colorPicker.value);
     });
     function resetColor() {
-      document.body.style.background = "";
-      colorPicker.value = "#0f0c29";
+      setThemeColor(defaultColor);
+      colorPicker.value = defaultColor;
     }
+    // Inicializa en color default
+    setThemeColor(defaultColor);
 
+    // --- Resto del código original ---
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
