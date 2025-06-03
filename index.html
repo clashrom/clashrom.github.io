@@ -205,30 +205,30 @@
     }
     /* Panel de Ajustes centrado y con altura mínima */
     .settings {
-  display: none;
-  flex-direction: column;
-  gap: 18px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 34px 34px 22px 34px;
-  border-radius: 16px;
-  align-items: center;
-  z-index: 2;
-  animation: fadeIn 0.5s ease forwards;
-  justify-content: center;
-  position: fixed;
-  inset: 0; /* Ocupa toda la ventana */
-  margin: auto; /* Centra el panel visualmente */
-  min-width: 350px;
-  max-width: 95vw;
-  min-height: 350px;
-  max-height: 95vh;
-  box-shadow: 0 8px 40px #000a;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transform: none; /* Quita el translate para centrar con margin:auto */
-}
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 34px 34px 22px 34px;
+      border-radius: 16px;
+      align-items: center;
+      z-index: 2;
+      animation: fadeIn 0.5s ease forwards;
+      justify-content: center;
+      position: fixed;
+      inset: 0; /* Ocupa toda la ventana */
+      margin: auto; /* Centra el panel visualmente */
+      min-width: 350px;
+      max-width: 95vw;
+      min-height: 350px;
+      max-height: 95vh;
+      box-shadow: 0 8px 40px #000a;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: none; /* Quita el translate para centrar con margin:auto */
+    }
     .settings-row {
       display: flex;
       flex-direction: row;
@@ -416,6 +416,12 @@
   </div>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
+    <!-- NUEVA OPCIÓN: Elegir color de fondo (color picker) -->
+    <div class="settings-row">
+      <label for="colorPicker" style="color:white;">Color de fondo:</label>
+      <input type="color" id="colorPicker" name="colorPicker" value="#0f0c29" style="width: 40px; height: 40px; border: none; background: none;">
+      <button class="default-btn" type="button" onclick="resetColor()">Default</button>
+    </div>
     <div class="settings-row">
       <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
       <button class="default-btn" type="button" onclick="setDefaultTitle()">Default</button>
@@ -430,6 +436,17 @@
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
   <script>
+    // --- Script del color picker ---
+    const colorPicker = document.getElementById('colorPicker');
+    const originalBg = document.body.style.background;
+    colorPicker.addEventListener('input', function() {
+      document.body.style.background = colorPicker.value;
+    });
+    function resetColor() {
+      document.body.style.background = "";
+      colorPicker.value = "#0f0c29";
+    }
+
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
