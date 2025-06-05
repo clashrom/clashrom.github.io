@@ -386,7 +386,10 @@
           <button class="menu-button" id="poki-btn">
             <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
           </button>
-          <!-- NUEVO BOTÓN -->
+          <!-- NUEVO BOTÓN GEFORCE NOW -->
+          <button class="menu-button" id="geforcenow-btn">
+            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce Now">
+          </button>
           <button class="menu-button" id="buckshotroulette-btn">
             <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
           </button>
@@ -405,7 +408,7 @@
         </button>
         <div class="menu-buttons-row" id="herramientas-row">
           <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
-            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navega[...]">
+            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
           </button>
         </div>
         <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
@@ -610,6 +613,12 @@
         pokiBtn.addEventListener('click', function() {
           const letrasAzar = generarLetrasAzar(8);
           window.open('https://poki.com/' + letrasAzar, '_blank');
+        });
+      }
+      const geforceNowBtn = document.getElementById('geforcenow-btn');
+      if (geforceNowBtn) {
+        geforceNowBtn.addEventListener('click', function() {
+          abrirEnIframe('https://definitelyscience.com/class/GeForce-Now/');
         });
       }
       const librefutboltvBtn = document.getElementById('librefutboltv-btn');
