@@ -175,7 +175,7 @@
       fill: none;
     }
     .carousel-arrow.left { left: -28px; }
-    .carousel-arrow.right { right: -28px; }
+    .carousel-arrow.right { right: 8px; }  /* MODIFICADO AQUÍ */
     .carousel-arrow.visible {
       visibility: visible !important;
       pointer-events: auto;
@@ -304,6 +304,8 @@
       .menu-buttons-row {
         max-width: 100vw;
       }
+      /* Si tienes aquí .carousel-arrow.right, ponlo igual: */
+      /* .carousel-arrow.right { right: 8px; } */
     }
     @media (max-width: 700px) {
       .menu-button img {
@@ -327,6 +329,8 @@
       }
       .settings { min-width: 95vw; min-height: 200px; }
       .settings input { width: 80vw; }
+      /* Si tienes aquí .carousel-arrow.right, ponlo igual: */
+      /* .carousel-arrow.right { right: 8px; } */
     }
   </style>
 </head>
@@ -407,7 +411,7 @@
         </button>
         <div class="menu-buttons-row" id="herramientas-row">
           <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
-            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
+            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navega[...]
           </button>
         </div>
         <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
