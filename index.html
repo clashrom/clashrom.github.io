@@ -87,7 +87,7 @@
       transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
     .margen-grande-arriba {
-      margin-top: 90px; /* Mantén el margen superior aquí */
+      margin-top: 90px;
     }
     .section-title {
       margin-left: 64px;
@@ -203,7 +203,6 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-    /* Panel de Ajustes centrado y con altura mínima */
     .settings {
       display: none;
       flex-direction: column;
@@ -216,8 +215,8 @@
       animation: fadeIn 0.5s ease forwards;
       justify-content: center;
       position: fixed;
-      inset: 0; /* Ocupa toda la ventana */
-      margin: auto; /* Centra el panel visualmente */
+      inset: 0;
+      margin: auto;
       min-width: 350px;
       max-width: 95vw;
       min-height: 350px;
@@ -227,7 +226,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      transform: none; /* Quita el translate para centrar con margin:auto */
+      transform: none;
     }
     .settings-row {
       display: flex;
@@ -377,6 +376,10 @@
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
+          <!-- Buckshot Roulette justo después de Minecraft -->
+          <button class="menu-button" id="buckshotroulette-btn">
+            <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
+          </button>
           <button class="menu-button" id="eldardo-btn">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
           </button>
@@ -386,12 +389,8 @@
           <button class="menu-button" id="poki-btn">
             <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
           </button>
-          <!-- NUEVO BOTÓN GEFORCE NOW -->
           <button class="menu-button" id="geforcenow-btn">
             <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce Now">
-          </button>
-          <button class="menu-button" id="buckshotroulette-btn">
-            <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
           </button>
         </div>
         <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
@@ -419,7 +418,6 @@
   </div>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
-    <!-- NUEVA OPCIÓN: Elegir color de fondo (color picker) -->
     <div class="settings-row">
       <label for="colorPicker" style="color:white;">Color de fondo:</label>
       <input type="color" id="colorPicker" name="colorPicker" value="#0f0c29" style="width: 40px; height: 40px; border: none; background: none;">
@@ -607,7 +605,6 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
-      // SCRIPT NUEVO PARA POKI
       const pokiBtn = document.getElementById('poki-btn');
       if (pokiBtn) {
         pokiBtn.addEventListener('click', function() {
@@ -627,7 +624,6 @@
           abrirEnIframe('https://librefutboltv.su/');
         });
       }
-      // NUEVO PARA BUCKSHOT ROULETTE
       const buckshotBtn = document.getElementById('buckshotroulette-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
