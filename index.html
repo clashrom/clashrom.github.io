@@ -289,9 +289,9 @@
     /* --- BUSCADOR DE BOTONES --- */
     #buscador-contenedor {
       z-index: 12;
-      transition: box-shadow 0.3s, background 0.3s;
+      transition: box-shadow 0.3s, background 0.3s, top 0.3s;
     }
-    #buscador-contenedor.fijo-arriba {
+    #buscador-contenedor.compact {
       position: fixed;
       top: 0;
       left: 0;
@@ -399,8 +399,9 @@
   <div id="resultados-busqueda" style="display:none;"></div>
 
   <!-- Menú principal con secciones -->
-  <!-- ... TODO TU MENÚ AQUÍ ... -->
-  <!-- (Copia las secciones de entretenimiento, juegos, herramientas y sus botones) -->
+  <!-- ... aquí va todo tu menú igual que antes ... -->
+  <!-- (Secciones de entretenimiento, juegos, herramientas, etc.) -->
+  <!-- ... usa tu estructura actual del menú ... -->
 
   <div id="menu">
     <!-- Sección Entretenimiento -->
@@ -812,30 +813,25 @@
       }
     });
 
-    // --- Fijar buscador arriba si desaparece por scroll ---
-    function checkBuscadorSticky() {
-      if (!buscadorContenedor) return;
-      const rect = buscadorContenedor.getBoundingClientRect();
+    // --- FIJAR BUSCADOR ARRIBA SI SE ESCONDE POR SCROLL, CON ANIMACIÓN IGUAL QUE AJUSTES ---
+    function updateBuscadorCompact() {
       const settingsVisible = settingsPanel.classList.contains('show');
       if (settingsVisible) {
-        buscadorContenedor.classList.remove('fijo-arriba');
+        buscadorContenedor.classList.remove('compact');
         return;
       }
-      if (rect.bottom < 0) {
-        buscadorContenedor.classList.add('fijo-arriba');
+      // Si el scroll es mayor a 2px, ponerlo en compacto
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      if (scrollTop < 2) {
+        buscadorContenedor.classList.remove('compact');
       } else {
-        buscadorContenedor.classList.remove('fijo-arriba');
+        buscadorContenedor.classList.add('compact');
       }
     }
-    window.addEventListener('scroll', checkBuscadorSticky, {passive:true});
-    // También actualizar al abrir/cerrar ajustes
+    window.addEventListener('scroll', updateBuscadorCompact, {passive:true});
+    document.addEventListener('DOMContentLoaded', updateBuscadorCompact);
     toggleSettingsBtn.addEventListener('click', () => {
-      setTimeout(checkBuscadorSticky, 100);
-    });
-
-    // Si el menú de ajustes se abre, quitar la clase fija si la tiene
-    document.addEventListener('DOMContentLoaded', () => {
-      checkBuscadorSticky();
+      setTimeout(updateBuscadorCompact, 100);
     });
   </script>
 </body>
