@@ -203,7 +203,6 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
-    /* Panel de Ajustes centrado y con altura mínima */
     .settings {
       display: none;
       flex-direction: column;
@@ -359,6 +358,10 @@
           </button>
           <button class="menu-button" id="librefutboltv-btn">
             <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
+          </button>
+          <!-- NUEVO BOTÓN OMEGLE -->
+          <button class="menu-button" id="omegle-btn">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRWogxB_X-F_kwSIj48DhhtD4RsiOv00JvA&s" alt="Omegle">
           </button>
         </div>
         <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
@@ -651,6 +654,31 @@
                 </head>
                 <body>
                   <iframe src="https://definitelyscience.com/class/GeForce-Now/" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
+        });
+      }
+      // NUEVO BOTÓN OMEGLE
+      const omegleBtn = document.getElementById('omegle-btn');
+      if (omegleBtn) {
+        omegleBtn.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>Omegle Chat</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="https://web.omegle.onl/chat/" allow="autoplay; fullscreen"></iframe>
                 </body>
               </html>
             `);
