@@ -371,7 +371,7 @@
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
-  <!-- Panel de Ajustes centrado (¡Ahora ANTES del buscador!) -->
+  <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
       <label for="colorPicker" style="color:white;">Color de fondo:</label>
@@ -392,6 +392,8 @@
     <button id="applyBtn" onclick="applySettings()">Aplicar</button>
   </div>
 
+  <!-- Sentinela para IntersectionObserver -->
+  <div id="buscador-sentinela" style="height:1px;"></div>
   <!-- Barra de búsqueda de botones -->
   <div id="buscador-contenedor" style="width:100vw;display:flex;justify-content:center;margin-top:25px;">
     <input id="buscador-menu" type="text" placeholder="Buscar botón del menú..." style="width: 350px; font-size: 1.1em; padding: 10px 16px; border-radius: 12px; border: none; outline: none;">
@@ -399,9 +401,9 @@
   <div id="resultados-busqueda" style="display:none;"></div>
 
   <!-- Menú principal con secciones -->
-  <!-- ... aquí va todo tu menú igual que antes ... -->
-  <!-- (Secciones de entretenimiento, juegos, herramientas, etc.) -->
-  <!-- ... usa tu estructura actual del menú ... -->
+  <!-- (Aquí va TODO tu menú de botones, igual que en tus ejemplos anteriores) -->
+  <!-- ... -->
+  <!-- ... PEGA aquí tu menú de secciones y botones ... -->
 
   <div id="menu">
     <!-- Sección Entretenimiento -->
@@ -497,7 +499,6 @@
   <script>
     // --- Script del color picker ---
     const colorPicker = document.getElementById('colorPicker');
-    const originalBg = document.body.style.background;
     colorPicker.addEventListener('input', function() {
       document.body.style.background = colorPicker.value;
     });
@@ -760,8 +761,8 @@
     const menuDiv = document.getElementById('menu');
     const resultadosBusqueda = document.getElementById('resultados-busqueda');
     const buscadorContenedor = document.getElementById('buscador-contenedor');
+    const buscadorSentinela = document.getElementById('buscador-sentinela');
 
-    // Recoge todos los botones de todas las filas
     function obtenerBotonesMenu() {
       const secciones = ['ent-row', 'juegos-row', 'herramientas-row'];
       let botones = [];
@@ -813,25 +814,33 @@
       }
     });
 
-    // --- FIJAR BUSCADOR ARRIBA SI SE ESCONDE POR SCROLL, CON ANIMACIÓN IGUAL QUE AJUSTES ---
-    function updateBuscadorCompact() {
-      const settingsVisible = settingsPanel.classList.contains('show');
-      if (settingsVisible) {
+    // --- PEGAR BUSCADOR ARRIBA SI SE ESCONDE POR SCROLL ---
+    function updateBuscadorCompactBySettings() {
+      if (settingsPanel.classList.contains('show')) {
         buscadorContenedor.classList.remove('compact');
-        return;
-      }
-      // Si el scroll es mayor a 2px, ponerlo en compacto
-      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      if (scrollTop < 2) {
-        buscadorContenedor.classList.remove('compact');
-      } else {
-        buscadorContenedor.classList.add('compact');
       }
     }
-    window.addEventListener('scroll', updateBuscadorCompact, {passive:true});
-    document.addEventListener('DOMContentLoaded', updateBuscadorCompact);
-    toggleSettingsBtn.addEventListener('click', () => {
-      setTimeout(updateBuscadorCompact, 100);
+
+    const observer = new window.IntersectionObserver(
+      entries => {
+        const e = entries[0];
+        if (settingsPanel.classList.contains('show')) {
+          buscadorContenedor.classList.remove('compact');
+          return;
+        }
+        if (!e.isIntersecting) {
+          buscadorContenedor.classList.add('compact');
+        } else {
+          buscadorContenedor.classList.remove('compact');
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(buscadorSentinela);
+
+    document.getElementById('toggleSettings').addEventListener('click', () => {
+      setTimeout(updateBuscadorCompactBySettings, 100);
     });
   </script>
 </body>
