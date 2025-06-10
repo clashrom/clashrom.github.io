@@ -286,6 +286,21 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+    /* --- BUSCADOR DE BOTONES --- */
+    #buscador-contenedor {
+      z-index: 12;
+    }
+    #resultados-busqueda {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      margin: 44px 0 16px 0;
+      animation: fadeIn 0.4s;
+    }
+    #resultados-busqueda .menu-button {
+      margin: 0;
+    }
     @media (max-width: 1000px) {
       .menu-button img {
         width: 180px;
@@ -337,6 +352,12 @@
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
+  <!-- Barra de búsqueda de botones -->
+  <div id="buscador-contenedor" style="width:100vw;display:flex;justify-content:center;margin-top:25px;">
+    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú..." style="width: 350px; font-size: 1.1em; padding: 10px 16px; border-radius: 12px; border: none; outline: none;">
+  </div>
+  <div id="resultados-busqueda" style="display:none;"></div>
+
   <!-- Menú principal con secciones -->
   <div id="menu">
     <!-- Sección Entretenimiento -->
@@ -382,7 +403,7 @@
           </button>
           <!-- NUEVO BOTÓN SURVEV.IO -->
           <button class="menu-button" id="survey-btn">
-            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="Survev.io">
+            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=80" alt="Survev.io">
           </button>
           <!-- NUEVO BOTÓN GEFORCE NOW -->
           <button class="menu-button" id="geforcenow-btn">
@@ -710,6 +731,71 @@
       }
       return resultado;
     }
+
+    // --- BUSCADOR DE BOTONES DE MENÚ ---
+    const buscador = document.getElementById('buscador-menu');
+    const menuDiv = document.getElementById('menu');
+    const resultadosBusqueda = document.getElementById('resultados-busqueda');
+
+    // Recoge todos los botones de todas las filas
+    function obtenerBotonesMenu() {
+      const secciones = ['ent-row', 'juegos-row', 'herramientas-row'];
+      let botones = [];
+      secciones.forEach(id => {
+        const fila = document.getElementById(id);
+        if (fila) {
+          // Solo botones hijos directos, no flechas
+          botones = botones.concat(Array.from(fila.querySelectorAll('.menu-button')));
+        }
+      });
+      return botones;
+    }
+
+    // Buscar y mostrar los botones coincidentes
+    buscador.addEventListener('input', function() {
+      const texto = buscador.value.trim().toLowerCase();
+      if (texto === "") {
+        resultadosBusqueda.style.display = "none";
+        menuDiv.style.display = "";
+        return;
+      }
+      const botones = obtenerBotonesMenu();
+      // Filtra por nombre (alt de la imagen) o por primera letra
+      const botonesFiltrados = botones.filter(btn => {
+        const img = btn.querySelector('img');
+        if (!img) return false;
+        const nombre = img.alt || "";
+        return nombre.toLowerCase().startsWith(texto) || nombre.toLowerCase().includes(texto) || (texto.length === 1 && nombre[0]?.toLowerCase() === texto);
+      });
+      // Quita los antiguos
+      resultadosBusqueda.innerHTML = "";
+      if (botonesFiltrados.length === 0) {
+        resultadosBusqueda.innerHTML = '<div style="color:#fff;font-size:1.1em;padding:32px;">No se encontró ningún botón.</div>';
+      } else {
+        botonesFiltrados.forEach(btn => {
+          // Clona el botón para evitar bugs de eventos
+          const clon = btn.cloneNode(true);
+          clon.onclick = btn.onclick;
+          // Copia los event listeners también (para btns especiales)
+          if (btn.id) {
+            const orig = document.getElementById(btn.id);
+            if (orig) clon.addEventListener('click', orig.onclick);
+          }
+          resultadosBusqueda.appendChild(clon);
+        });
+      }
+      resultadosBusqueda.style.display = "flex";
+      menuDiv.style.display = "none";
+    });
+
+    // Si el usuario borra el texto, mostrar el menú normal.
+    buscador.addEventListener('blur', function() {
+      if (buscador.value.trim() === "") {
+        resultadosBusqueda.style.display = "none";
+        menuDiv.style.display = "";
+      }
+    });
+
   </script>
 </body>
 </html>
