@@ -296,26 +296,12 @@
       top: 0;
       left: 0;
       width: 100vw;
-      background: none !important;
-      box-shadow: none !important;
+      background: rgba(20,24,32,0.92);
+      box-shadow: 0 2px 16px #000a;
       padding-top: 8px;
       padding-bottom: 8px;
       margin-top: 0 !important;
       animation: fadeIn 0.3s;
-    }
-    #buscador-contenedor input {
-      background: rgba(255,255,255,0.08);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-size: 1.1em;
-      padding: 10px 16px;
-      outline: none;
-      width: 350px;
-      transition: background 0.3s;
-    }
-    #buscador-contenedor input:focus {
-      background: rgba(255,255,255,0.20);
     }
     #resultados-busqueda {
       display: flex;
@@ -410,11 +396,15 @@
   <div id="buscador-sentinela" style="height:1px;"></div>
   <!-- Barra de búsqueda de botones -->
   <div id="buscador-contenedor" style="width:100vw;display:flex;justify-content:center;margin-top:25px;">
-    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú...">
+    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú..." style="width: 350px; font-size: 1.1em; padding: 10px 16px; border-radius: 12px; border: none; outline: none;">
   </div>
   <div id="resultados-busqueda" style="display:none;"></div>
 
   <!-- Menú principal con secciones -->
+  <!-- (Aquí va TODO tu menú de botones, igual que en tus ejemplos anteriores) -->
+  <!-- ... -->
+  <!-- ... PEGA aquí tu menú de secciones y botones ... -->
+
   <div id="menu">
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -436,6 +426,7 @@
           <button class="menu-button" id="librefutboltv-btn">
             <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
           </button>
+          <!-- NUEVO BOTÓN OMEGLE -->
           <button class="menu-button" id="omegle-btn">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRWogxB_X-F_kwSIj48DhhtD4RsiOv00JvA&s" alt="Omegle">
           </button>
@@ -456,9 +447,11 @@
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
+          <!-- NUEVO BOTÓN SURVEV.IO -->
           <button class="menu-button" id="survey-btn">
             <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=80" alt="Survev.io">
           </button>
+          <!-- NUEVO BOTÓN GEFORCE NOW -->
           <button class="menu-button" id="geforcenow-btn">
             <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce Now">
           </button>
@@ -471,6 +464,7 @@
           <button class="menu-button" id="poki-btn">
             <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
           </button>
+          <!-- NUEVO BOTÓN -->
           <button class="menu-button" id="buckshotroulette-btn">
             <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
           </button>
@@ -491,6 +485,7 @@
           <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
             <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
           </button>
+          <!-- Nuevo botón Chat -->
           <button class="menu-button" onclick="abrirEnIframe('https://merx111.github.io/chat/')">
             <img src="https://img.freepik.com/vector-premium/icono-chat-bocadillo-dialogo_23-2147501656.jpg" alt="Chat">
           </button>
@@ -669,6 +664,7 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
+      // SCRIPT NUEVO PARA POKI
       const pokiBtn = document.getElementById('poki-btn');
       if (pokiBtn) {
         pokiBtn.addEventListener('click', function() {
@@ -682,12 +678,14 @@
           abrirEnIframe('https://librefutboltv.su/');
         });
       }
+      // NUEVO PARA BUCKSHOT ROULETTE
       const buckshotBtn = document.getElementById('buckshotroulette-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
           abrirEnIframe('https://buckshotroulette.com/home');
         });
       }
+      // NUEVO PARA GEFORCE NOW
       const geforceNowBtn = document.getElementById('geforcenow-btn');
       if (geforceNowBtn) {
         geforceNowBtn.addEventListener('click', function() {
@@ -712,6 +710,7 @@
           }
         });
       }
+      // NUEVO BOTÓN OMEGLE
       const omegleBtn = document.getElementById('omegle-btn');
       if (omegleBtn) {
         omegleBtn.addEventListener('click', function() {
@@ -736,6 +735,7 @@
           }
         });
       }
+      // NUEVO BOTÓN SURVEV.IO
       const surveyBtn = document.getElementById('survey-btn');
       if (surveyBtn) {
         surveyBtn.addEventListener('click', function() {
@@ -762,7 +762,6 @@
     const resultadosBusqueda = document.getElementById('resultados-busqueda');
     const buscadorContenedor = document.getElementById('buscador-contenedor');
     const buscadorSentinela = document.getElementById('buscador-sentinela');
-    const settingsPanel = document.getElementById('settingsPanel');
 
     function obtenerBotonesMenu() {
       const secciones = ['ent-row', 'juegos-row', 'herramientas-row'];
