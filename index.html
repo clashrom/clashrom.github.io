@@ -301,6 +301,11 @@
     #resultados-busqueda .menu-button {
       margin: 0;
     }
+    /* OCULTAR BUSCADOR Y RESULTADOS cuando ajustes está abierto */
+    .settings.show ~ #buscador-contenedor,
+    .settings.show ~ #resultados-busqueda {
+      display: none !important;
+    }
     @media (max-width: 1000px) {
       .menu-button img {
         width: 180px;
