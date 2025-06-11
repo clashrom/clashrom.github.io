@@ -8,12 +8,20 @@
     body {
       margin: 0;
       font-family: sans-serif;
-      background: #111;
-      color: #fff;
       display: flex;
       height: 100vh;
       overflow: hidden;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark {
+      background: #111;
+      color: #fff;
+    }
+
+    body.light {
+      background: #eee;
+      color: #000;
     }
 
     #menu, #chatView {
@@ -67,7 +75,7 @@
     }
   </style>
 </head>
-<body>
+<body class="dark">
   <div id="menu">
     <input id="createRoomInput" type="text" placeholder="Nombre para crear sala" />
     <button onclick="createRoom()">Crear sala</button>
@@ -84,26 +92,22 @@
   <script>
     function createRoom() {
       const room = document.getElementById('createRoomInput').value.trim();
-      if (room) {
-        openChat(room);
-      }
+      if (room) openChat(room);
     }
 
     function joinRoom() {
       const room = document.getElementById('joinRoomInput').value.trim();
-      if (room) {
-        openChat(room);
-      }
+      if (room) openChat(room);
     }
 
     function openChat(room) {
-      const chatURL = "https://tlk.io/" + encodeURIComponent(room);
-      document.getElementById('chatFrame').src = chatURL;
+      document.getElementById('chatFrame').src = "https://tlk.io/" + encodeURIComponent(room);
       document.getElementById('menu').style.display = 'none';
       document.getElementById('chatView').style.display = 'flex';
       document.getElementById('backButton').style.display = 'block';
-      document.body.style.background = '#eee'; // gris claro
-      document.body.style.color = '#000'; // texto oscuro
+
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
     }
 
     function goBack() {
@@ -111,8 +115,9 @@
       document.getElementById('menu').style.display = 'flex';
       document.getElementById('chatView').style.display = 'none';
       document.getElementById('backButton').style.display = 'none';
-      document.body.style.background = '#111'; // fondo oscuro original
-      document.body.style.color = '#fff'; // texto blanco
+
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
     }
   </script>
 </body>
