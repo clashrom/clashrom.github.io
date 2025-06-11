@@ -400,11 +400,6 @@
   </div>
   <div id="resultados-busqueda" style="display:none;"></div>
 
-  <!-- Menú principal con secciones -->
-  <!-- (Aquí va TODO tu menú de botones, igual que en tus ejemplos anteriores) -->
-  <!-- ... -->
-  <!-- ... PEGA aquí tu menú de secciones y botones ... -->
-
   <div id="menu">
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -436,6 +431,7 @@
         </button>
       </div>
     </div>
+
     <!-- Sección Juegos -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Juegos</div>
@@ -447,9 +443,13 @@
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
+          <!-- NUEVO BOTÓN INFINITE CRAFT -->
+          <button class="menu-button" id="infinitecraft-btn">
+            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinite Craft">
+          </button>
           <!-- NUEVO BOTÓN SURVEV.IO -->
           <button class="menu-button" id="survey-btn">
-            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=80" alt="Survev.io">
+            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="Survev.io">
           </button>
           <!-- NUEVO BOTÓN GEFORCE NOW -->
           <button class="menu-button" id="geforcenow-btn">
@@ -740,6 +740,31 @@
       if (surveyBtn) {
         surveyBtn.addEventListener('click', function() {
           abrirEnIframe('https://survev.io/');
+        });
+      }
+      // NUEVO BOTÓN INFINITE CRAFT
+      const infiniteCraftBtn = document.getElementById('infinitecraft-btn');
+      if (infiniteCraftBtn) {
+        infiniteCraftBtn.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>Infinite Craft</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="https://infinite-craft.com/" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
         });
       }
       ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
