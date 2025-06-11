@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salas de Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #menu, #chatView {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      width: 250px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #chatFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    #backButton {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #333;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1000;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="menu">
+    <input id="createRoomInput" type="text" placeholder="Nombre para crear sala" />
+    <button onclick="createRoom()">Crear sala</button>
+
+    <input id="joinRoomInput" type="text" placeholder="Nombre para unirse a sala" />
+    <button onclick="joinRoom()">Unirse a sala</button>
+  </div>
+
+  <div id="chatView" style="display:none;">
+    <button id="backButton" onclick="goBack()">←</button>
+    <iframe id="chatFrame"></iframe>
+  </div>
+
+  <script>
+    function createRoom() {
+      const room = document.getElementById('createRoomInput').value.trim();
+      if (room) {
+        openChat(room);
+      }
+    }
+
+    function joinRoom() {
+      const room = document.getElementById('joinRoomInput').value.trim();
+      if (room) {
+        openChat(room);
+      }
+    }
+
+    function openChat(room) {
+      const chatURL = "https://tlk.io/" + encodeURIComponent(room);
+      document.getElementById('chatFrame').src = chatURL;
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('chatView').style.display = 'flex';
+      document.getElementById('backButton').style.display = 'block';
+    }
+
+    function goBack() {
+      document.getElementById('chatFrame').src = '';
+      document.getElementById('menu').style.display = 'flex';
+      document.getElementById('chatView').style.display = 'none';
+      document.getElementById('backButton').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
