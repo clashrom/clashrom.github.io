@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Salas de Chat</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: sans-serif;
       height: 100vh;
       overflow: hidden;
-      transition: background 0.3s ease;
       background: #111;
       color: white;
+      transition: background 0.3s ease;
     }
 
     #menu, #chatView {
@@ -46,14 +50,19 @@
 
     #chatView {
       display: none;
-      background-color: #eee; /* gris claro */
+      background-color: #ddd; /* gris claro */
       flex-direction: column;
+      padding: 10px;
     }
 
     #chatWrapper {
       flex: 1;
       width: 100%;
-      background-color: #eee; /* asegura fondo claro detrás del iframe */
+      max-width: 100%;
+      background-color: #ddd;
+      border: 10px solid #eee; /* marco blanco visible */
+      border-radius: 12px;
+      overflow: hidden;
       display: flex;
     }
 
@@ -61,7 +70,6 @@
       width: 100%;
       height: 100%;
       border: none;
-      background: transparent;
     }
 
     #backButton {
@@ -112,7 +120,7 @@
       document.getElementById('menu').style.display = 'none';
       document.getElementById('chatView').style.display = 'flex';
       document.getElementById('backButton').style.display = 'block';
-      document.body.style.background = '#eee'; // gris claro
+      document.body.style.background = '#ddd'; // Gris claro simulado
       document.body.style.color = '#000';
     }
 
@@ -121,7 +129,7 @@
       document.getElementById('menu').style.display = 'flex';
       document.getElementById('chatView').style.display = 'none';
       document.getElementById('backButton').style.display = 'none';
-      document.body.style.background = '#111'; // fondo oscuro
+      document.body.style.background = '#111';
       document.body.style.color = '#fff';
     }
   </script>
