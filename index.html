@@ -370,7 +370,10 @@
 
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
-
+<!-- Botón para boton de panico -->
+  <button id="classroomRedirectBtn" title="Ir a Google Classroom">
+  <span style="font-size:1.2em;">🏫</span>
+</button>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
@@ -867,6 +870,18 @@
     document.getElementById('toggleSettings').addEventListener('click', () => {
       setTimeout(updateBuscadorCompactBySettings, 100);
     });
-  </script>
+  // --- REDIRECCIÓN CON BOTÓN Y TECLA º ---
+const classroomBtn = document.getElementById('classroomRedirectBtn');
+if (classroomBtn) {
+  classroomBtn.addEventListener('click', function() {
+    window.location.href = 'https://classroom.google.com/';
+  });
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'º') {
+    window.location.href = 'https://classroom.google.com/';
+  }
+});
+</script>
 </body>
 </html>
