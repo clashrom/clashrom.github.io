@@ -7,11 +7,15 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
       background: linear-gradient(135deg, #2d1446, #9147ff 50%, #25124d);
       font-family: sans-serif;
-      min-height: 100vh;
       color: white;
       animation: backgroundMove 20s infinite alternate;
       display: flex;
@@ -19,8 +23,9 @@
       align-items: center;
       justify-content: flex-start;
       padding-top: 40px;
-      overflow-y: auto;
-      max-height: 100vh;
+      overflow-y: auto; /* Scrollbar global */
+      height: 100vh;
+      box-sizing: border-box;
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
@@ -130,8 +135,7 @@
       margin-bottom: 40px;
       position: relative;
       transition: all 0.3s ease;
-      max-height: 520px;
-      overflow-y: auto;
+      /* ¡Sin scrollbar aquí! */
       background: rgba(21, 9, 40, 0.8);
       border-radius: 14px;
       box-shadow: 0 0 20px #9147ff55;
@@ -291,7 +295,7 @@
     const streamers = [
       "rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51"
     ];
-    const customStreamer = {name: "crackheber", url: "https://www.twitch.tv/crackheber"};
+    const crackheber = "crackheber";
     const streamList = document.getElementById("streamList");
     const twitchFrame = document.getElementById("twitchFrame");
     const chatFrame = document.getElementById("chatFrame");
@@ -318,26 +322,13 @@
       return btn;
     }
 
-    function showStream(channel) {
-      playerContainer.style.display = "flex";
-      twitchFrame.src = `https://player.twitch.tv/?channel=${channel}&parent=${location.hostname}`;
-      chatFrame.src = `https://www.twitch.tv/embed/${channel}/chat?parent=${location.hostname}`;
-      playerContainer.classList.remove("chat-hidden");
-      chatIcon.classList.remove("rotated");
-      setTimeout(() => {
-        playerContainer.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 200);
-    }
-
     // Agrega todos los botones de streamers "normales"
     streamers.forEach(name => {
       streamList.appendChild(createStreamerButton(name));
     });
 
-    // --- Aquí insertamos el botón de crackheber justo antes del botón de añadir ---
-    const crackBtn = createStreamerButton(customStreamer.name);
-    streamList.appendChild(crackBtn);
-    // ---------------------------------------------------------------------------
+    // Agrega el botón de crackheber justo antes del botón de añadir
+    streamList.appendChild(createStreamerButton(crackheber));
 
     // Botón para añadir canal personalizado
     const addBtn = document.createElement("button");
@@ -356,6 +347,17 @@
       openPopup();
     };
     streamList.appendChild(addBtn);
+
+    function showStream(channel) {
+      playerContainer.style.display = "flex";
+      twitchFrame.src = `https://player.twitch.tv/?channel=${channel}&parent=${location.hostname}`;
+      chatFrame.src = `https://www.twitch.tv/embed/${channel}/chat?parent=${location.hostname}`;
+      playerContainer.classList.remove("chat-hidden");
+      chatIcon.classList.remove("rotated");
+      setTimeout(() => {
+        playerContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 200);
+    }
 
     function addCustomStream() {
       const url = document.getElementById("customLink").value;
