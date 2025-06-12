@@ -12,18 +12,21 @@
       padding: 0;
       width: 100vw;
       min-width: 100vw;
-      height: 100vh;
       overflow-x: hidden;
-      overflow-y: auto;
     }
     body {
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
+      height: 100vh;
       color: white;
       animation: backgroundMove 20s infinite alternate;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
       width: 100vw;
       min-width: 100vw;
+      overflow-x: hidden;
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
@@ -57,61 +60,23 @@
       z-index: 10;
       transition: background 0.3s ease;
       font-family: inherit;
+    }
+    #toggleSettings:hover {
+      background: rgba(0, 255, 255, 0.3);
+    }
+    #menu {
       display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    #toggleSettings .ajustes-text {
-      display: inline-block;
-      opacity: 1;
-      max-width: 200px;
-      margin-left: 5px;
-      transform: translateX(0);
-      transition: 
-        opacity 0.3s cubic-bezier(.4,2,.6,1), 
-        max-width 0.35s cubic-bezier(.4,2,.6,1),
-        margin-left 0.3s cubic-bezier(.4,2,.6,1),
-        transform 0.3s cubic-bezier(.4,2,.6,1);
-      white-space: nowrap;
-      pointer-events: auto;
-    }
-    #toggleSettings.compact .ajustes-text {
-      opacity: 0;
-      max-width: 0px;
-      margin-left: 0;
-      transform: translateX(-12px);
-      pointer-events: none;
-    }
-    #toggleSettings .gear-icon {
-      font-size: 1.2em;
-      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
-    }
-    .margen-grande-arriba {
-      margin-top: 90px;
-    }
-    .section-title {
-      margin-left: 64px;
-      width: calc(100vw - 64px);
-      max-width: calc(100vw - 64px);
+      flex-direction: column;
+      gap: 40px;
+      align-items: stretch;
+      width: 100vw;
+      min-width: 100vw;
       box-sizing: border-box;
-      padding-left: 24px;
-      padding-right: 24px;
-      text-align: left;
-      margin-bottom: 12px;
-      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-      font-size: 2.1rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 12px #000, 0 0px 2px #222;
-      color: #fff;
-      border-left: 5px solid #00ffff66;
-      padding-left: 12px;
-      margin-right: 0;
     }
     .menu-buttons-row-wrapper {
       display: flex;
       align-items: center;
-      margin-left: 32px;
+      margin-left: 32px; /* margen a la izquierda */
       width: calc(100vw - 32px);
       max-width: calc(100vw - 32px);
       box-sizing: border-box;
@@ -158,7 +123,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      opacity: 100%;
+      opacity: 0.75;
       outline: none;
       user-select: none;
       box-shadow: 0 2px 16px #0007;
@@ -168,21 +133,21 @@
     }
     .carousel-arrow svg {
       display: block;
-      width: 48px;
-      height: 48px;
-      stroke-width: 4;
-      stroke: #ff0000;
+      width: 38px;
+      height: 38px;
+      stroke-width: 3.5;
+      stroke: #00ffff;
       fill: none;
     }
     .carousel-arrow.left { left: -28px; }
-    .carousel-arrow.right { right: -8px; }
+    .carousel-arrow.right { right: -28px; }
     .carousel-arrow.visible {
       visibility: visible !important;
       pointer-events: auto;
     }
     .carousel-arrow:active {
       background: rgba(0,255,255,0.08);
-      opacity: 3;
+      opacity: 1;
     }
     .menu-button {
       padding: 0;
@@ -203,57 +168,35 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
     }
+    .section-title {
+      margin-left: 64px; /* Los títulos un poco más a la derecha */
+      width: calc(100vw - 64px);
+      max-width: calc(100vw - 64px);
+      box-sizing: border-box;
+      padding-left: 24px;
+      padding-right: 24px;
+      text-align: left;
+      margin-bottom: 12px;
+      font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px #000, 0 0px 2px #222;
+      color: #fff;
+      border-left: 5px solid #00ffff66;
+      padding-left: 12px;
+      margin-right: 0;
+    }
     .settings {
       display: none;
       flex-direction: column;
-      gap: 18px;
+      gap: 15px;
       background: rgba(255, 255, 255, 0.05);
-      padding: 34px 34px 22px 34px;
+      padding: 30px;
       border-radius: 16px;
       align-items: center;
       z-index: 2;
       animation: fadeIn 0.5s ease forwards;
-      justify-content: center;
-      position: fixed;
-      inset: 0;
-      margin: auto;
-      min-width: 350px;
-      max-width: 95vw;
-      min-height: 350px;
-      max-height: 95vh;
-      box-shadow: 0 8px 40px #000a;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      transform: none;
-    }
-    .settings-row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      justify-content: center;
-    }
-    .default-btn, .aboutblank-btn {
-      background: rgba(0, 255, 255, 0.18);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 15px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-family: inherit;
-    }
-    .aboutblank-btn {
-      padding: 8px 18px;
-      font-size: 15px;
-      margin-top: 4px;
-    }
-    .default-btn:hover, .aboutblank-btn:hover {
-      background: rgba(0, 255, 255, 0.32);
     }
     .settings.show {
       display: flex;
@@ -267,7 +210,6 @@
       font-size: 16px;
       width: 250px;
       transition: 0.3s ease;
-      text-align: center;
     }
     .settings button {
       background: rgba(0, 255, 255, 0.2);
@@ -278,7 +220,6 @@
       font-size: 16px;
       cursor: pointer;
       transition: 0.3s ease;
-      z-index: 10;
     }
     .settings button:hover {
       background: rgba(0, 255, 255, 0.4);
@@ -286,39 +227,6 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
-    }
-    /* --- BUSCADOR DE BOTONES --- */
-    #buscador-contenedor {
-      z-index: 8;
-      transition: box-shadow 0.3s, background 0.3s, top 0.3s;
-    }
-    #buscador-contenedor.compact {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      background: rgba(20,24,32,0.92);
-      box-shadow: 0 2px 16px #000a;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      margin-top: 0 !important;
-      animation: fadeIn 0.3s;
-    }
-    #resultados-busqueda {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: center;
-      margin: 44px 0 16px 0;
-      animation: fadeIn 0.4s;
-    }
-    #resultados-busqueda .menu-button {
-      margin: 0;
-    }
-    /* OCULTAR BUSCADOR Y RESULTADOS cuando ajustes está abierto */
-    .settings.show ~ #buscador-contenedor,
-    .settings.show ~ #resultados-busqueda {
-      display: none !important;
     }
     @media (max-width: 1000px) {
       .menu-button img {
@@ -349,7 +257,7 @@
         height: 60px;
       }
       .carousel-arrow svg {
-        width: 38px;
+        width: 28px;
         height: 28px;
       }
       .section-title {
@@ -359,67 +267,21 @@
         max-width: calc(100vw - 8px);
         padding-left: 6px;
       }
-      .settings { min-width: 95vw; min-height: 200px; }
-      .settings input { width: 80vw; }
-      #buscador-contenedor input { width: 88vw !important; }
     }
   </style>
 </head>
 <body>
+
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-05-07 11.39.48.png" alt="Pantalla completa" />
 
   <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
+  <button id="toggleSettings">⚙ Ajustes</button>
 
-  <!-- Botón para boton de panico -->
-  <button id="classroomRedirectBtn" title="Boton de panico, Ir a Google Classroom"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 170px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">🏫</span>
-</button>
-  <!-- Panel de Ajustes centrado -->
-  <div class="settings" id="settingsPanel">
-    <div class="settings-row">
-      <label for="colorPicker" style="color:white;">Color de fondo:</label>
-      <input type="color" id="colorPicker" name="colorPicker" value="#0f0c29" style="width: 40px; height: 40px; border: none; background: none;">
-      <button class="default-btn" type="button" onclick="resetColor()">Default</button>
-    </div>
-    <div class="settings-row">
-      <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
-      <button class="default-btn" type="button" onclick="setDefaultTitle()">Default</button>
-    </div>
-    <div class="settings-row">
-      <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
-      <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
-    </div>
-    <div class="settings-row">
-      <button class="aboutblank-btn" type="button" onclick="openAboutBlankIframe()">about:blank</button>
-    </div>
-    <button id="applyBtn" onclick="applySettings()">Aplicar</button>
-  </div>
-
-  <!-- Sentinela para IntersectionObserver -->
-  <div id="buscador-sentinela" style="height:1px;"></div>
-  <!-- Barra de búsqueda de botones -->
-  <div id="buscador-contenedor" style="width:100vw;display:flex;justify-content:center;margin-top:25px;">
-    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú..." style="width: 350px; font-size: 1.1em; padding: 10px 16px; border-radius: 12px; border: none; outline: none;">
-  </div>
-  <div id="resultados-busqueda" style="display:none;"></div>
-
+  <!-- Menú principal con secciones -->
   <div id="menu">
     <!-- Sección Entretenimiento -->
-    <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Entretenimiento</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
@@ -432,15 +294,8 @@
           <button class="menu-button" onclick="abrirEnIframe('twich.html')">
             <img src="https://static-00.iconduck.com/assets.00/twitch-icon-1024x1024-we46yfc0.png" alt="Twich">
           </button>
-          <button class="menu-button" onclick="abrirEnIframe('kick.html')">
-            <img src="https://i.pinimg.com/736x/75/3a/80/753a8026311b908da737fab513be953a.jpg" alt="Kick">
-          </button>
           <button class="menu-button" id="librefutboltv-btn">
             <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
-          </button>
-          <!-- NUEVO BOTÓN OMEGLE -->
-          <button class="menu-button" id="omegle-btn">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRWogxB_X-F_kwSIj48DhhtD4RsiOv00JvA&s" alt="Omegle">
           </button>
         </div>
         <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
@@ -460,18 +315,6 @@
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
-          <!-- NUEVO BOTÓN INFINITE CRAFT -->
-          <button class="menu-button" id="infinitecraft-btn">
-            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinite Craft">
-          </button>
-          <!-- NUEVO BOTÓN SURVEV.IO -->
-          <button class="menu-button" id="survey-btn">
-            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="Survev.io">
-          </button>
-          <!-- NUEVO BOTÓN GEFORCE NOW -->
-          <button class="menu-button" id="geforcenow-btn">
-            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce Now">
-          </button>
           <button class="menu-button" id="eldardo-btn">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
           </button>
@@ -481,71 +324,34 @@
           <button class="menu-button" id="poki-btn">
             <img src="https://images.purevpn-tools.com/wp-content/uploads/en/2023/12/poki-games-unblocked-banner.png" alt="Poki Aleatorio">
           </button>
-          <!-- NUEVO BOTÓN -->
-          <button class="menu-button" id="buckshotroulette-btn">
-            <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
-          </button>
         </div>
         <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
           <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
-    <!-- SECCIÓN HERRAMIENTAS -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
-      <div class="section-title">Herramientas</div>
-      <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" id="herramientas-arrow-left" onclick="scrollRow('herramientas', -1)" aria-label="Izquierda">
-          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="menu-buttons-row" id="herramientas-row">
-          <button class="menu-button" onclick="abrirEnIframe('prox/proxy.html')">
-            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2024/03/chrome-firefox-edge-safari-cual-navegador-seguro-3286164.jpg?tf=1200x900" alt="Proxy/Navegador">
-          </button>
-          <!-- Nuevo botón Chat -->
-          <button class="menu-button" onclick="abrirEnIframe('chat.html')">
-            <img src="https://img.freepik.com/vector-premium/icono-chat-bocadillo-dialogo_23-2147501656.jpg" alt="Chat">
-          </button>
-        </div>
-        <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
-          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
   </div>
-  <script>
-    // --- Script del color picker ---
-    const colorPicker = document.getElementById('colorPicker');
-    colorPicker.addEventListener('input', function() {
-      document.body.style.background = colorPicker.value;
-    });
-    function resetColor() {
-      document.body.style.background = "";
-      colorPicker.value = "#0f0c29";
-    }
 
+  <!-- Ajustes -->
+  <div class="settings" id="settingsPanel">
+    <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
+    <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+    <button id="applyBtn" onclick="applySettings()">Aplicar</button>
+  </div>
+
+  <script>
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
     const toggleSettingsBtn = document.getElementById("toggleSettings");
-    function updateAjustesButton() {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      if (scrollTop < 2) {
-        toggleSettingsBtn.classList.remove('compact');
-      } else {
-        toggleSettingsBtn.classList.add('compact');
-      }
-    }
-    window.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
-    document.addEventListener('DOMContentLoaded', updateAjustesButton);
+
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
         fullscreenImage.classList.toggle("hidden");
       }
     });
+
     toggleSettingsBtn.addEventListener("click", () => {
       if (settingsPanel.classList.contains("show")) {
         settingsPanel.classList.remove("show");
@@ -567,6 +373,7 @@
         }, 500);
       }
     });
+
     function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
       const newImage = document.getElementById("imageInput").value;
@@ -582,35 +389,7 @@
         }, 500);
       }, 50);
     }
-    function setDefaultTitle() {
-      document.getElementById("titleInput").value = "";
-      document.title = "Classroom";
-    }
-    function setDefaultImage() {
-      document.getElementById("imageInput").value = "";
-      document.getElementById("fullscreenImage").src = "images/Screenshot 2025-05-07 11.39.48.png";
-    }
-    function openAboutBlankIframe() {
-      const nuevaPestana = window.open('about:blank', '_blank');
-      if (nuevaPestana) {
-        nuevaPestana.document.write(`
-          <html>
-            <head>
-              <title>Classroom</title>
-              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-              <style>
-                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                iframe { border:none; width:100vw; height:100vh; display:block; }
-              </style>
-            </head>
-            <body>
-              <iframe src="https://merx111.github.io/" allow="autoplay; fullscreen"></iframe>
-            </body>
-          </html>
-        `);
-        nuevaPestana.document.close();
-      }
-    }
+
     function abrirEnIframe(url) {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -632,6 +411,7 @@
         nuevaPestana.document.close();
       }
     }
+
     function scrollRow(row, dir) {
       const rowEl = document.getElementById(row + '-row');
       if (!rowEl) return;
@@ -643,6 +423,7 @@
       rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
       setTimeout(() => updateArrows(row), 340);
     }
+
     function updateArrows(row) {
       const rowEl = document.getElementById(row + '-row');
       const leftArrow = document.getElementById(row + '-arrow-left');
@@ -659,10 +440,10 @@
         rightArrow.classList.remove('visible');
       }
     }
+
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
-      updateArrows('herramientas');
     }
     window.addEventListener('resize', updateAllArrows);
     document.addEventListener('DOMContentLoaded', function() {
@@ -695,100 +476,12 @@
           abrirEnIframe('https://librefutboltv.su/');
         });
       }
-      // NUEVO PARA BUCKSHOT ROULETTE
-      const buckshotBtn = document.getElementById('buckshotroulette-btn');
-      if (buckshotBtn) {
-        buckshotBtn.addEventListener('click', function() {
-          abrirEnIframe('https://buckshotroulette.com/home');
-        });
-      }
-      // NUEVO PARA GEFORCE NOW
-      const geforceNowBtn = document.getElementById('geforcenow-btn');
-      if (geforceNowBtn) {
-        geforceNowBtn.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>GeForce Now</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="https://definitelyscience.com/class/GeForce-Now/" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
-      // NUEVO BOTÓN OMEGLE
-      const omegleBtn = document.getElementById('omegle-btn');
-      if (omegleBtn) {
-        omegleBtn.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>Omegle Chat</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="https://omegleweb.com/video" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
-      // NUEVO BOTÓN SURVEV.IO
-      const surveyBtn = document.getElementById('survey-btn');
-      if (surveyBtn) {
-        surveyBtn.addEventListener('click', function() {
-          abrirEnIframe('https://survev.io/');
-        });
-      }
-      // NUEVO BOTÓN INFINITE CRAFT
-      const infiniteCraftBtn = document.getElementById('infinitecraft-btn');
-      if (infiniteCraftBtn) {
-        infiniteCraftBtn.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>Infinite Craft</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="https://infinite-craft.com/" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
-      ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
+      ['ent-row', 'juegos-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
     });
+
     function generarLetrasAzar(longitud) {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       let resultado = '';
@@ -797,105 +490,6 @@
       }
       return resultado;
     }
-
-    // --- BUSCADOR DE BOTONES DE MENÚ ---
-    const buscador = document.getElementById('buscador-menu');
-    const menuDiv = document.getElementById('menu');
-    const resultadosBusqueda = document.getElementById('resultados-busqueda');
-    const buscadorContenedor = document.getElementById('buscador-contenedor');
-    const buscadorSentinela = document.getElementById('buscador-sentinela');
-
-    function obtenerBotonesMenu() {
-      const secciones = ['ent-row', 'juegos-row', 'herramientas-row'];
-      let botones = [];
-      secciones.forEach(id => {
-        const fila = document.getElementById(id);
-        if (fila) {
-          botones = botones.concat(Array.from(fila.querySelectorAll('.menu-button')));
-        }
-      });
-      return botones;
-    }
-
-    buscador.addEventListener('input', function() {
-      const texto = buscador.value.trim().toLowerCase();
-      if (texto === "") {
-        resultadosBusqueda.style.display = "none";
-        menuDiv.style.display = "";
-        return;
-      }
-      const botones = obtenerBotonesMenu();
-      const botonesFiltrados = botones.filter(btn => {
-        const img = btn.querySelector('img');
-        if (!img) return false;
-        const nombre = img.alt || "";
-        return nombre.toLowerCase().startsWith(texto) || nombre.toLowerCase().includes(texto) || (texto.length === 1 && nombre[0]?.toLowerCase() === texto);
-      });
-      resultadosBusqueda.innerHTML = "";
-      if (botonesFiltrados.length === 0) {
-        resultadosBusqueda.innerHTML = '<div style="color:#fff;font-size:1.1em;padding:32px;">No se encontró ningún botón.</div>';
-      } else {
-        botonesFiltrados.forEach(btn => {
-          const clon = btn.cloneNode(true);
-          clon.onclick = btn.onclick;
-          if (btn.id) {
-            const orig = document.getElementById(btn.id);
-            if (orig) clon.addEventListener('click', orig.onclick);
-          }
-          resultadosBusqueda.appendChild(clon);
-        });
-      }
-      resultadosBusqueda.style.display = "flex";
-      menuDiv.style.display = "none";
-    });
-
-    buscador.addEventListener('blur', function() {
-      if (buscador.value.trim() === "") {
-        resultadosBusqueda.style.display = "none";
-        menuDiv.style.display = "";
-      }
-    });
-
-    // --- PEGAR BUSCADOR ARRIBA SI SE ESCONDE POR SCROLL ---
-    function updateBuscadorCompactBySettings() {
-      if (settingsPanel.classList.contains('show')) {
-        buscadorContenedor.classList.remove('compact');
-      }
-    }
-
-    const observer = new window.IntersectionObserver(
-      entries => {
-        const e = entries[0];
-        if (settingsPanel.classList.contains('show')) {
-          buscadorContenedor.classList.remove('compact');
-          return;
-        }
-        if (!e.isIntersecting) {
-          buscadorContenedor.classList.add('compact');
-        } else {
-          buscadorContenedor.classList.remove('compact');
-        }
-      },
-      { threshold: 0 }
-    );
-
-    observer.observe(buscadorSentinela);
-
-    document.getElementById('toggleSettings').addEventListener('click', () => {
-      setTimeout(updateBuscadorCompactBySettings, 100);
-    });
-  // --- REDIRECCIÓN CON BOTÓN Y TECLA º ---
-const classroomBtn = document.getElementById('classroomRedirectBtn');
-if (classroomBtn) {
-  classroomBtn.addEventListener('click', function() {
-    window.location.href = 'https://classroom.google.com/';
-  });
-}
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'º') {
-    window.location.href = 'https://classroom.google.com/';
-  }
-});
-</script>
+  </script>
 </body>
 </html>
