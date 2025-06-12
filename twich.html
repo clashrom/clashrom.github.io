@@ -19,7 +19,6 @@
       align-items: center;
       justify-content: flex-start;
       padding-top: 40px;
-      /* Permitir scroll si se necesita */
       overflow-y: auto;
       max-height: 100vh;
     }
@@ -131,7 +130,6 @@
       margin-bottom: 40px;
       position: relative;
       transition: all 0.3s ease;
-      /* Scroll solo en los iframes */
       max-height: 520px;
       overflow-y: auto;
       background: rgba(21, 9, 40, 0.8);
@@ -289,10 +287,11 @@
   </div>
 
   <script>
-    // Añadido crackheber
+    // Lista de streamers sin el botón de añadir
     const streamers = [
-      "rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51", "crackheber"
+      "rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51"
     ];
+    const customStreamer = {name: "crackheber", url: "https://www.twitch.tv/crackheber"};
     const streamList = document.getElementById("streamList");
     const twitchFrame = document.getElementById("twitchFrame");
     const chatFrame = document.getElementById("chatFrame");
@@ -330,9 +329,15 @@
       }, 200);
     }
 
+    // Agrega todos los botones de streamers "normales"
     streamers.forEach(name => {
       streamList.appendChild(createStreamerButton(name));
     });
+
+    // --- Aquí insertamos el botón de crackheber justo antes del botón de añadir ---
+    const crackBtn = createStreamerButton(customStreamer.name);
+    streamList.appendChild(crackBtn);
+    // ---------------------------------------------------------------------------
 
     // Botón para añadir canal personalizado
     const addBtn = document.createElement("button");
