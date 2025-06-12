@@ -11,8 +11,7 @@
       margin: 0;
       background: linear-gradient(135deg, #2d1446, #9147ff 50%, #25124d);
       font-family: sans-serif;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
       color: white;
       animation: backgroundMove 20s infinite alternate;
       display: flex;
@@ -20,6 +19,9 @@
       align-items: center;
       justify-content: flex-start;
       padding-top: 40px;
+      /* Agregado para permitir scroll cuando hay iframes */
+      overflow-y: auto;
+      max-height: 100vh;
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
@@ -35,8 +37,6 @@
       letter-spacing: -1px;
       text-shadow: 0 2px 14px #9147ff99;
     }
-
-    /* Botón principal y su hover */
     button, .stream-button, .chat-toggle-btn, .open-popup-btn {
       background: #191037;
       color: #fff;
@@ -56,8 +56,6 @@
       border: 2px solid #fff;
       box-shadow: 0 4px 24px #9147ff77, 0 0 0 4px #9147ff44;
     }
-
-    /* Input */
     input {
       width: 300px;
       background: #25124d;
@@ -77,8 +75,6 @@
       border: 2px solid #fff;
       box-shadow: 0 4px 16px #9147ff77, 0 0 0 4px #9147ff44;
     }
-
-    /* Stream list y contenedores */
     .stream-list {
       display: flex;
       flex-wrap: wrap;
@@ -115,7 +111,6 @@
       font-size: 14px;
       color: #e5ccff;
     }
-
     .add-icon {
       font-size: 50px;
       color: #fff;
@@ -128,7 +123,6 @@
       width: 60px;
       margin: 0 auto 8px;
     }
-
     .stream-player-container {
       display: flex;
       gap: 10px;
@@ -137,6 +131,12 @@
       margin-bottom: 40px;
       position: relative;
       transition: all 0.3s ease;
+      /* SCROLL SOLO EN LOS IFRAME */
+      max-height: 520px;
+      overflow-y: auto;
+      background: rgba(21, 9, 40, 0.8);
+      border-radius: 14px;
+      box-shadow: 0 0 20px #9147ff55;
     }
     iframe {
       border: none;
@@ -147,11 +147,13 @@
       flex: 3;
       height: 500px;
       transition: all 0.5s ease;
+      min-width: 350px;
     }
     #chatFrame {
       flex: 1;
       height: 500px;
       transition: all 0.5s ease;
+      min-width: 200px;
     }
     .chat-hidden #chatFrame {
       width: 0;
@@ -163,7 +165,6 @@
       flex: 1;
       width: 100%;
     }
-
     .chat-toggle-btn {
       position: absolute;
       right: -40px;
@@ -185,7 +186,6 @@
     .rotated {
       transform: rotate(180deg);
     }
-
     .open-popup-btn {
       position: absolute;
       left: -40px;
@@ -198,8 +198,6 @@
       border-radius: 6px;
       z-index: 10;
     }
-
-    /* Popup y overlay */
     #popup {
       display: none;
       position: fixed;
@@ -291,7 +289,8 @@
   </div>
 
   <script>
-    const streamers = ["rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51"];
+    // Añadido crackheber
+    const streamers = ["rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51", "crackheber"];
     const streamList = document.getElementById("streamList");
     const twitchFrame = document.getElementById("twitchFrame");
     const chatFrame = document.getElementById("chatFrame");
@@ -324,7 +323,6 @@
       chatFrame.src = `https://www.twitch.tv/embed/${channel}/chat?parent=${location.hostname}`;
       playerContainer.classList.remove("chat-hidden");
       chatIcon.classList.remove("rotated");
-      // Scroll automático al reproductor
       setTimeout(() => {
         playerContainer.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 200);
@@ -363,14 +361,14 @@
     }
 
     function closePopup() {
-      document.getElementById("popup").style.animation = "none"; // Remove previous animation
-      document.getElementById("popup").style.display = "none"; // Hide the popup
+      document.getElementById("popup").style.animation = "none";
+      document.getElementById("popup").style.display = "none";
       document.getElementById("overlay").style.display = "none";
     }
 
     function openPopup() {
-      document.getElementById("popup").style.display = "block"; // Show the popup
-      document.getElementById("popup").style.animation = "popupAppear 0.6s ease-out forwards"; // Apply the animation
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("popup").style.animation = "popupAppear 0.6s ease-out forwards";
       document.getElementById("overlay").style.display = "block";
     }
 
