@@ -158,8 +158,8 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      opacity: 1;
-      outline: 2px solid black;
+      opacity: 100%;
+      outline: none;
       user-select: none;
       box-shadow: 0 4px 26px #0007;
       padding: 0;
@@ -170,9 +170,10 @@
       display: block;
       width: 48px;
       height: 48px;
-      stroke-width: 3.5;
+      stroke-width: 4;
       stroke: #ff0000;
       fill: none;
+      outline: 3px solid black;
     }
     .carousel-arrow.left { left: -28px; }
     .carousel-arrow.right { right: -8px; }
@@ -182,7 +183,7 @@
     }
     .carousel-arrow:active {
       background: rgba(0,255,255,0.08);
-      opacity: 1;
+      opacity: 3;
     }
     .menu-button {
       padding: 0;
