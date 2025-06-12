@@ -19,7 +19,7 @@
       align-items: center;
       justify-content: flex-start;
       padding-top: 40px;
-      /* Agregado para permitir scroll cuando hay iframes */
+      /* Permitir scroll si se necesita */
       overflow-y: auto;
       max-height: 100vh;
     }
@@ -131,7 +131,7 @@
       margin-bottom: 40px;
       position: relative;
       transition: all 0.3s ease;
-      /* SCROLL SOLO EN LOS IFRAME */
+      /* Scroll solo en los iframes */
       max-height: 520px;
       overflow-y: auto;
       background: rgba(21, 9, 40, 0.8);
@@ -290,7 +290,9 @@
 
   <script>
     // Añadido crackheber
-    const streamers = ["rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51", "crackheber"];
+    const streamers = [
+      "rubius", "thegrefg", "rickyedit", "auronplay", "elxokas", "agustin51", "crackheber"
+    ];
     const streamList = document.getElementById("streamList");
     const twitchFrame = document.getElementById("twitchFrame");
     const chatFrame = document.getElementById("chatFrame");
@@ -332,6 +334,7 @@
       streamList.appendChild(createStreamerButton(name));
     });
 
+    // Botón para añadir canal personalizado
     const addBtn = document.createElement("button");
     addBtn.className = "stream-button";
 
