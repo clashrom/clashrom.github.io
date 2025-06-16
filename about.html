@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Abrir en about:blank</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #111;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      flex-direction: column;
+    }
+    input[type="text"] {
+      width: 60%;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="linkInput" placeholder="Pega un enlace aquí y presiona Enter">
+  <button onclick="abrirIframe()">Abrir en iframe</button>
+
+  <script>
+    function abrirIframe() {
+      const url = document.getElementById("linkInput").value;
+      if (!url) return;
+
+      const win = window.open("about:blank", "_blank");
+      win.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Vista previa</title>
+          <style>
+            html, body {
+              margin: 0;
+              height: 100%;
+              background: black;
+            }
+            iframe {
+              width: 100%;
+              height: 100%;
+              border: none;
+            }
+          </style>
+        </head>
+        <body>
+          <iframe src="${url}" allowfullscreen></iframe>
+        </body>
+        </html>
+      `);
+      win.document.close();
+    }
+
+    document.getElementById("linkInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") abrirIframe();
+    });
+  </script>
+
+</body>
+</html>
