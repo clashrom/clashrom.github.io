@@ -1156,11 +1156,12 @@ document.addEventListener('keydown', function(e) {
 window.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
     document.getElementById('loader-bg').classList.add('hide');
+    document.body.classList.remove('loading');
     setTimeout(() => {
       const loader = document.getElementById('loader-bg');
       if (loader) loader.remove();
     }, 600);
-  }, 13000);
+  }, 900); // Puedes ajustar el tiempo si quieres
 });
 </script>
 </body>
