@@ -363,7 +363,24 @@
       .settings input { width: 80vw; }
       #buscador-contenedor input { width: 88vw !important; }
     }
-  /* From Uiverse.io by Nawsome */ 
+  /* From Uiverse.io by Nawsome */
+  /* Pantalla de carga centrada */
+body.loading > *:not(#loader-bg) {
+  display: none !important;
+}  
+#loader-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* igual que el body */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s;
+}
+#loader-bg.hide {
+  opacity: 0;
+  pointer-events: none;
 .pl {
   width: 6em;
   height: 6em;
@@ -570,7 +587,7 @@
 }
   </style>
 </head>
-<body>
+<body class="loading">
   <div id="loader-bg">
   <svg class="pl" viewBox="0 0 200 200" width="96" height="96">
     <circle class="pl__ring pl__ring--a" cx="100" cy="100" r="80" fill="none" stroke-width="20" stroke-linecap="round"/>
@@ -1143,7 +1160,7 @@ window.addEventListener('DOMContentLoaded', function() {
       const loader = document.getElementById('loader-bg');
       if (loader) loader.remove();
     }, 600);
-  }, 900);
+  }, 13000);
 });
 </script>
 </body>
