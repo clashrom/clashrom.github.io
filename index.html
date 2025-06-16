@@ -378,9 +378,6 @@ body.loading > *:not(#loader-bg) {
   justify-content: center;
   transition: opacity 0.5s;
 }
-#loader-bg.hide {
-  opacity: 0;
-  pointer-events: none;
 /* Animations */
 /* From Uiverse.io by jeremyssocial */ 
 @keyframes blinkCursor {
@@ -477,14 +474,19 @@ body.loading > *:not(#loader-bg) {
   </style>
 </head>
 <body class="loading">
-  <div id="loader-bg">
-  <svg class="pl" viewBox="0 0 200 200" width="96" height="96">
-    <circle class="pl__ring pl__ring--a" cx="100" cy="100" r="80" fill="none" stroke-width="20" stroke-linecap="round"/>
-    <circle class="pl__ring pl__ring--b" cx="100" cy="100" r="60" fill="none" stroke-width="20" stroke-linecap="round"/>
-    <circle class="pl__ring pl__ring--c" cx="100" cy="100" r="40" fill="none" stroke-width="20" stroke-linecap="round"/>
-    <circle class="pl__ring pl__ring--d" cx="100" cy="100" r="20" fill="none" stroke-width="20" stroke-linecap="round"/>
-  </svg>
+  <!-- From Uiverse.io by jeremyssocial --> 
+<div class="terminal-loader">
+  <div class="terminal-header">
+    <div class="terminal-title">Status</div>
+    <div class="terminal-controls">
+      <div class="control close"></div>
+      <div class="control minimize"></div>
+      <div class="control maximize"></div>
+    </div>
+  </div>
+  <div class="text">Loading...</div>
 </div>
+
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
