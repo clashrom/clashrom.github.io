@@ -435,9 +435,6 @@
           <button class="menu-button" onclick="abrirEnIframe('kick.html')">
             <img src="https://i.pinimg.com/736x/75/3a/80/753a8026311b908da737fab513be953a.jpg" alt="Kick">
           </button>
-          <button class="menu-button" id="librefutboltv-btn">
-            <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
-          </button>
           <button class="menu-button" onclick="abrirEnIframe('https://librefutboltv.su/')">
             <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
           </button>
@@ -700,12 +697,6 @@
         pokiBtn.addEventListener('click', function() {
           const letrasAzar = generarLetrasAzar(8);
           window.open('https://poki.com/' + letrasAzar, '_blank');
-        });
-      }
-      const librefutboltvBtn = document.getElementById('librefutboltv-btn');
-      if (librefutboltvBtn) {
-        librefutboltvBtn.addEventListener('click', function() {
-          abrirEnIframe('https://librefutboltv.su/');
         });
       }
       // NUEVO PARA BUCKSHOT ROULETTE
