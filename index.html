@@ -43,118 +43,49 @@
     .hidden {
       display: none !important;
     }
-
-    /* Burger Menu Styles */
-    .burger-menu-container {
+    #toggleSettings {
       position: fixed;
       top: 20px;
       left: 20px;
-      z-index: 1000;
-    }
-
-    .burger {
-      position: relative;
-      width: 40px;
-      height: 30px;
-      background: transparent;
-      cursor: pointer;
-      display: block;
-    }
-
-    .burger input {
-      display: none;
-    }
-
-    .burger span {
-      display: block;
-      position: absolute;
-      height: 4px;
-      width: 100%;
-      background: white;
-      border-radius: 9px;
-      opacity: 1;
-      left: 0;
-      transform: rotate(0deg);
-      transition: .25s ease-in-out;
-    }
-
-    .burger span:nth-of-type(1) {
-      top: 0px;
-      transform-origin: left center;
-    }
-
-    .burger span:nth-of-type(2) {
-      top: 50%;
-      transform: translateY(-50%);
-      transform-origin: left center;
-    }
-
-    .burger span:nth-of-type(3) {
-      top: 100%;
-      transform-origin: left center;
-      transform: translateY(-100%);
-    }
-
-    .burger input:checked ~ span:nth-of-type(1) {
-      transform: rotate(45deg);
-      top: 0px;
-      left: 5px;
-    }
-
-    .burger input:checked ~ span:nth-of-type(2) {
-      width: 0%;
-      opacity: 0;
-    }
-
-    .burger input:checked ~ span:nth-of-type(3) {
-      transform: rotate(-45deg);
-      top: 28px;
-      left: 5px;
-    }
-
-    .menu-options {
-      display: none;
-      position: absolute;
-      left: 0;
-      top: 50px;
-      flex-direction: column;
-      gap: 10px;
-      background: rgba(20, 24, 32, 0.9);
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      min-width: 200px;
-      z-index: 1001;
-    }
-
-    #burger:checked ~ .menu-options {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .menu-option {
-      padding: 10px 15px;
-      background: rgba(0, 255, 255, 0.18);
-      color: white;
+      padding: 10px 20px;
+      background: rgba(0, 255, 255, 0.15);
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
-      transition: background 0.2s;
-      font-family: 'Montserrat', sans-serif;
-      text-align: left;
+      z-index: 10;
+      transition: background 0.3s ease;
+      font-family: inherit;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
-
-    .menu-option:hover {
-      background: rgba(0, 255, 255, 0.32);
+    #toggleSettings .ajustes-text {
+      display: inline-block;
+      opacity: 1;
+      max-width: 200px;
+      margin-left: 5px;
+      transform: translateX(0);
+      transition: 
+        opacity 0.3s cubic-bezier(.4,2,.6,1), 
+        max-width 0.35s cubic-bezier(.4,2,.6,1),
+        margin-left 0.3s cubic-bezier(.4,2,.6,1),
+        transform 0.3s cubic-bezier(.4,2,.6,1);
+      white-space: nowrap;
+      pointer-events: auto;
     }
-
-    .menu-option span {
+    #toggleSettings.compact .ajustes-text {
+      opacity: 0;
+      max-width: 0px;
+      margin-left: 0;
+      transform: translateX(-12px);
+      pointer-events: none;
+    }
+    #toggleSettings .gear-icon {
       font-size: 1.2em;
+      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
-
     .margen-grande-arriba {
       margin-top: 90px;
     }
@@ -438,28 +369,41 @@
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
-  <!-- Menú hamburguesa -->
-  <div class="burger-menu-container">
-    <label class="burger" for="burger">
-      <input type="checkbox" id="burger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-    
-    <div class="menu-options">
-      <button class="menu-option" id="settingsOption">
-        <span>⚙</span> Ajustes
-      </button>
-      <button class="menu-option" id="panicOption">
-        <span>🏫</span> Botón de pánico
-      </button>
-      <button class="menu-option" id="termsOption">
-        <span>❏</span> Términos y condiciones
-      </button>
-    </div>
-  </div>
+  <!-- Botón para mostrar ajustes -->
+  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
+  <!-- Botón para boton de panico -->
+  <button id="classroomRedirectBtn" title="Boton de panico, Ir a Google Classroom"
+  style="
+    position: fixed;
+    top: 20px;
+    left: 170px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgba(0,255,255,0.18);
+    color: #fff;
+    border: none;
+    z-index: 10;
+    cursor: pointer;
+  ">
+  <span style="font-size:1.4em;">🏫</span>
+</button>
+  <!-- Botón para terminos y condiciones -->
+  <button id="tyc" title="terminos y condiciones"
+  style="
+    position: fixed;
+    top: 20px;
+    left: 270px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgba(0,255,255,0.18);
+    color: #fff;
+    border: none;
+    z-index: 10;
+    cursor: pointer;
+  ">
+  <span style="font-size:1.4em;">❏</span>
+</button>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
@@ -519,8 +463,9 @@
           <button class="menu-button" onclick="abrirEnIframe('https://reddit.formula1stream.cc/index22')">
             <img src="https://m.media-amazon.com/images/I/01QFWDRb+1L.png" alt="f1">
           </button>
-          <button class="menu-button" onclick="abrirEnIframe('https://ome.tv')">
-            <img src="https://play-lh.googleusercontent.com/dqXfJhXmJRvQNU-6ExVKC1QchVfscm1VpmZO16IAjAF0eN6YwWIUjdOSPSdBgK1gRQ" alt="omegle">
+          <!-- NUEVO BOTÓN OMEGLE -->
+          <button class="menu-button" id="omegle-btn">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRWogxB_X-F_kwSIj48DhhtD4RsiOv00JvA&s" alt="Omegle">
           </button>
         </div>
         <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
@@ -540,20 +485,25 @@
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
-          <button class="menu-button" onclick="abrirEnIframe('https://infinite-craft.com/')">
-            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinitecraft">
+          <!-- NUEVO BOTÓN INFINITE CRAFT -->
+          <button class="menu-button" id="infinitecraft-btn">
+            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinite Craft">
           </button>
+          <!-- NUEVO BOTON GARTIC PHONE -->
           <button class="menu-button" onclick="abrirEnIframe('https://garticphone.com/es')">
             <img src="https://i.pinimg.com/originals/e9/67/a6/e967a6cbaba556d30794fe287a300cba.png" alt="gartic phone">
           </button>
+          <!-- NUEVO BOTON skyriders -->
           <button class="menu-button" onclick="abrirEnIframe('https://holajuegos.com/game/sky-riders')">
             <img src="https://play-lh.googleusercontent.com/mFC3V4uWCrzSTVKt3sWzK7e7vFqHEqNaDgKumL3Ist7B0OstmZGGFWVKDawzaELImQ=w526-h296-rw" alt="sky riders">
           </button>
-          <button class="menu-button" onclick="abrirEnIframe('https://survev.io/')">
-            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="survev.io">
+          <!-- NUEVO BOTÓN SURVEV.IO -->
+          <button class="menu-button" id="survey-btn">
+            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="Survev.io">
           </button>
-          <button class="menu-button" onclick="abrirEnIframe('https://definitelyscience.com/class/GeForce-Now/')">
-            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce NOW">
+          <!-- NUEVO BOTÓN GEFORCE NOW -->
+          <button class="menu-button" id="geforcenow-btn">
+            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce Now">
           </button>
           <button class="menu-button" id="eldardo-btn">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
@@ -567,6 +517,7 @@
           <button class="menu-button" onclick="abrirEnIframe('https://eduardolainez.github.io/order-the-colors/')">
             <img src="images/ordena.jpg" alt="ordena los colores">
           </button>
+          <!-- NUEVO BOTÓN -->
           <button class="menu-button" id="buckshotroulette-btn">
             <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
           </button>
@@ -590,6 +541,7 @@
           <button class="menu-button" onclick="abrirEnIframe('https://anura.pro')">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2H1lIjVZXgJbUW-3kgcaJk8jff5fr8kRZC2iF4HrfkTlut85ICei01QGzPAP-F5YY0XM&usqp=CAU" alt="anuraOS">
           </button>
+          <!-- Nuevo botón Chat -->
           <button class="menu-button" onclick="abrirEnIframe('chat.html')">
             <img src="https://img.freepik.com/vector-premium/icono-chat-bocadillo-dialogo_23-2147501656.jpg" alt="Chat">
           </button>
@@ -623,68 +575,46 @@
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
-    
+    const toggleSettingsBtn = document.getElementById("toggleSettings");
     function updateAjustesButton() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       if (scrollTop < 2) {
-        document.getElementById('burger').checked = false;
+        toggleSettingsBtn.classList.remove('compact');
+      } else {
+        toggleSettingsBtn.classList.add('compact');
       }
     }
     window.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('DOMContentLoaded', updateAjustesButton);
-    
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
         fullscreenImage.classList.toggle("hidden");
       }
     });
-
-    // Burger menu functionality
-    document.getElementById('settingsOption').addEventListener('click', function() {
-      document.getElementById('burger').checked = false;
-      settingsPanel.classList.add("show");
-      menu.classList.add("hidden");
-    });
-
-    document.getElementById('panicOption').addEventListener('click', function() {
-      window.location.href = 'https://classroom.google.com/';
-    });
-
-    document.getElementById('termsOption').addEventListener('click', function() {
-      document.getElementById('burger').checked = false;
-      const nuevaPestana = window.open('about:blank', '_blank');
-      if (nuevaPestana) {
-        nuevaPestana.document.write(`
-          <html>
-            <head>
-              <title>terminos y condiciones</title>
-              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-              <style>
-                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                iframe { border:none; width:100vw; height:100vh; display:block; }
-              </style>
-            </head>
-            <body>
-              <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
-            </body>
-          </html>
-        `);
-        nuevaPestana.document.close();
+    toggleSettingsBtn.addEventListener("click", () => {
+      if (settingsPanel.classList.contains("show")) {
+        settingsPanel.classList.remove("show");
+        setTimeout(() => {
+          menu.classList.remove("hidden");
+          menu.classList.remove("fade-out");
+          menu.classList.add("fade-in");
+          setTimeout(() => {
+            menu.classList.remove("fade-in");
+          }, 500);
+        }, 50);
+      } else {
+        menu.classList.remove("fade-out");
+        menu.classList.add("fade-out");
+        setTimeout(() => {
+          menu.classList.add("hidden");
+          menu.classList.remove("fade-out");
+          settingsPanel.classList.add("show");
+        }, 500);
       }
     });
-
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function(event) {
-      const burgerMenu = document.querySelector('.burger-menu-container');
-      const burgerCheckbox = document.getElementById('burger');
-      if (!burgerMenu.contains(event.target) {
-        burgerCheckbox.checked = false;
-      }
-    });
-
     function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
       const newImage = document.getElementById("imageInput").value;
@@ -693,19 +623,21 @@
       settingsPanel.classList.remove("show");
       setTimeout(() => {
         menu.classList.remove("hidden");
+        menu.classList.remove("fade-out");
+        menu.classList.add("fade-in");
+        setTimeout(() => {
+          menu.classList.remove("fade-in");
+        }, 500);
       }, 50);
     }
-    
     function setDefaultTitle() {
       document.getElementById("titleInput").value = "";
       document.title = "Classroom";
     }
-    
     function setDefaultImage() {
       document.getElementById("imageInput").value = "";
       document.getElementById("fullscreenImage").src = "images/Screenshot 2025-06-16 13.03.28.png";
     }
-    
     function openAboutBlankIframe() {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -727,7 +659,6 @@
         nuevaPestana.document.close();
       }
     }
-    
     function abrirEnIframe(url) {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -749,7 +680,6 @@
         nuevaPestana.document.close();
       }
     }
-    
     function scrollRow(row, dir) {
       const rowEl = document.getElementById(row + '-row');
       if (!rowEl) return;
@@ -761,7 +691,6 @@
       rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
       setTimeout(() => updateArrows(row), 340);
     }
-    
     function updateArrows(row) {
       const rowEl = document.getElementById(row + '-row');
       const leftArrow = document.getElementById(row + '-arrow-left');
@@ -778,15 +707,12 @@
         rightArrow.classList.remove('visible');
       }
     }
-    
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
       updateArrows('herramientas');
     }
-    
     window.addEventListener('resize', updateAllArrows);
-    
     document.addEventListener('DOMContentLoaded', function() {
       updateAllArrows();
       const eldardoBtn = document.getElementById('eldardo-btn');
@@ -796,7 +722,6 @@
           window.open('https://eldardo.net/' + letrasAzar, '_blank');
         });
       }
-      
       const crazygamesBtn = document.getElementById('crazygames-btn');
       if (crazygamesBtn) {
         crazygamesBtn.addEventListener('click', function() {
@@ -804,7 +729,7 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
-      
+      // SCRIPT NUEVO PARA POKI
       const pokiBtn = document.getElementById('poki-btn');
       if (pokiBtn) {
         pokiBtn.addEventListener('click', function() {
@@ -812,20 +737,125 @@
           window.open('https://poki.com/' + letrasAzar, '_blank');
         });
       }
-      
+      // NUEVO PARA BUCKSHOT ROULETTE
       const buckshotBtn = document.getElementById('buckshotroulette-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
           abrirEnIframe('https://buckshotroulette.com/home');
         });
       }
-      
+      // NUEVO PARA GEFORCE NOW
+      const geforceNowBtn = document.getElementById('geforcenow-btn');
+      if (geforceNowBtn) {
+        geforceNowBtn.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>GeForce Now</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="https://definitelyscience.com/class/GeForce-Now/" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
+        });
+      }
+      // NUEVO BOTÓN OMEGLE
+      const omegleBtn = document.getElementById('omegle-btn');
+      if (omegleBtn) {
+        omegleBtn.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>Omegle Chat</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="https://omegleweb.com/video" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
+        });
+      }
+      // NUEVO BOTÓN SURVEV.IO
+      const surveyBtn = document.getElementById('survey-btn');
+      if (surveyBtn) {
+        surveyBtn.addEventListener('click', function() {
+          abrirEnIframe('https://survev.io/');
+        });
+      }
+      // NUEVO BOTÓN INFINITE CRAFT
+      const infiniteCraftBtn = document.getElementById('infinitecraft-btn');
+      if (infiniteCraftBtn) {
+        infiniteCraftBtn.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>Infinite Craft</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="https://infinite-craft.com/" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
+        });
+      }
+      // BOTON TERMINOS Y CONDICIONES
+      const tyc = document.getElementById('tyc');
+      if (tyc) {
+        tyc.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>terminos y condiciones</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
+        });
+      }
       ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
     });
-    
     function generarLetrasAzar(longitud) {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       let resultado = '';
@@ -918,12 +948,21 @@
 
     observer.observe(buscadorSentinela);
 
-    // --- REDIRECCIÓN CON TECLA º ---
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'º') {
-        window.location.href = 'https://classroom.google.com/';
-      }
+    document.getElementById('toggleSettings').addEventListener('click', () => {
+      setTimeout(updateBuscadorCompactBySettings, 100);
     });
-  </script>
+  // --- REDIRECCIÓN CON BOTÓN Y TECLA º ---
+const classroomBtn = document.getElementById('classroomRedirectBtn');
+if (classroomBtn) {
+  classroomBtn.addEventListener('click', function() {
+    window.location.href = 'https://classroom.google.com/';
+  });
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'º') {
+    window.location.href = 'https://classroom.google.com/';
+  }
+});
+</script>
 </body>
 </html>
