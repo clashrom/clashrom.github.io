@@ -464,8 +464,8 @@
             <img src="https://m.media-amazon.com/images/I/01QFWDRb+1L.png" alt="f1">
           </button>
           <!-- NUEVO BOTÓN OMEGLE -->
-          <button class="menu-button" id="omegle-btn">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRWogxB_X-F_kwSIj48DhhtD4RsiOv00JvA&s" alt="Omegle">
+          <button class="menu-button" onclick="abrirEnIframe('https://ome.tv')">
+            <img src="https://play-lh.googleusercontent.com/dqXfJhXmJRvQNU-6ExVKC1QchVfscm1VpmZO16IAjAF0eN6YwWIUjdOSPSdBgK1gRQ" alt="omegle">
           </button>
         </div>
         <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
@@ -486,8 +486,8 @@
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
           <!-- NUEVO BOTÓN INFINITE CRAFT -->
-          <button class="menu-button" id="infinitecraft-btn">
-            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinite Craft">
+          <button class="menu-button" onclick="abrirEnIframe('https://infinite-craft.com/')">
+            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinitecraft">
           </button>
           <!-- NUEVO BOTON GARTIC PHONE -->
           <button class="menu-button" onclick="abrirEnIframe('https://garticphone.com/es')">
@@ -498,12 +498,12 @@
             <img src="https://play-lh.googleusercontent.com/mFC3V4uWCrzSTVKt3sWzK7e7vFqHEqNaDgKumL3Ist7B0OstmZGGFWVKDawzaELImQ=w526-h296-rw" alt="sky riders">
           </button>
           <!-- NUEVO BOTÓN SURVEV.IO -->
-          <button class="menu-button" id="survey-btn">
-            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="Survev.io">
+          <button class="menu-button" onclick="abrirEnIframe('https://survev.io/')">
+            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="survev.io">
           </button>
           <!-- NUEVO BOTÓN GEFORCE NOW -->
-          <button class="menu-button" id="geforcenow-btn">
-            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce Now">
+          <button class="menu-button" onclick="abrirEnIframe('https://definitelyscience.com/class/GeForce-Now/')">
+            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce NOW">
           </button>
           <button class="menu-button" id="eldardo-btn">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
@@ -742,88 +742,6 @@
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
           abrirEnIframe('https://buckshotroulette.com/home');
-        });
-      }
-      // NUEVO PARA GEFORCE NOW
-      const geforceNowBtn = document.getElementById('geforcenow-btn');
-      if (geforceNowBtn) {
-        geforceNowBtn.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>GeForce Now</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="https://definitelyscience.com/class/GeForce-Now/" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
-      // NUEVO BOTÓN OMEGLE
-      const omegleBtn = document.getElementById('omegle-btn');
-      if (omegleBtn) {
-        omegleBtn.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>Omegle Chat</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="https://omegleweb.com/video" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
-      // NUEVO BOTÓN SURVEV.IO
-      const surveyBtn = document.getElementById('survey-btn');
-      if (surveyBtn) {
-        surveyBtn.addEventListener('click', function() {
-          abrirEnIframe('https://survev.io/');
-        });
-      }
-      // NUEVO BOTÓN INFINITE CRAFT
-      const infiniteCraftBtn = document.getElementById('infinitecraft-btn');
-      if (infiniteCraftBtn) {
-        infiniteCraftBtn.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>Infinite Craft</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="https://infinite-craft.com/" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
         });
       }
       // BOTON TERMINOS Y CONDICIONES
