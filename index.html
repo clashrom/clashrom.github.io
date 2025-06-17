@@ -43,49 +43,120 @@
     .hidden {
       display: none !important;
     }
-    #toggleSettings {
+    
+    /* Burger Menu Styles */
+    .burger-menu-container {
       position: fixed;
       top: 20px;
       left: 20px;
-      padding: 10px 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .burger {
+      position: relative;
+      width: 40px;
+      height: 30px;
       background: rgba(0, 255, 255, 0.15);
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      z-index: 10;
-      transition: background 0.3s ease;
-      font-family: inherit;
+      display: block;
+      padding: 10px;
+      box-sizing: content-box;
+    }
+
+    .burger input {
+      display: none;
+    }
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 70%;
+      background: white;
+      border-radius: 9px;
+      opacity: 1;
+      left: 15%;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+    }
+
+    .burger span:nth-of-type(1) {
+      top: 10px;
+      transform-origin: left center;
+    }
+
+    .burger span:nth-of-type(2) {
+      top: 50%;
+      transform: translateY(-50%);
+      transform-origin: left center;
+    }
+
+    .burger span:nth-of-type(3) {
+      top: 30px;
+      transform-origin: left center;
+    }
+
+    .burger input:checked ~ span:nth-of-type(1) {
+      transform: rotate(45deg);
+      top: 10px;
+      left: 20%;
+    }
+
+    .burger input:checked ~ span:nth-of-type(2) {
+      width: 0%;
+      opacity: 0;
+    }
+
+    .burger input:checked ~ span:nth-of-type(3) {
+      transform: rotate(-45deg);
+      top: 30px;
+      left: 20%;
+    }
+
+    .menu-options {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(20, 24, 32, 0.9);
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    #burger:checked ~ .menu-options {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .menu-option {
+      padding: 10px 15px;
+      background: rgba(0, 255, 255, 0.18);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: 'Montserrat', sans-serif;
+      text-align: left;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      min-width: 180px;
     }
-    #toggleSettings .ajustes-text {
-      display: inline-block;
-      opacity: 1;
-      max-width: 200px;
-      margin-left: 5px;
-      transform: translateX(0);
-      transition: 
-        opacity 0.3s cubic-bezier(.4,2,.6,1), 
-        max-width 0.35s cubic-bezier(.4,2,.6,1),
-        margin-left 0.3s cubic-bezier(.4,2,.6,1),
-        transform 0.3s cubic-bezier(.4,2,.6,1);
-      white-space: nowrap;
-      pointer-events: auto;
+
+    .menu-option:hover {
+      background: rgba(0, 255, 255, 0.32);
     }
-    #toggleSettings.compact .ajustes-text {
-      opacity: 0;
-      max-width: 0px;
-      margin-left: 0;
-      transform: translateX(-12px);
-      pointer-events: none;
-    }
-    #toggleSettings .gear-icon {
+
+    .menu-option span {
       font-size: 1.2em;
-      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
     }
+
     .margen-grande-arriba {
       margin-top: 90px;
     }
@@ -369,41 +440,28 @@
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
-  <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
+  <!-- Burger Menu -->
+  <div class="burger-menu-container">
+    <label class="burger" for="burger">
+      <input type="checkbox" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    
+    <div class="menu-options">
+      <button class="menu-option" id="settingsOption">
+        <span>⚙</span> Ajustes
+      </button>
+      <button class="menu-option" id="panicOption">
+        <span>🏫</span> Botón de pánico
+      </button>
+      <button class="menu-option" id="termsOption">
+        <span>❏</span> Términos y condiciones
+      </button>
+    </div>
+  </div>
 
-  <!-- Botón para boton de panico -->
-  <button id="classroomRedirectBtn" title="Boton de panico, Ir a Google Classroom"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 170px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">🏫</span>
-</button>
-  <!-- Botón para terminos y condiciones -->
-  <button id="tyc" title="terminos y condiciones"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 270px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">❏</span>
-</button>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
@@ -575,46 +633,59 @@
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
     const settingsPanel = document.getElementById("settingsPanel");
-    const toggleSettingsBtn = document.getElementById("toggleSettings");
+    
     function updateAjustesButton() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       if (scrollTop < 2) {
-        toggleSettingsBtn.classList.remove('compact');
-      } else {
-        toggleSettingsBtn.classList.add('compact');
+        document.getElementById('burger').checked = false;
       }
     }
     window.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('DOMContentLoaded', updateAjustesButton);
+    
     document.addEventListener("keydown", (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
         fullscreenImage.classList.toggle("hidden");
       }
     });
-    toggleSettingsBtn.addEventListener("click", () => {
-      if (settingsPanel.classList.contains("show")) {
-        settingsPanel.classList.remove("show");
-        setTimeout(() => {
-          menu.classList.remove("hidden");
-          menu.classList.remove("fade-out");
-          menu.classList.add("fade-in");
-          setTimeout(() => {
-            menu.classList.remove("fade-in");
-          }, 500);
-        }, 50);
-      } else {
-        menu.classList.remove("fade-out");
-        menu.classList.add("fade-out");
-        setTimeout(() => {
-          menu.classList.add("hidden");
-          menu.classList.remove("fade-out");
-          settingsPanel.classList.add("show");
-        }, 500);
+
+    // Burger menu functionality
+    document.getElementById('settingsOption').addEventListener('click', function() {
+      document.getElementById('burger').checked = false;
+      settingsPanel.classList.add("show");
+      menu.classList.add("hidden");
+    });
+
+    document.getElementById('panicOption').addEventListener('click', function() {
+      window.location.href = 'https://classroom.google.com/';
+    });
+
+    document.getElementById('termsOption').addEventListener('click', function() {
+      document.getElementById('burger').checked = false;
+      const nuevaPestana = window.open('about:blank', '_blank');
+      if (nuevaPestana) {
+        nuevaPestana.document.write(`
+          <html>
+            <head>
+              <title>terminos y condiciones</title>
+              <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+              <style>
+                body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                iframe { border:none; width:100vw; height:100vh; display:block; }
+              </style>
+            </head>
+            <body>
+              <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
+            </body>
+          </html>
+        `);
+        nuevaPestana.document.close();
       }
     });
+
     function applySettings() {
       const newTitle = document.getElementById("titleInput").value;
       const newImage = document.getElementById("imageInput").value;
@@ -623,21 +694,19 @@
       settingsPanel.classList.remove("show");
       setTimeout(() => {
         menu.classList.remove("hidden");
-        menu.classList.remove("fade-out");
-        menu.classList.add("fade-in");
-        setTimeout(() => {
-          menu.classList.remove("fade-in");
-        }, 500);
       }, 50);
     }
+    
     function setDefaultTitle() {
       document.getElementById("titleInput").value = "";
       document.title = "Classroom";
     }
+    
     function setDefaultImage() {
       document.getElementById("imageInput").value = "";
       document.getElementById("fullscreenImage").src = "images/Screenshot 2025-06-16 13.03.28.png";
     }
+    
     function openAboutBlankIframe() {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -659,6 +728,7 @@
         nuevaPestana.document.close();
       }
     }
+    
     function abrirEnIframe(url) {
       const nuevaPestana = window.open('about:blank', '_blank');
       if (nuevaPestana) {
@@ -680,6 +750,7 @@
         nuevaPestana.document.close();
       }
     }
+    
     function scrollRow(row, dir) {
       const rowEl = document.getElementById(row + '-row');
       if (!rowEl) return;
@@ -691,6 +762,7 @@
       rowEl.scrollBy({ left: scrollAmount * dir, behavior: 'smooth' });
       setTimeout(() => updateArrows(row), 340);
     }
+    
     function updateArrows(row) {
       const rowEl = document.getElementById(row + '-row');
       const leftArrow = document.getElementById(row + '-arrow-left');
@@ -707,12 +779,15 @@
         rightArrow.classList.remove('visible');
       }
     }
+    
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
       updateArrows('herramientas');
     }
+    
     window.addEventListener('resize', updateAllArrows);
+    
     document.addEventListener('DOMContentLoaded', function() {
       updateAllArrows();
       const eldardoBtn = document.getElementById('eldardo-btn');
@@ -722,6 +797,7 @@
           window.open('https://eldardo.net/' + letrasAzar, '_blank');
         });
       }
+      
       const crazygamesBtn = document.getElementById('crazygames-btn');
       if (crazygamesBtn) {
         crazygamesBtn.addEventListener('click', function() {
@@ -729,7 +805,7 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
-      // SCRIPT NUEVO PARA POKI
+      
       const pokiBtn = document.getElementById('poki-btn');
       if (pokiBtn) {
         pokiBtn.addEventListener('click', function() {
@@ -737,43 +813,20 @@
           window.open('https://poki.com/' + letrasAzar, '_blank');
         });
       }
-      // NUEVO PARA BUCKSHOT ROULETTE
+      
       const buckshotBtn = document.getElementById('buckshotroulette-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
           abrirEnIframe('https://buckshotroulette.com/home');
         });
       }
-      // BOTON TERMINOS Y CONDICIONES
-      const tyc = document.getElementById('tyc');
-      if (tyc) {
-        tyc.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>terminos y condiciones</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
+      
       ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
     });
+    
     function generarLetrasAzar(longitud) {
       const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       let resultado = '';
@@ -866,21 +919,12 @@
 
     observer.observe(buscadorSentinela);
 
-    document.getElementById('toggleSettings').addEventListener('click', () => {
-      setTimeout(updateBuscadorCompactBySettings, 100);
+    // --- REDIRECCIÓN CON TECLA º ---
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'º') {
+        window.location.href = 'https://classroom.google.com/';
+      }
     });
-  // --- REDIRECCIÓN CON BOTÓN Y TECLA º ---
-const classroomBtn = document.getElementById('classroomRedirectBtn');
-if (classroomBtn) {
-  classroomBtn.addEventListener('click', function() {
-    window.location.href = 'https://classroom.google.com/';
-  });
-}
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'º') {
-    window.location.href = 'https://classroom.google.com/';
-  }
-});
-</script>
+  </script>
 </body>
 </html>
