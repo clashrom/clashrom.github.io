@@ -363,12 +363,98 @@
       .settings input { width: 80vw; }
       #buscador-contenedor input { width: 88vw !important; }
     }
+    /* Menú hamburguesa */
+    .menu-toggle {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+
+    .menu-toggle input {
+      display: none;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 30px;
+      height: 3px;
+      margin: 6px;
+      background: white;
+      transition: 0.3s;
+    }
+
+    /* Menú lateral */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 220px;
+      height: 100%;
+      background: #222;
+      padding: 60px 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+      transition: left 0.3s ease-in-out;
+      z-index: 999;
+    }
+
+    .menu button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: left;
+      transition: background 0.3s, transform 0.3s;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: fadeInLeft 0.3s forwards;
+    }
+
+    .menu button:hover {
+      background: #555;
+      transform: translateX(0) scale(1.02);
+    }
+
+    /* Mostrar menú cuando el checkbox está marcado */
+    #menu-checkbox:checked ~ .menu {
+      left: 0;
+    }
+
+    #menu-checkbox:checked ~ .menu button {
+      animation: fadeInLeft 0.4s ease forwards;
+    }
+
+    /* Animación entrada */
+    @keyframes fadeInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
+  <!-- Menú hamburguesa -->
+  <label class="menu-toggle">
+    <input type="checkbox" id="menu-checkbox">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+
+  <!-- Menú desplegable -->
+  <div class="menu">
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
 
@@ -404,6 +490,7 @@
   ">
   <span style="font-size:1.4em;">❏</span>
 </button>
+  </div>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
