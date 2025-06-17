@@ -388,6 +388,22 @@
   ">
   <span style="font-size:1.4em;">🏫</span>
 </button>
+  <!-- Botón para terminos y condiciones -->
+  <button id="tyc" title="terminos y condiciones"
+  style="
+    position: fixed;
+    top: 20px;
+    left: 270px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgba(0,255,255,0.18);
+    color: #fff;
+    border: none;
+    z-index: 10;
+    cursor: pointer;
+  ">
+  <span style="font-size:1.4em;">❏</span>
+</button>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
@@ -803,6 +819,31 @@
                 </head>
                 <body>
                   <iframe src="https://infinite-craft.com/" allow="autoplay; fullscreen"></iframe>
+                </body>
+              </html>
+            `);
+            nuevaPestana.document.close();
+          }
+        });
+      }
+      // BOTON TERMINOS Y CONDICIONES
+      const tyc = document.getElementById('tyc');
+      if (tyc) {
+        tyc.addEventListener('click', function() {
+          const nuevaPestana = window.open('about:blank', '_blank');
+          if (nuevaPestana) {
+            nuevaPestana.document.write(`
+              <html>
+                <head>
+                  <title>terminos y condiciones</title>
+                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+                  <style>
+                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+                    iframe { border:none; width:100vw; height:100vh; display:block; }
+                  </style>
+                </head>
+                <body>
+                  <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
                 </body>
               </html>
             `);
