@@ -43,28 +43,22 @@
     .hidden {
       display: none !important;
     }
-    
+
     /* Burger Menu Styles */
     .burger-menu-container {
       position: fixed;
       top: 20px;
       left: 20px;
       z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
     }
 
     .burger {
       position: relative;
       width: 40px;
       height: 30px;
-      background: rgba(0, 255, 255, 0.15);
-      border-radius: 8px;
+      background: transparent;
       cursor: pointer;
       display: block;
-      padding: 10px;
-      box-sizing: content-box;
     }
 
     .burger input {
@@ -74,18 +68,18 @@
     .burger span {
       display: block;
       position: absolute;
-      height: 3px;
-      width: 70%;
+      height: 4px;
+      width: 100%;
       background: white;
       border-radius: 9px;
       opacity: 1;
-      left: 15%;
+      left: 0;
       transform: rotate(0deg);
       transition: .25s ease-in-out;
     }
 
     .burger span:nth-of-type(1) {
-      top: 10px;
+      top: 0px;
       transform-origin: left center;
     }
 
@@ -96,14 +90,15 @@
     }
 
     .burger span:nth-of-type(3) {
-      top: 30px;
+      top: 100%;
       transform-origin: left center;
+      transform: translateY(-100%);
     }
 
     .burger input:checked ~ span:nth-of-type(1) {
       transform: rotate(45deg);
-      top: 10px;
-      left: 20%;
+      top: 0px;
+      left: 5px;
     }
 
     .burger input:checked ~ span:nth-of-type(2) {
@@ -113,24 +108,27 @@
 
     .burger input:checked ~ span:nth-of-type(3) {
       transform: rotate(-45deg);
-      top: 30px;
-      left: 20%;
+      top: 28px;
+      left: 5px;
     }
 
     .menu-options {
       display: none;
+      position: absolute;
+      left: 0;
+      top: 50px;
       flex-direction: column;
       gap: 10px;
       background: rgba(20, 24, 32, 0.9);
       padding: 15px;
       border-radius: 12px;
-      margin-top: 10px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      min-width: 200px;
+      animation: fadeIn 0.3s ease;
     }
 
     #burger:checked ~ .menu-options {
       display: flex;
-      animation: fadeIn 0.3s ease;
     }
 
     .menu-option {
@@ -146,7 +144,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      min-width: 180px;
     }
 
     .menu-option:hover {
@@ -440,7 +437,7 @@
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
-  <!-- Burger Menu -->
+  <!-- Menú hamburguesa -->
   <div class="burger-menu-container">
     <label class="burger" for="burger">
       <input type="checkbox" id="burger">
@@ -521,7 +518,6 @@
           <button class="menu-button" onclick="abrirEnIframe('https://reddit.formula1stream.cc/index22')">
             <img src="https://m.media-amazon.com/images/I/01QFWDRb+1L.png" alt="f1">
           </button>
-          <!-- NUEVO BOTÓN OMEGLE -->
           <button class="menu-button" onclick="abrirEnIframe('https://ome.tv')">
             <img src="https://play-lh.googleusercontent.com/dqXfJhXmJRvQNU-6ExVKC1QchVfscm1VpmZO16IAjAF0eN6YwWIUjdOSPSdBgK1gRQ" alt="omegle">
           </button>
@@ -543,23 +539,18 @@
           <button class="menu-button" onclick="abrirEnIframe('minecraft.html')">
             <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/05/minecraft.jpg" alt="Minecraft">
           </button>
-          <!-- NUEVO BOTÓN INFINITE CRAFT -->
           <button class="menu-button" onclick="abrirEnIframe('https://infinite-craft.com/')">
             <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinitecraft">
           </button>
-          <!-- NUEVO BOTON GARTIC PHONE -->
           <button class="menu-button" onclick="abrirEnIframe('https://garticphone.com/es')">
             <img src="https://i.pinimg.com/originals/e9/67/a6/e967a6cbaba556d30794fe287a300cba.png" alt="gartic phone">
           </button>
-          <!-- NUEVO BOTON skyriders -->
           <button class="menu-button" onclick="abrirEnIframe('https://holajuegos.com/game/sky-riders')">
             <img src="https://play-lh.googleusercontent.com/mFC3V4uWCrzSTVKt3sWzK7e7vFqHEqNaDgKumL3Ist7B0OstmZGGFWVKDawzaELImQ=w526-h296-rw" alt="sky riders">
           </button>
-          <!-- NUEVO BOTÓN SURVEV.IO -->
           <button class="menu-button" onclick="abrirEnIframe('https://survev.io/')">
             <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="survev.io">
           </button>
-          <!-- NUEVO BOTÓN GEFORCE NOW -->
           <button class="menu-button" onclick="abrirEnIframe('https://definitelyscience.com/class/GeForce-Now/')">
             <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce NOW">
           </button>
@@ -575,7 +566,6 @@
           <button class="menu-button" onclick="abrirEnIframe('https://eduardolainez.github.io/order-the-colors/')">
             <img src="images/ordena.jpg" alt="ordena los colores">
           </button>
-          <!-- NUEVO BOTÓN -->
           <button class="menu-button" id="buckshotroulette-btn">
             <img src="https://gaming-cdn.com/images/products/16592/orig/buckshot-roulette-pc-juego-steam-cover.jpg?v=1718111534" alt="Buckshot Roulette">
           </button>
@@ -599,7 +589,6 @@
           <button class="menu-button" onclick="abrirEnIframe('https://anura.pro')">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2H1lIjVZXgJbUW-3kgcaJk8jff5fr8kRZC2iF4HrfkTlut85ICei01QGzPAP-F5YY0XM&usqp=CAU" alt="anuraOS">
           </button>
-          <!-- Nuevo botón Chat -->
           <button class="menu-button" onclick="abrirEnIframe('chat.html')">
             <img src="https://img.freepik.com/vector-premium/icono-chat-bocadillo-dialogo_23-2147501656.jpg" alt="Chat">
           </button>
@@ -683,6 +672,15 @@
           </html>
         `);
         nuevaPestana.document.close();
+      }
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(event) {
+      const burgerMenu = document.querySelector('.burger-menu-container');
+      const burgerCheckbox = document.getElementById('burger');
+      if (!burgerMenu.contains(event.target) {
+        burgerCheckbox.checked = false;
       }
     });
 
