@@ -43,10 +43,76 @@
     .hidden {
       display: none !important;
     }
-    #toggleSettings {
+    /* Estilos del menú hamburguesa */
+    .hamburger-menu {
       position: fixed;
       top: 20px;
       left: 20px;
+      width: 40px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 20;
+    }
+    .hamburger-line {
+      width: 100%;
+      height: 4px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(1) {
+      transform: translateY(13px) rotate(45deg);
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(3) {
+      transform: translateY(-13px) rotate(-45deg);
+    }
+    /* Contenedor de botones del menú */
+    .menu-buttons-container {
+      position: fixed;
+      top: 70px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 19;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .menu-buttons-container.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    /* Botones dentro del menú */
+    .menu-button-item {
+      background: rgba(0, 255, 255, 0.18);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 160px;
+    }
+    .menu-button-item:hover {
+      background: rgba(0, 255, 255, 0.32);
+    }
+    .menu-button-item span {
+      font-size: 1.2em;
+    }
+    #toggleSettings {
+      position: relative;
       padding: 10px 20px;
       background: rgba(0, 255, 255, 0.15);
       border: none;
@@ -60,6 +126,9 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      width: 100%;
+      box-sizing: border-box;
+      justify-content: flex-start;
     }
     #toggleSettings .ajustes-text {
       display: inline-block;
@@ -362,6 +431,24 @@
       .settings { min-width: 95vw; min-height: 200px; }
       .settings input { width: 80vw; }
       #buscador-contenedor input { width: 88vw !important; }
+      /* Ajustes para menú hamburguesa en móviles */
+      .hamburger-menu {
+        width: 32px;
+        height: 24px;
+      }
+      .hamburger-line {
+        height: 3px;
+      }
+      .menu-buttons-container {
+        top: 60px;
+        left: 10px;
+        padding: 10px;
+      }
+      .menu-button-item {
+        padding: 6px 10px;
+        font-size: 13px;
+        min-width: 140px;
+      }
     }
   </style>
 </head>
@@ -369,41 +456,24 @@
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
-  <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
+  <!-- Menú hamburguesa -->
+  <div class="hamburger-menu" id="hamburgerMenu">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+  </div>
 
-  <!-- Botón para boton de panico -->
-  <button id="classroomRedirectBtn" title="Boton de panico, Ir a Google Classroom"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 170px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">🏫</span>
-</button>
-  <!-- Botón para terminos y condiciones -->
-  <button id="tyc" title="terminos y condiciones"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 270px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">❏</span>
-</button>
+  <!-- Contenedor de botones del menú -->
+  <div class="menu-buttons-container" id="menuButtonsContainer">
+    <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
+    <button class="menu-button-item" id="classroomRedirectBtn">
+      <span>🏫</span> Botón de pánico
+    </button>
+    <button class="menu-button-item" id="tyc">
+      <span>❏</span> Términos y condiciones
+    </button>
+  </div>
+
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
@@ -571,6 +641,23 @@
       document.body.style.background = "";
       colorPicker.value = "#0f0c29";
     }
+
+    // --- Script del menú hamburguesa ---
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const menuButtonsContainer = document.getElementById('menuButtonsContainer');
+    
+    hamburgerMenu.addEventListener('click', function() {
+      this.classList.toggle('active');
+      menuButtonsContainer.classList.toggle('show');
+    });
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(event) {
+      if (!hamburgerMenu.contains(event.target) {
+        hamburgerMenu.classList.remove('active');
+        menuButtonsContainer.classList.remove('show');
+      }
+    });
 
     const fullscreenImage = document.getElementById("fullscreenImage");
     const menu = document.getElementById("menu");
