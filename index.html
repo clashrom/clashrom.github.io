@@ -320,6 +320,76 @@
     .settings.show ~ #resultados-busqueda {
       display: none !important;
     }
+
+    /* Estilos para el menú hamburguesa */
+    .hamburger-menu {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 11;
+      transition: all 0.3s ease;
+    }
+    .hamburger-line {
+      width: 100%;
+      height: 4px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    .menu-dropdown {
+      position: fixed;
+      top: 70px;
+      left: 20px;
+      background: rgba(0, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 10px 0;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 11;
+      animation: fadeIn 0.3s ease forwards;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .menu-dropdown.active {
+      display: flex;
+    }
+    .menu-dropdown button {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: left;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      border-radius: 8px;
+    }
+    .menu-dropdown button:hover {
+      background: rgba(0, 255, 255, 0.3);
+    }
+    .menu-dropdown button span {
+      font-size: 1.2em;
+    }
+
     @media (max-width: 1000px) {
       .menu-button img {
         width: 180px;
@@ -337,6 +407,14 @@
       }
       .menu-buttons-row {
         max-width: 100vw;
+      }
+      #toggleSettings, #classroomRedirectBtn, #tyc {
+        display: none;
+      }
+    }
+    @media (min-width: 1001px) {
+      .hamburger-menu {
+        display: none;
       }
     }
     @media (max-width: 700px) {
@@ -368,6 +446,18 @@
 <body>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
+
+  <!-- Menú hamburguesa -->
+  <div class="hamburger-menu">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+  </div>
+  <div class="menu-dropdown">
+    <button onclick="document.getElementById('toggleSettings').click()"><span>⚙</span> Ajustes</button>
+    <button onclick="window.location.href = 'https://classroom.google.com/'"><span>🏫</span> Botón de pánico</button>
+    <button onclick="document.getElementById('tyc').click()"><span>❏</span> Términos y condiciones</button>
+  </div>
 
   <!-- Botón para mostrar ajustes -->
   <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
@@ -714,6 +804,23 @@
     }
     window.addEventListener('resize', updateAllArrows);
     document.addEventListener('DOMContentLoaded', function() {
+      // Script para el menú hamburguesa
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      const menuDropdown = document.querySelector('.menu-dropdown');
+      
+      hamburgerMenu.addEventListener('click', function() {
+        this.classList.toggle('active');
+        menuDropdown.classList.toggle('active');
+      });
+
+      // Cerrar menú al hacer clic fuera
+      document.addEventListener('click', function(e) {
+        if (!hamburgerMenu.contains(e.target) {
+          hamburgerMenu.classList.remove('active');
+          menuDropdown.classList.remove('active');
+        }
+      });
+
       updateAllArrows();
       const eldardoBtn = document.getElementById('eldardo-btn');
       if (eldardoBtn) {
