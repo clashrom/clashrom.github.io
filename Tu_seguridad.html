@@ -136,25 +136,31 @@
     // ANIMACIÓN DE FONDO ESTILO HACKER
     const canvas = document.getElementById('hacker-bg');
     const ctx = canvas.getContext('2d');
+    const fontSize = 16;
+    let columns, drops;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    }
 
-    const columns = canvas.width / 20;
-    const drops = Array(Math.floor(columns)).fill(1);
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     function drawMatrixRain() {
       ctx.fillStyle = "rgba(13, 27, 42, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = "#00fff2";
-      ctx.font = "16px monospace";
+      ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
         const char = String.fromCharCode(0x30A0 + Math.random() * 96);
-        ctx.fillText(char, i * 20, drops[i] * 20);
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
 
-        if (drops[i] * 20 > canvas.height || Math.random() > 0.975) {
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
@@ -162,10 +168,6 @@
     }
 
     setInterval(drawMatrixRain, 50);
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
 </body>
 </html>
