@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Classroom</title>
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #0d1b2a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #a0c4ff;
+    }
+
+    .options {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: #1b263b;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      width: 200px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+      color: #90e0ef;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tu privacidad es un derecho, no un privilegio.</h1>
+  </header>
+
+  <div class="options">
+    <div class="card" onclick="abrir('https://zerobin.net')">
+      <h2>ZeroBin</h2>
+      <img src="https://zerobin.net/apple-touch-icon.png" alt="ZeroBin" />
+      <p>Mensajes cifrados que desaparecen. Nadie más los ve.</p>
+    </div>
+
+    <div class="card" onclick="abrir('https://privatebin.net')">
+      <h2>PrivateBin</h2>
+      <img src="https://privatebin.info/images/logo.svg" alt="PrivateBin" />
+      <p>Comparte textos secretos con cifrado de extremo a extremo.</p>
+    </div>
+  </div>
+
+  <script>
+    function abrir(url) {
+      const win = window.open("about:blank", "_blank");
+      const html = `
+        <!DOCTYPE html>
+        <html>
+        <head><title>Conexión segura</title>
+        <style>html, body { margin: 0; padding: 0; height: 100%; } iframe { border: none; width: 100%; height: 100%; }</style>
+        </head>
+        <body><iframe src="${url}"></iframe></body>
+        </html>`;
+      win.document.write(html);
+    }
+  </script>
+</body>
+</html>
+
