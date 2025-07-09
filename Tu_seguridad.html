@@ -1,180 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Classroom</title>
-  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto Mono', monospace;
-      background-color: #0d1b2a;
-      color: #e0e0e0;
-      overflow: hidden;
-    }
-
-    #chat-rain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 3rem 1rem;
-      min-height: 100vh;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-      max-width: 800px;
-    }
-
-    .lema {
-      font-size: 1.2rem;
-      color: #64ffda;
-      text-shadow: 0 0 8px #64ffda;
-      line-height: 1.6;
-      margin-bottom: 0.5rem;
-    }
-
-    .nota {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-top: 0.5rem;
-    }
-
-    .options {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .card {
-      background: #11243d;
-      border-radius: 1rem;
-      padding: 1rem;
-      text-align: center;
-      width: 200px;
-      box-shadow: 0 0 10px rgba(0,255,255,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 12px rgba(100,255,218,0.5);
-    }
-
-    .card h2 {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
-      color: #90e0ef;
-    }
-
-    .card p {
-      font-size: 0.85rem;
-      color: #ccc;
-    }
-
-    @media (max-width: 500px) {
-      .card {
-        width: 90%;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Google Classroom</title>
+<style>
+  html, body {
+    margin:0; padding:0;
+    height:100%;
+    background-color:#0d1b2a;
+    color:#64ffda;
+    font-family: monospace;
+    overflow: hidden;
+  }
+  canvas {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    z-index:-1;
+    display: block;
+  }
+  body {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+  }
+  header {
+    max-width: 700px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .lema {
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px #64ffda;
+    line-height: 1.6;
+  }
+  .nota {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 0.3rem;
+  }
+  .options {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .card {
+    background:#11243d;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 200px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,255,255,0.2);
+    color: #90e0ef;
+    text-align: center;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .card:hover {
+    box-shadow: 0 0 15px #00fff2;
+    transform: translateY(-5px);
+  }
+  .card h2 {
+    margin-bottom: 0.5rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+</style>
 </head>
 <body>
-  <canvas id="chat-rain"></canvas>
-
+  <canvas id="canvas"></canvas>
   <header>
     <div class="lema">
-      En un mundo donde todo es observado, hablar en voz baja es un acto de resistencia.<br>
+      En un mundo donde todo es observado, hablar en voz baja es un acto de resistencia.<br/>
       La privacidad no es esconderse, es el derecho a elegir a quién dejas entrar.
     </div>
     <div class="nota">⚠️ Al hacer clic, el historial de tu navegador recordará estas visitas.</div>
   </header>
-
   <div class="options">
-    <div class="card" onclick="abrir('https://zerobin.net')">
+    <div class="card" onclick="window.open('https://zerobin.net', '_blank')">
       <h2>ZeroBin</h2>
       <p>Mensajes que desaparecen, sin dejar huellas.</p>
     </div>
-
-    <div class="card" onclick="abrir('https://privatebin.net')">
+    <div class="card" onclick="window.open('https://privatebin.net', '_blank')">
       <h2>PrivateBin</h2>
       <p>Compartir ideas sin ser vigilado, cifrado real de extremo a extremo.</p>
     </div>
   </div>
 
-  <script>
-    function abrir(url) {
-      window.open(url, '_blank');
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const words = [
+    "clave", "mensaje", "oculto", "identidad", "anonimato", "proxy", "hash", "binario",
+    "secure", "private", "leak", "confidencial", "txt", "cifrado", "resistencia", "chat",
+    "ip", "log", "terminal", "token", "code", "root", "access", "open", "drop", "note"
+  ];
+
+  class FallingWord {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * -height;
+      this.speed = 1 + Math.random() * 2;
+      this.text = words[Math.floor(Math.random() * words.length)];
+      this.opacity = 0.3 + Math.random() * 0.7;
+      this.fontSize = 14 + Math.random() * 6;
+    }
+    draw() {
+      ctx.font = this.fontSize + 'px monospace';
+      ctx.fillStyle = `rgba(0,255,0,${this.opacity})`;
+      ctx.fillText(this.text, this.x, this.y);
+      this.y += this.speed;
+      if(this.y > height) this.reset();
+    }
+  }
+
+  const fallingWords = [];
+  for(let i=0; i<80; i++){
+    fallingWords.push(new FallingWord());
+  }
+
+  function animate(){
+    ctx.fillStyle = 'rgba(13,27,42,0.2)';
+    ctx.fillRect(0,0,width,height);
+
+    for(let w of fallingWords){
+      w.draw();
     }
 
-    // CHAT HACKER ANIMADO
-    const canvas = document.getElementById('chat-rain');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const words = [
-      "clave", "mensaje", "oculto", "identidad", "anonimato", "proxy", "hash", "binario",
-      "secure", "private", "leak", "confidencial", "txt", "cifrado", "resistencia", "chat",
-      "ip", "log", "terminal", "token", "code", "root", "access", "open", "drop", "note"
-    ];
-
-    class Word {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.text = words[Math.floor(Math.random() * words.length)];
-        this.x = Math.random() * canvas.width;
-        this.y = -Math.random() * canvas.height;
-        this.speed = 1 + Math.random() * 2;
-        this.opacity = 0.5 + Math.random() * 0.5;
-        this.fontSize = 14 + Math.random() * 6;
-      }
-
-      draw() {
-        ctx.font = this.fontSize + 'px monospace';
-        ctx.fillStyle = `rgba(0, 255, 0, ${this.opacity})`;
-        ctx.fillText(this.text, this.x, this.y);
-        this.y += this.speed;
-        if (this.y > canvas.height) this.reset();
-      }
-    }
-
-    const wordCount = 100;
-    const wordRain = Array.from({ length: wordCount }, () => new Word());
-
-    function animateRain() {
-      ctx.fillStyle = "rgba(13, 27, 42, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      wordRain.forEach(word => word.draw());
-      requestAnimationFrame(animateRain);
-    }
-
-    animateRain();
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  </script>
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
 </body>
 </html>
