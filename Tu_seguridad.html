@@ -145,10 +145,7 @@
 
 <div id="contenido">
   <header>
-    <div class="lema">
-      En un mundo donde todo es observado, hablar en voz baja es un acto de resistencia.<br>
-      La privacidad no es esconderse, es el derecho a elegir a quién dejas entrar.
-    </div>
+    <div class="lema" id="lema"></div>
     <div class="nota">⚠️ Al hacer clic, el historial de tu navegador recordará estas visitas.</div>
   </header>
 
@@ -200,6 +197,24 @@
     "Esto es un insulto al abecedario."
   ];
 
+  const lemas = [
+    "En un aula donde cada clic deja huella, pensar libre es un acto de valor.",
+    "Donde todos te miran, elegir el silencio es tener el control.",
+    "Tu historial no debería hablar más fuerte que tu voz.",
+    "No se trata de esconder, sino de proteger lo que aún es solo tuyo.",
+    "Cuando todo se guarda, lo verdaderamente valioso es lo que decides no mostrar.",
+    "En un mundo de vigilancia, la privacidad no es un lujo: es una forma de existir.",
+    "La libertad digital no se pide. Se cifra.",
+    "Hay cosas que solo se entienden cuando no se comparten.",
+    "Ser libre es decidir qué parte de ti se queda fuera del historial.",
+    "Si tu curiosidad incomoda, es porque aún piensas por ti mismo.",
+    "No es paranoia. Es saber que en cada red hay ojos que no pediste.",
+    "Te educan a pensar, pero te rastrean cuando lo haces.",
+    "Entre tú y tu búsqueda debería haber confianza, no vigilancia.",
+    "Guardar silencio no es callar, es proteger lo que aún no estás listo para explicar.",
+    "Elegir el anonimato es una forma de recordar que no todo debe ser público."
+  ];
+
   function generarCaptcha() {
     const canvas = document.getElementById("captchaCanvas");
     const ctx = canvas.getContext("2d");
@@ -243,7 +258,14 @@
     }
   }
 
+  function mostrarLemaAleatorio() {
+    const lemaRandom = lemas[Math.floor(Math.random() * lemas.length)];
+    document.getElementById("lema").innerText = lemaRandom;
+  }
+
+  // Ejecutar al cargar
   generarCaptcha();
+  mostrarLemaAleatorio();
 </script>
 
 </body>
