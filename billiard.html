@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Juego de Billar</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container {
+    width: 800px; /* tamaño más grande para el contenedor */
+    height: 700px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  embed {
+    width: 600px;
+    height: 500px;
+    background-color: black; /* si el juego es cuadrado, fondo negro */
+    display: block;
+  }
+  a {
+    color: white;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+  <div class="container" align="center">
+    <embed src="https://www.classicgamesarcade.com/espanol/games/billards.swf" width="600px" height="500px" autostart="true" loop="false" controller="true"></embed>
+    <br />
+    <a href="https://www.classicgamesarcade.com/espanol/game/21659/juego-de-billar.html" target="_blank" rel="noopener noreferrer">Juegos Clásicos</a>
+  </div>
+</body>
+</html>
