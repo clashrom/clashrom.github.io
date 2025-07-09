@@ -121,6 +121,13 @@
       font-size: 0.9rem;
       color: #ccc;
     }
+
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #555;
+      margin-top: 3rem;
+    }
   </style>
 </head>
 <body>
@@ -163,6 +170,10 @@
       <p>Oculta mensajes dentro de imágenes como un espía digital.</p>
     </div>
   </div>
+
+  <footer>
+    Hecho con sigilo por <strong>Merks Studios</strong> · 2025 🛠️
+  </footer>
 </div>
 
 <script>
@@ -193,18 +204,15 @@
     const canvas = document.getElementById("captchaCanvas");
     const ctx = canvas.getContext("2d");
 
-    // Generar nuevo código
     codigo = '';
     for (let i = 0; i < 5; i++) {
       codigo += letras[Math.floor(Math.random() * letras.length)];
     }
 
-    // Limpiar canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Dibujar letras con rotación
     for (let i = 0; i < codigo.length; i++) {
       const char = codigo[i];
       const x = 20 + i * 30;
@@ -220,7 +228,6 @@
       ctx.restore();
     }
 
-    // Reset inputs
     document.getElementById("respuesta").value = "";
     document.getElementById("insulto").textContent = "";
   }
@@ -236,7 +243,6 @@
     }
   }
 
-  // Generar CAPTCHA al cargar
   generarCaptcha();
 </script>
 
