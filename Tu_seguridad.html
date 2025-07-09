@@ -1,86 +1,150 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Google Classroom</title>
-<style>
-  html, body {
-    margin:0; padding:0;
-    height:100%;
-    background-color:#0d1b2a;
-    color:#64ffda;
-    font-family: monospace;
-    overflow: hidden;
-  }
-  canvas {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    z-index:-1;
-    display: block;
-  }
-  body {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 2rem 1rem;
-  }
-  header {
-    max-width: 700px;
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  .lema {
-    font-size: 1.2rem;
-    text-shadow: 0 0 10px #64ffda;
-    line-height: 1.6;
-  }
-  .nota {
-    font-size: 0.8rem;
-    color: #999;
-    margin-top: 0.3rem;
-  }
-  .options {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .card {
-    background:#11243d;
-    border-radius: 1rem;
-    padding: 1rem;
-    width: 200px;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,255,255,0.2);
-    color: #90e0ef;
-    text-align: center;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-  }
-  .card:hover {
-    box-shadow: 0 0 15px #00fff2;
-    transform: translateY(-5px);
-  }
-  .card h2 {
-    margin-bottom: 0.5rem;
-  }
-  .card p {
-    font-size: 0.9rem;
-    color: #ccc;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Classroom</title>
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0d1b2a;
+      color: #e0e0e0;
+      font-family: monospace;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+    }
+
+    .captcha-box {
+      background: #11243d;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.1);
+    }
+
+    canvas {
+      background: #000;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      margin-bottom: 1rem;
+      width: 150px;
+      text-align: center;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      margin: 0.2rem;
+      border: none;
+      border-radius: 5px;
+      background: #00fff2;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #insulto {
+      margin-top: 1rem;
+      color: #ff6666;
+      font-size: 0.9rem;
+      min-height: 1rem;
+    }
+
+    #contenido {
+      display: none;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      max-width: 800px;
+      margin: 2rem auto 1rem;
+    }
+
+    .lema {
+      font-size: 1.2rem;
+      color: #64ffda;
+      text-shadow: 0 0 8px #64ffda;
+      line-height: 1.6;
+    }
+
+    .nota {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 0.5rem;
+    }
+
+    .options {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: #11243d;
+      border-radius: 1rem;
+      padding: 1rem;
+      width: 200px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,255,255,0.2);
+      color: #90e0ef;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 15px #00fff2;
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+
+<div id="verificacion" class="centered">
+  <div class="captcha-box">
+    <canvas id="captchaCanvas" width="200" height="60"></canvas>
+    <input type="text" id="respuesta" placeholder="Escribe el texto" />
+    <br>
+    <button onclick="verificarCaptcha()">Entrar</button>
+    <button onclick="generarCaptcha()">Nuevo código</button>
+    <div id="insulto"></div>
+  </div>
+</div>
+
+<div id="contenido">
   <header>
     <div class="lema">
-      En un mundo donde todo es observado, hablar en voz baja es un acto de resistencia.<br/>
+      En un mundo donde todo es observado, hablar en voz baja es un acto de resistencia.<br>
       La privacidad no es esconderse, es el derecho a elegir a quién dejas entrar.
     </div>
     <div class="nota">⚠️ Al hacer clic, el historial de tu navegador recordará estas visitas.</div>
   </header>
+
   <div class="options">
     <div class="card" onclick="window.open('https://zerobin.net', '_blank')">
       <h2>ZeroBin</h2>
@@ -90,69 +154,88 @@
       <h2>PrivateBin</h2>
       <p>Compartir ideas sin ser vigilado, cifrado real de extremo a extremo.</p>
     </div>
-    <div class="card" onclick="window.open('https://cryptpad.fr/', '_blank')">
+    <div class="card" onclick="window.open('https://cryptpad.fr', '_blank')">
       <h2>CryptPad</h2>
       <p>Colabora en documentos encriptados y seguros.</p>
     </div>
   </div>
+</div>
 
 <script>
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  let width, height;
+  const letras = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  let codigo = '';
 
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const words = [
-    "clave", "mensaje", "oculto", "identidad", "anonimato", "proxy", "hash", "binario",
-    "secure", "private", "leak", "confidencial", "txt", "cifrado", "resistencia", "chat",
-    "ip", "log", "terminal", "token", "code", "root", "access", "open", "drop", "note"
+  const insultos = [
+    "¿Vas bien de vista o qué?",
+    "Intenta otra vez, genio.",
+    "Pareces un bot oxidado.",
+    "Eso ni tu perro lo habría puesto tan mal.",
+    "¿Seguro que sabes leer?",
+    "¿Te falta una neurona o solo está de vacaciones?",
+    "Pide ayuda a un adulto.",
+    "La inteligencia artificial no te va a salvar.",
+    "Dale, campeón, no te rindas (aunque deberías).",
+    "Error humano detectado. Nivel: ridículo.",
+    "No sabes copiar 5 letras, qué triste.",
+    "Si te cuesta esto, mejor ni entres.",
+    "Lo tuyo no es el teclado, admítelo.",
+    "Tienes menos puntería que un stormtrooper.",
+    "¿Ya probaste usar los ojos?",
+    "Hasta el captcha se aburrió de ti.",
+    "Tranquilo... los errores son humanos. Pero esto es ridículo.",
+    "Esto es un insulto al abecedario."
   ];
 
-  class FallingWord {
-    constructor() {
-      this.reset();
+  function generarCaptcha() {
+    const canvas = document.getElementById("captchaCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Generar nuevo código
+    codigo = '';
+    for (let i = 0; i < 5; i++) {
+      codigo += letras[Math.floor(Math.random() * letras.length)];
     }
-    reset() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * -height;
-      this.speed = 1 + Math.random() * 2;
-      this.text = words[Math.floor(Math.random() * words.length)];
-      this.opacity = 0.3 + Math.random() * 0.7;
-      this.fontSize = 14 + Math.random() * 6;
+
+    // Limpiar canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dibujar letras con rotación
+    for (let i = 0; i < codigo.length; i++) {
+      const char = codigo[i];
+      const x = 20 + i * 30;
+      const y = 35 + Math.random() * 10;
+      const angle = (Math.random() - 0.5) * 0.6;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.font = "24px monospace";
+      ctx.fillStyle = "#0f0";
+      ctx.fillText(char, 0, 0);
+      ctx.restore();
     }
-    draw() {
-      ctx.font = this.fontSize + 'px monospace';
-      ctx.fillStyle = `rgba(0,255,0,${this.opacity})`;
-      ctx.fillText(this.text, this.x, this.y);
-      this.y += this.speed;
-      if(this.y > height) this.reset();
+
+    // Reset inputs
+    document.getElementById("respuesta").value = "";
+    document.getElementById("insulto").textContent = "";
+  }
+
+  function verificarCaptcha() {
+    const entrada = document.getElementById("respuesta").value.trim();
+    if (entrada === codigo) {
+      document.getElementById("verificacion").style.display = "none";
+      document.getElementById("contenido").style.display = "block";
+    } else {
+      const insulto = insultos[Math.floor(Math.random() * insultos.length)];
+      document.getElementById("insulto").textContent = insulto;
     }
   }
 
-  const fallingWords = [];
-  for(let i=0; i<80; i++){
-    fallingWords.push(new FallingWord());
-  }
-
-  function animate(){
-    ctx.fillStyle = 'rgba(13,27,42,0.2)';
-    ctx.fillRect(0,0,width,height);
-
-    for(let w of fallingWords){
-      w.draw();
-    }
-
-    requestAnimationFrame(animate);
-  }
-  animate();
+  // Generar CAPTCHA al cargar
+  generarCaptcha();
 </script>
+
 </body>
 </html>
