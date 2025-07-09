@@ -5,28 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Google Classroom</title>
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Roboto Mono', monospace;
       background-color: #0d1b2a;
       color: #e0e0e0;
+      position: relative;
+      height: 100%;
+    }
+
+    canvas#hacker-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
+      padding: 3rem 1rem;
     }
 
     header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
+      max-width: 800px;
     }
 
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: #a0c4ff;
+    .lema {
+      font-size: 1.2rem;
+      color: #64ffda;
+      text-shadow: 0 0 8px #64ffda;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .nota {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 0.5rem;
     }
 
     .options {
@@ -34,21 +60,23 @@
       gap: 2rem;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 2rem;
     }
 
     .card {
-      background: #1b263b;
+      background: #11243d;
       border-radius: 1rem;
       padding: 1rem;
       text-align: center;
       width: 200px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,255,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
     }
 
     .card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 0 12px rgba(100,255,218,0.5);
     }
 
     .card img {
@@ -64,44 +92,80 @@
     }
 
     .card p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #ccc;
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
+  <canvas id="hacker-bg"></canvas>
+
   <header>
-    <h1>Tu privacidad es un derecho, no un privilegio.</h1>
+    <div class="lema">
+      En un mundo donde todo es observado, hablar en voz baja es un acto de resistencia.<br>
+      La privacidad no es esconderse, es el derecho a elegir a quién dejas entrar.
+    </div>
+    <div class="nota">⚠️ Al hacer clic, el historial de tu navegador recordará estas visitas.</div>
   </header>
 
   <div class="options">
     <div class="card" onclick="abrir('https://zerobin.net')">
       <h2>ZeroBin</h2>
       <img src="https://zerobin.net/apple-touch-icon.png" alt="ZeroBin" />
-      <p>Mensajes cifrados que desaparecen. Nadie más los ve.</p>
+      <p>Mensajes que desaparecen, sin dejar huellas.</p>
     </div>
 
     <div class="card" onclick="abrir('https://privatebin.net')">
       <h2>PrivateBin</h2>
       <img src="https://privatebin.info/images/logo.svg" alt="PrivateBin" />
-      <p>Comparte textos secretos con cifrado de extremo a extremo.</p>
+      <p>Compartir ideas sin ser vigilado, cifrado real de extremo a extremo.</p>
     </div>
   </div>
 
   <script>
     function abrir(url) {
-      const win = window.open("about:blank", "_blank");
-      const html = `
-        <!DOCTYPE html>
-        <html>
-        <head><title>Conexión segura</title>
-        <style>html, body { margin: 0; padding: 0; height: 100%; } iframe { border: none; width: 100%; height: 100%; }</style>
-        </head>
-        <body><iframe src="${url}"></iframe></body>
-        </html>`;
-      win.document.write(html);
+      window.open(url, '_blank');
     }
+
+    // ANIMACIÓN DE FONDO ESTILO HACKER
+    const canvas = document.getElementById('hacker-bg');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const columns = canvas.width / 20;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrixRain() {
+      ctx.fillStyle = "rgba(13, 27, 42, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00fff2";
+      ctx.font = "16px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = String.fromCharCode(0x30A0 + Math.random() * 96);
+        ctx.fillText(char, i * 20, drops[i] * 20);
+
+        if (drops[i] * 20 > canvas.height || Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrixRain, 50);
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>
-
