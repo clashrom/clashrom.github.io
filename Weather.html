@@ -1,55 +1,189 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Reloj & Clima</title>
-<style>
-  :root{
-    --sky-day:linear-gradient(to top,#4aa9ff,#87cefa);
-    --sky-night:linear-gradient(to top,#001b3d,#003366);
-    --sky-overcast:linear-gradient(to top,#5b6d7a,#95a4b3);
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Segoe UI',sans-serif;color:#fff;text-align:center;overflow:hidden;height:100vh}
-  .sky{position:fixed;inset:0;background:var(--sky-day);transition:background 1s;z-index:-3}
-  .mountains{position:absolute;bottom:0;width:100%;height:32%;background:linear-gradient(to top,#5a9132,#7abe45);border-top-left-radius:100% 20%;border-top-right-radius:100% 20%;z-index:-2}
-  .sun,.moon{position:absolute;top:10%;left:50%;translate:-50% 0;width:80px;height:80px;border-radius:50%;box-shadow:0 0 30px rgba(255,255,100,.5);transition:opacity 1s}
-  .sun{background:#ffdb4d}
-  .moon{background:#ccc;box-shadow:0 0 20px #ccc}
-  /* Texto ------------------------------------------------------------- */
-  .time{padding-top:45%;font-size:3.4em}
-  .date{margin-top:.5em;font-size:1.2em}
-  .weather{margin-top:1.5em;font-size:1em;display:flex;flex-direction:column;gap:.3em}
-  /* Efectos comunes ----------------------------------------------------*/
-  .effect{position:fixed;inset:0;pointer-events:none;z-index:2}
-  /* Lluvia */
-  .rain{background-image:url('https://i.imgur.com/NM4SokO.png');background-size:cover;opacity:.3;animation:rain 1s linear infinite}
-  @keyframes rain{from{background-position:0 0}to{background-position:0 100%}}
-  /* Nieve */
-  .snow{background-image:url('https://i.imgur.com/13p62dP.png');background-size:contain;opacity:.5;animation:snow 8s linear infinite}
-  @keyframes snow{from{background-position:0 -100%}to{background-position:0 100%}}
-  /* Niebla */
-  .fog{background:radial-gradient(circle at 50% 120%,rgba(255,255,255,.6),rgba(255,255,255,0) 60%);backdrop-filter:blur(2px);animation:fog 12s ease-in-out infinite}
-  @keyframes fog{0%,100%{transform:translateX(-10%)}50%{transform:translateX(10%)}}
-  /* Nubes sueltas */
-  .clouds-few::before,.clouds-few::after,
-  .clouds-overcast::before,.clouds-overcast::after{
-    content:'';position:absolute;top:10%;left:-30%;width:160px;height:90px;background:#fff;border-radius:50%;box-shadow: -40px 10px 0 10px #fff;opacity:.8;
-    animation:cloud 60s linear infinite}
-  .clouds-few::after{top:35%;animation-duration:80s}
-  .clouds-overcast::before{opacity:.9;filter:brightness(.85)}
-  .clouds-overcast::after{top:25%;opacity:.9;animation-duration:70s;filter:brightness(.8)}
-  @keyframes cloud{to{transform:translateX(130vw)}}
-  /* Viento (hojas que pasan) → solo un detalle ligero */
-  .wind{background-image:url('https://i.imgur.com/5dCx1fi.png');background-size:200px;animation:wind 4s linear infinite}
-  @keyframes wind{from{background-position:-200px 0}to{background-position:calc(100% + 200px) 0}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Reloj & Clima</title>
+  <style>
+    :root {
+      --sky-day: linear-gradient(to top, #4aa9ff, #87cefa);
+      --sky-night: linear-gradient(to top, #001b3d, #003366);
+      --sky-overcast: linear-gradient(to top, #5b6d7a, #95a4b3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      height: 100vh;
+      background: black;
+    }
+
+    .sky {
+      position: fixed; inset: 0;
+      background: var(--sky-day);
+      transition: background 1s;
+      z-index: -3;
+    }
+
+    .mountains {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 32%;
+      background: linear-gradient(to top, #5a9132, #7abe45);
+      border-top-left-radius: 100% 20%;
+      border-top-right-radius: 100% 20%;
+      z-index: -2;
+    }
+
+    .sun, .moon {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      translate: -50% 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(255, 255, 100, 0.5);
+      transition: opacity 1s;
+    }
+
+    .sun { background: #ffdb4d }
+    .moon { background: #ccc; box-shadow: 0 0 20px #ccc }
+
+    .time { padding-top: 45%; font-size: 3.4em }
+    .date { margin-top: .5em; font-size: 1.2em }
+    .weather {
+      margin-top: 1.5em;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: .3em;
+    }
+
+    .effect {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .rain {
+      background-image: url('https://i.imgur.com/NM4SokO.png');
+      background-size: cover;
+      opacity: .3;
+      animation: rain 1s linear infinite;
+    }
+
+    @keyframes rain {
+      from { background-position: 0 0 }
+      to { background-position: 0 100% }
+    }
+
+    .snow {
+      background-image: url('https://i.imgur.com/13p62dP.png');
+      background-size: contain;
+      opacity: .5;
+      animation: snow 8s linear infinite;
+    }
+
+    @keyframes snow {
+      from { background-position: 0 -100% }
+      to { background-position: 0 100% }
+    }
+
+    .fog {
+      background: radial-gradient(circle at 50% 120%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%);
+      backdrop-filter: blur(2px);
+      animation: fog 12s ease-in-out infinite;
+    }
+
+    @keyframes fog {
+      0%, 100% { transform: translateX(-10%) }
+      50% { transform: translateX(10%) }
+    }
+
+    .clouds-few::before, .clouds-few::after,
+    .clouds-overcast::before, .clouds-overcast::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: -30%;
+      width: 160px;
+      height: 90px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: -40px 10px 0 10px #fff;
+      opacity: .8;
+      animation: cloud 60s linear infinite;
+    }
+
+    .clouds-few::after { top: 35%; animation-duration: 80s }
+    .clouds-overcast::before { opacity: .9; filter: brightness(.85) }
+    .clouds-overcast::after { top: 25%; opacity: .9; animation-duration: 70s; filter: brightness(.8) }
+
+    @keyframes cloud {
+      to { transform: translateX(130vw) }
+    }
+
+    .wind {
+      background-image: url('https://i.imgur.com/5dCx1fi.png');
+      background-size: 200px;
+      animation: wind 4s linear infinite;
+    }
+
+    @keyframes wind {
+      from { background-position: -200px 0 }
+      to { background-position: calc(100% + 200px) 0 }
+    }
+
+    /* Carrusel */
+    .forecast {
+      position: absolute;
+      bottom: 32%;
+      width: 100%;
+      display: flex;
+      gap: 1em;
+      overflow-x: auto;
+      padding: .5em 1em;
+      z-index: 10;
+      scrollbar-width: none;
+    }
+    .forecast::-webkit-scrollbar { display: none }
+
+    .hour {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: .5em;
+      min-width: 80px;
+      flex-shrink: 0;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .hour img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .hour-time {
+      font-size: .9em;
+      margin-bottom: 0.2em;
+    }
+
+    .hour-temp {
+      font-size: 1.1em;
+    }
+  </style>
 </head>
 <body>
   <div id="sky" class="sky"></div>
   <div class="sun" id="sun"></div>
   <div class="moon" id="moon"></div>
+  <div class="forecast" id="forecast"></div>
   <div class="mountains" id="mount"></div>
 
   <div class="time" id="time">--:--</div>
@@ -60,56 +194,93 @@
   </div>
 
 <script>
-const $ = id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-function pad(n){return n.toString().padStart(2,'0');}
-function setText(){
-  const now=new Date(),h=now.getHours(),m=now.getMinutes();
-  $('time').textContent=`${pad(h)}:${pad(m)}`;
-  $('date').textContent=now.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  // Día/noche
-  const sky=$('sky'),sun=$('sun'),moon=$('moon');
-  if(h>=6&&h<18){sky.style.background='var(--sky-day)';sun.style.opacity=1;moon.style.opacity=0;}
-  else{sky.style.background='var(--sky-night)';sun.style.opacity=0;moon.style.opacity=1;}
+function pad(n){ return n.toString().padStart(2,'0'); }
+
+function setText() {
+  const now = new Date();
+  const h = now.getHours(), m = now.getMinutes();
+  $('time').textContent = `${pad(h)}:${pad(m)}`;
+  $('date').textContent = now.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+  const sky = $('sky'), sun = $('sun'), moon = $('moon');
+  if(h >= 6 && h < 18){
+    sky.style.background = 'var(--sky-day)';
+    sun.style.opacity = 1;
+    moon.style.opacity = 0;
+  } else {
+    sky.style.background = 'var(--sky-night)';
+    sun.style.opacity = 0;
+    moon.style.opacity = 1;
+  }
 }
-setText();setInterval(setText,60*1000);
+setText(); setInterval(setText, 60000);
 
-// Clima ------------------------------------------------------------------
-const key="b66c9112b020cbc90a49476edb3d15ae";
-navigator.geolocation.getCurrentPosition(({coords})=>{
-  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${key}&units=metric&lang=es`)
-  .then(r=>r.json()).then(drawWeather);
-},()=>$('details').textContent="Ubicación denegada");
+// --- Clima + Carrusel ---
+const key = "b66c9112b020cbc90a49476edb3d15ae";
+
+navigator.geolocation.getCurrentPosition(pos => {
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+
+  // Clima actual
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric&lang=es`)
+    .then(r => r.json())
+    .then(drawWeather);
+
+  // Previsión por horas
+  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric&lang=es`)
+    .then(r => r.json())
+    .then(drawForecast);
+});
 
 function drawWeather(d){
-  const main=d.weather[0].main.toLowerCase(),
-        desc=d.weather[0].description,
-        clouds=d.clouds.all,
-        wind=d.wind.speed;
-  $('city').textContent=`📍 ${d.name}`;
-  $('details').textContent=`🌡️ ${d.main.temp.toFixed(1)}°C | 🌬️ ${wind} m/s | ${desc}`;
-  const sky=$('sky');
-  // Primero, limpia efectos anteriores
-  document.querySelectorAll('.effect').forEach(e=>e.remove());
+  const main = d.weather[0].main.toLowerCase();
+  const desc = d.weather[0].description;
+  const clouds = d.clouds.all;
+  const wind = d.wind.speed;
 
-  // Helpers
-  const addEff=cls=>{
-    const div=document.createElement('div');div.className=`effect ${cls}`;document.body.append(div);
+  $('city').textContent = `📍 ${d.name}`;
+  $('details').textContent = `🌡️ ${d.main.temp.toFixed(1)}°C | 🌬️ ${wind} m/s | ${desc}`;
+
+  document.querySelectorAll('.effect').forEach(e => e.remove());
+  const sky = $('sky');
+  const addEff = cls => {
+    const div = document.createElement('div');
+    div.className = `effect ${cls}`;
+    document.body.appendChild(div);
   };
 
-  // Lluvia
-  if(main==='rain'||main==='drizzle'){addEff('rain');}
-  // Nieve
-  if(main==='snow'){addEff('snow');}
-  // Niebla / bruma
-  if(['mist','fog','haze','smoke'].includes(main)){addEff('fog');}
-  // Nubes (usamos porcentaje)
-  if(main==='clouds'){
-    if(clouds<40){addEff('clouds-few');}
-    else {addEff('clouds-overcast');sky.style.background='var(--sky-overcast)';}
+  if(main === 'rain' || main === 'drizzle') addEff('rain');
+  if(main === 'snow') addEff('snow');
+  if(['mist','fog','haze','smoke'].includes(main)) addEff('fog');
+  if(main === 'clouds') {
+    if(clouds < 40) addEff('clouds-few');
+    else { addEff('clouds-overcast'); sky.style.background = 'var(--sky-overcast)'; }
   }
-  // Viento fuerte (>8 m/s) –simple detalle
-  if(wind>8){addEff('wind');}
+  if(wind > 8) addEff('wind');
+}
+
+function drawForecast(data){
+  const forecast = $('forecast');
+  forecast.innerHTML = '';
+  const nextHours = data.list.slice(0, 8); // próximas 8 horas
+
+  nextHours.forEach(hourData => {
+    const hour = new Date(hourData.dt_txt).getHours();
+    const icon = hourData.weather[0].icon;
+    const temp = Math.round(hourData.main.temp);
+
+    const box = document.createElement('div');
+    box.className = 'hour';
+    box.innerHTML = `
+      <div class="hour-time">${pad(hour)}:00</div>
+      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="">
+      <div class="hour-temp">${temp}°C</div>
+    `;
+    forecast.appendChild(box);
+  });
 }
 </script>
 </body>
