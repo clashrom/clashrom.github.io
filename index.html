@@ -12,41 +12,16 @@
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
-  <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
+  <!-- Menú Hamburguesa -->
+ <div class="hamburger-container">
+   <button class="hamburger" id="hamburgerBtn">☰</button>
+   <div id="hamburgerMenu" class="hamburger-menu hidden">
+     <button id="hamburger-ajustes" class="menu-item">⚙ Ajustes</button>
+     <button id="hamburger-panico" class="menu-item">🏫 Pánico</button>
+     <button id="hamburger-tyc" class="menu-item">-?- Términos</button>
+   </div>
+ </div>
 
-  <!-- Botón para boton de panico -->
-  <button id="classroomRedirectBtn" title="Boton de panico, Ir a Google Classroom"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 170px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">🏫</span>
-</button>
-  <!-- Botón para terminos y condiciones -->
-  <button id="tyc" title="terminos y condiciones"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 270px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">-?-</span>
-</button>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
