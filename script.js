@@ -180,31 +180,6 @@
           abrirEnIframe('https://buckshotroulette.com/home');
         });
       }
-      // BOTON TERMINOS Y CONDICIONES
-      const tyc = document.getElementById('tyc');
-      if (tyc) {
-        tyc.addEventListener('click', function() {
-          const nuevaPestana = window.open('about:blank', '_blank');
-          if (nuevaPestana) {
-            nuevaPestana.document.write(`
-              <html>
-                <head>
-                  <title>terminos y condiciones</title>
-                  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
-                  <style>
-                    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
-                    iframe { border:none; width:100vw; height:100vh; display:block; }
-                  </style>
-                </head>
-                <body>
-                  <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
-                </body>
-              </html>
-            `);
-            nuevaPestana.document.close();
-          }
-        });
-      }
       ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
@@ -315,5 +290,47 @@ if (classroomBtn) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'º') {
     window.location.href = 'https://classroom.google.com/';
+  }
+});
+    // Menú hamburguesa
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const hamburgerMenu = document.getElementById('hamburgerMenu');
+
+hamburgerBtn.addEventListener('click', () => {
+  hamburgerMenu.classList.toggle('hidden');
+});
+
+// ⚙ Ajustes sin animación
+document.getElementById('hamburger-ajustes').addEventListener('click', () => {
+  hamburgerMenu.classList.add('hidden');
+  settingsPanel.classList.add("show");
+  menu.classList.add("hidden");
+});
+
+// 🏫 Botón de pánico
+document.getElementById('hamburger-panico').addEventListener('click', () => {
+  window.location.href = 'https://classroom.google.com/';
+});
+
+// -?- Términos y Condiciones
+document.getElementById('hamburger-tyc').addEventListener('click', () => {
+  const nuevaPestana = window.open('about:blank', '_blank');
+  if (nuevaPestana) {
+    nuevaPestana.document.write(`
+      <html>
+        <head>
+          <title>Términos y condiciones</title>
+          <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+          <style>
+            body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#111; }
+            iframe { border:none; width:100vw; height:100vh; display:block; }
+          </style>
+        </head>
+        <body>
+          <iframe src="condiciones.html" allow="autoplay; fullscreen"></iframe>
+        </body>
+      </html>
+    `);
+    nuevaPestana.document.close();
   }
 });
