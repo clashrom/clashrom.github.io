@@ -8,16 +8,12 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-    * {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      overflow: hidden;
       background: black;
+      overflow: hidden;
+      height: 100%;
       font-family: 'Press Start 2P', cursive;
     }
 
@@ -25,9 +21,10 @@
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
       z-index: -1;
-      width: 100vw;
-      height: 100vh;
+      display: block;
     }
 
     .container {
@@ -76,41 +73,44 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
-    // Crear estrellas
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
     const stars = [];
-    const totalStars = 150;
+    const totalStars = 100;
+
     for (let i = 0; i < totalStars; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 4 + 2,
-        speed: Math.random() * 1 + 0.3,
+        size: Math.random() * 3 + 1,
+        speed: Math.random() * 1.5 + 0.5,
         depth: Math.random() * 2 + 1
       });
     }
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function drawStars() {
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       for (let star of stars) {
-        ctx.fillStyle = 'rgba(255, 255, 0, 1)'; // Amarillo visible
+        ctx.fillStyle = 'rgb(255, 255, 0)'; // Amarillo brillante
         ctx.fillRect(star.x, star.y, star.size, star.size);
 
-        // Movimiento con profundidad 3D falsa
         star.y += star.speed * star.depth;
-        star.x += Math.sin(star.y * 0.01) * 0.5;
+        star.x += Math.sin(star.y * 0.01) * 0.3 * star.depth;
 
         if (star.y > canvas.height) {
           star.y = -star.size;
           star.x = Math.random() * canvas.width;
         }
       }
-      requestAnimationFrame(draw);
+
+      requestAnimationFrame(drawStars);
     }
 
-    draw();
+    drawStars();
   </script>
 </body>
 </html>
