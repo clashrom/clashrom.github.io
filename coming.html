@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon</title>
+  <link rel="icon" href="https://i.imgur.com/0D0uX1u.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: yellow;
+      text-shadow: 2px 2px #000;
+    }
+
+    .title-img {
+      width: 80%;
+      max-width: 600px;
+      image-rendering: pixelated;
+    }
+
+    .subtitle {
+      margin-top: 20px;
+      font-size: 14px;
+      animation: blink 1.5s infinite steps(1);
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="container">
+    <img src="images/coming.png" alt="Coming Soon" class="title-img">
+    <div class="subtitle">Próximamente...</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    for (let i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 4 + 2,
+        speed: Math.random() * 0.8 + 0.2,
+        depth: Math.random() * 2 + 1
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let s of stars) {
+        ctx.fillStyle = 'rgb(255, 215, 0)';
+        ctx.fillRect(s.x, s.y, s.size, s.size);
+        s.y += s.speed * s.depth;
+        s.x += Math.sin(s.y * 0.01) * 0.3 * s.depth;
+
+        if (s.y > canvas.height) {
+          s.y = -10;
+          s.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>
