@@ -32,6 +32,8 @@
       height: 100vh;
       color: yellow;
       text-shadow: 2px 2px #000;
+      z-index: 1;
+      position: relative;
     }
 
     .title-img {
@@ -62,43 +64,44 @@
   <script>
     const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
-    let stars = [];
 
-    function resize() {
+    function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
 
-    window.addEventListener('resize', resize);
-    resize();
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    for (let i = 0; i < 150; i++) {
+    const stars = [];
+
+    for (let i = 0; i < 100; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 4 + 2,
-        speed: Math.random() * 0.8 + 0.2,
+        size: Math.random() * 3 + 1,
+        speed: Math.random() * 1 + 0.2,
         depth: Math.random() * 2 + 1
       });
     }
 
-    function draw() {
+    function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let s of stars) {
-        ctx.fillStyle = 'rgb(255, 215, 0)';
-        ctx.fillRect(s.x, s.y, s.size, s.size);
-        s.y += s.speed * s.depth;
-        s.x += Math.sin(s.y * 0.01) * 0.3 * s.depth;
+      for (let star of stars) {
+        ctx.fillStyle = 'rgba(255, 215, 0, 0.9)'; // Dorado visible
+        ctx.fillRect(star.x, star.y, star.size, star.size);
+        star.y += star.speed * star.depth;
+        star.x += Math.sin(star.y * 0.01) * 0.2 * star.depth;
 
-        if (s.y > canvas.height) {
-          s.y = -10;
-          s.x = Math.random() * canvas.width;
+        if (star.y > canvas.height) {
+          star.y = -star.size;
+          star.x = Math.random() * canvas.width;
         }
       }
-      requestAnimationFrame(draw);
+      requestAnimationFrame(drawStars);
     }
 
-    draw();
+    drawStars();
   </script>
 </body>
 </html>
