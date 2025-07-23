@@ -4,65 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Coming Soon</title>
-  <link rel="icon" href="https://i.imgur.com/0D0uX1u.png">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
     html, body {
       margin: 0;
       padding: 0;
       background: black;
       overflow: hidden;
-      height: 100%;
-      font-family: 'Press Start 2P', cursive;
     }
 
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
       z-index: -1;
-      display: block;
     }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: yellow;
-      text-shadow: 2px 2px #000;
+      font-family: monospace;
+      font-size: 32px;
+      text-shadow: 2px 2px 0 black;
+      text-align: center;
     }
 
-    .title-img {
-      width: 80%;
-      max-width: 500px;
+    img {
+      width: 300px;
       image-rendering: pixelated;
-    }
-
-    .subtitle {
-      margin-top: 20px;
-      font-size: 14px;
-      animation: blink 1.5s infinite steps(1);
-    }
-
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
+      display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
   <canvas id="stars"></canvas>
 
-  <div class="container">
-    <img src="images/coming.png" alt="Coming Soon" class="title-img">
-    <div class="subtitle">Próximamente...</div>
+  <div class="title">
+    <img src="images/coming.png" alt="Coming Soon">
+    <p>Próximamente...</p>
   </div>
 
   <script>
@@ -73,44 +55,37 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-
-    window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     const stars = [];
-    const totalStars = 100;
-
-    for (let i = 0; i < totalStars; i++) {
+    for (let i = 0; i < 150; i++) {
       stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 1,
-        speed: Math.random() * 1.5 + 0.5,
-        depth: Math.random() * 2 + 1
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: 2 + Math.random() * 4,
+        speed: 0.5 + Math.random() * 1,
+        depth: 1 + Math.random() * 2
       });
     }
 
-    function drawStars() {
-      ctx.fillStyle = 'black';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let s of stars) {
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(s.x, s.y, s.size, s.size);
+        s.y += s.speed * s.depth;
+        s.x += Math.sin(s.y * 0.01) * 0.5;
 
-      for (let star of stars) {
-        ctx.fillStyle = 'rgb(255, 255, 0)'; // Amarillo brillante
-        ctx.fillRect(star.x, star.y, star.size, star.size);
-
-        star.y += star.speed * star.depth;
-        star.x += Math.sin(star.y * 0.01) * 0.3 * star.depth;
-
-        if (star.y > canvas.height) {
-          star.y = -star.size;
-          star.x = Math.random() * canvas.width;
+        if (s.y > canvas.height) {
+          s.y = -s.size;
+          s.x = Math.random() * canvas.width;
         }
       }
-
-      requestAnimationFrame(drawStars);
+      requestAnimationFrame(draw);
     }
 
-    drawStars();
+    draw();
   </script>
 </body>
 </html>
