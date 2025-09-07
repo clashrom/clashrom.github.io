@@ -34,49 +34,51 @@ html, body {
     .hidden {
       display: none !important;
     }
+
+    /* ELIMINADO: #toggleSettings animaciones, posición y transiciones especiales */
     #toggleSettings {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: rgba(0, 255, 255, 0.15);
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 10;
-      transition: background 0.3s ease;
-      font-family: inherit;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      /* El estilo se define desde el HTML por .boton-ajuste-vertical, así que aquí sólo aseguramos que nada lo estorba */
+      position: static !important;
+      left: unset !important;
+      top: unset !important;
+      padding: unset !important;
+      background: unset !important;
+      border: unset !important;
+      border-radius: unset !important;
+      color: unset !important;
+      font-size: unset !important;
+      cursor: unset !important;
+      z-index: unset !important;
+      transition: none !important;
+      font-family: unset !important;
+      display: unset !important;
+      align-items: unset !important;
+      gap: unset !important;
+      box-shadow: none !important;
+      animation: none !important;
     }
     #toggleSettings .ajustes-text {
       display: inline-block;
       opacity: 1;
-      max-width: 200px;
+      max-width: none;
       margin-left: 5px;
-      transform: translateX(0);
-      transition: 
-        opacity 0.3s cubic-bezier(.4,2,.6,1), 
-        max-width 0.35s cubic-bezier(.4,2,.6,1),
-        margin-left 0.3s cubic-bezier(.4,2,.6,1),
-        transform 0.3s cubic-bezier(.4,2,.6,1);
+      transform: none;
+      transition: none;
       white-space: nowrap;
       pointer-events: auto;
     }
     #toggleSettings.compact .ajustes-text {
-      opacity: 0;
-      max-width: 0px;
-      margin-left: 0;
-      transform: translateX(-12px);
-      pointer-events: none;
+      opacity: 1;
+      max-width: none;
+      margin-left: 5px;
+      transform: none;
+      pointer-events: auto;
     }
     #toggleSettings .gear-icon {
       font-size: 1.2em;
-      transition: font-size 0.3s cubic-bezier(.4,2,.6,1);
+      transition: none;
     }
+
     .margen-grande-arriba {
       margin-top: 90px;
     }
