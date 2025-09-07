@@ -7,46 +7,107 @@
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* --- NUEVO: Botonera vertical y hamburguesa --- */
+    .menu-hamburguesa-container {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .menu-hamburguesa-btn {
+      background: rgba(0,255,255,0.18);
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.7em;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+    .menu-hamburguesa-btn:active {
+      background: rgba(0,255,255,0.35);
+    }
+    .botones-panel {
+      display: none;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      margin-top: 0;
+      margin-bottom: 8px;
+      /* El fondo y sombra ayudan a que se note sobre el contenido */
+      background: rgba(20,20,20,0.80);
+      border-radius: 14px;
+      padding: 10px 8px;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+    }
+    .botones-panel.show {
+      display: flex;
+    }
+    .boton-ajuste-vertical {
+      width: 170px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,255,255,0.18);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .boton-ajuste-vertical:active {
+      background: rgba(0,255,255,0.35);
+    }
+    @media (max-width: 500px) {
+      .menu-hamburguesa-container {
+        right: 8px;
+        top: 8px;
+      }
+      .boton-ajuste-vertical {
+        width: 140px;
+        font-size: 1em;
+        padding: 9px 12px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
-  <!-- Botón para mostrar ajustes -->
-  <button id="toggleSettings"><span class="gear-icon">⚙</span><span class="ajustes-text"> Ajustes</span></button>
+  <!-- NUEVO: Botonera vertical y menu hamburguesa -->
+  <div class="menu-hamburguesa-container">
+    <!-- Botón hamburguesa -->
+    <button id="hamburguesaBtn" class="menu-hamburguesa-btn" title="Mostrar menú">
+      <span style="font-size:1.7em;">&#9776;</span>
+    </button>
+    <!-- Panel botones verticales -->
+    <div id="panelBotones" class="botones-panel">
+      <!-- Botón Ajustes -->
+      <button id="toggleSettings" class="boton-ajuste-vertical">
+        <span class="gear-icon">⚙</span>
+        <span class="ajustes-text">Ajustes</span>
+      </button>
+      <!-- Botón de pánico -->
+      <button id="classroomRedirectBtn" class="boton-ajuste-vertical" title="Botón de pánico, Ir a Google Classroom">
+        <span style="font-size:1.4em;">🏫</span>
+        <span style="margin-left:4px;">Classroom</span>
+      </button>
+      <!-- Botón Términos y condiciones -->
+      <button id="tyc" class="boton-ajuste-vertical" title="Términos y condiciones">
+        <span style="font-size:1.4em;">-?-</span>
+        <span style="margin-left:4px;">Términos</span>
+      </button>
+    </div>
+  </div>
 
-  <!-- Botón para boton de panico -->
-  <button id="classroomRedirectBtn" title="Boton de panico, Ir a Google Classroom"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 170px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">🏫</span>
-</button>
-  <!-- Botón para terminos y condiciones -->
-  <button id="tyc" title="terminos y condiciones"
-  style="
-    position: fixed;
-    top: 20px;
-    left: 270px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    background: rgba(0,255,255,0.18);
-    color: #fff;
-    border: none;
-    z-index: 10;
-    cursor: pointer;
-  ">
-  <span style="font-size:1.4em;">-?-</span>
-</button>
   <!-- Panel de Ajustes centrado -->
   <div class="settings" id="settingsPanel">
     <div class="settings-row">
@@ -239,6 +300,22 @@
       </div>
     </div>
   </div>
-    <script src="script.js"></script>
+  <script>
+    // --- NUEVO: funcionalidad hamburguesa ---
+    const hamburguesaBtn = document.getElementById('hamburguesaBtn');
+    const panelBotones = document.getElementById('panelBotones');
+    hamburguesaBtn.addEventListener('click', () => {
+      panelBotones.classList.toggle('show');
+    });
+
+    // Opcional: cerrar el menú si se hace click fuera
+    document.addEventListener('click', function(e) {
+      if (!panelBotones.contains(e.target) && !hamburguesaBtn.contains(e.target)) {
+        panelBotones.classList.remove('show');
+      }
+    });
+    // Notas: los IDs de los botones se mantienen igual para compatibilidad con script.js
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
