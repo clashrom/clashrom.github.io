@@ -35,47 +35,62 @@ html, body {
       display: none !important;
     }
 
-    /* ELIMINADO: #toggleSettings animaciones, posición y transiciones especiales */
+    /* Botones del menú hamburguesa: mismo estilo para los tres */
+    .boton-ajuste-vertical {
+      width: 150px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,255,255,0.18);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 1.08em;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 10px 0 rgba(0,255,255,0.08);
+      margin: 0;
+    }
+    .boton-ajuste-vertical:hover {
+      background: rgba(0,255,255,0.32);
+      box-shadow: 0 4px 18px 0 rgba(0,255,255,0.14);
+    }
+    .boton-ajuste-vertical:active {
+      background: rgba(0,255,255,0.40);
+    }
+
+    /* Anula cualquier estilo especial heredado por #toggleSettings */
     #toggleSettings {
-      /* El estilo se define desde el HTML por .boton-ajuste-vertical, así que aquí sólo aseguramos que nada lo estorba */
-      position: static !important;
-      left: unset !important;
-      top: unset !important;
-      padding: unset !important;
-      background: unset !important;
-      border: unset !important;
-      border-radius: unset !important;
-      color: unset !important;
-      font-size: unset !important;
-      cursor: unset !important;
-      z-index: unset !important;
-      transition: none !important;
-      font-family: unset !important;
-      display: unset !important;
-      align-items: unset !important;
-      gap: unset !important;
-      box-shadow: none !important;
-      animation: none !important;
+      all: unset;
+      /* vuelve a aplicar .boton-ajuste-vertical (por si acaso) */
+      width: 150px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,255,255,0.18);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 1.08em;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 10px 0 rgba(0,255,255,0.08);
+      margin: 0;
     }
-    #toggleSettings .ajustes-text {
-      display: inline-block;
-      opacity: 1;
-      max-width: none;
-      margin-left: 5px;
-      transform: none;
-      transition: none;
-      white-space: nowrap;
-      pointer-events: auto;
+    #toggleSettings:hover {
+      background: rgba(0,255,255,0.32);
+      box-shadow: 0 4px 18px 0 rgba(0,255,255,0.14);
     }
-    #toggleSettings.compact .ajustes-text {
-      opacity: 1;
-      max-width: none;
-      margin-left: 5px;
-      transform: none;
-      pointer-events: auto;
+    #toggleSettings:active {
+      background: rgba(0,255,255,0.40);
     }
+
+    #toggleSettings .ajustes-text,
     #toggleSettings .gear-icon {
-      font-size: 1.2em;
+      font-size: 1em;
+      margin-left: 0;
       transition: none;
     }
 
