@@ -35,6 +35,77 @@ html, body {
       display: none !important;
     }
 
+    /* --- NUEVO: Botonera vertical y hamburguesa lado IZQUIERDO --- */
+    .menu-hamburguesa-container {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .menu-hamburguesa-btn {
+      background: rgba(0,255,255,0.18);
+      border: none;
+      border-radius: 12px;
+      padding: 7px 11px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.3em;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-hamburguesa-btn:active {
+      background: rgba(0,255,255,0.35);
+    }
+    .botones-panel {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 0;
+      margin-bottom: 8px;
+      background: rgba(20,20,20,0.80);
+      border-radius: 14px;
+      padding: 10px 8px;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+    }
+    .botones-panel.show {
+      display: flex;
+    }
+    .boton-ajuste-vertical {
+      width: 150px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,255,255,0.18);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 1.08em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .boton-ajuste-vertical:active {
+      background: rgba(0,255,255,0.35);
+    }
+    @media (max-width: 500px) {
+      .menu-hamburguesa-container {
+        left: 6px;
+        top: 6px;
+      }
+      .boton-ajuste-vertical {
+        width: 120px;
+        font-size: .96em;
+        padding: 8px 10px;
+      }
+    }
+
     /* Botones del menú hamburguesa: mismo estilo para los tres */
     .boton-ajuste-vertical {
       width: 150px;
