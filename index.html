@@ -78,9 +78,92 @@
         padding: 8px 10px;
       }
     }
+
+    /* --- ESTILOS TABLÓN DE NOVEDADES --- */
+    #novedades-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(20,24,32,0.78);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 99999;
+      padding-top: 38px;
+      animation: fadeIn 0.5s;
+    }
+    #novedades-box {
+      background: rgba(36,38,56,0.98);
+      border-radius: 18px;
+      box-shadow: 0 4px 40px #000a;
+      min-width: 310px;
+      max-width: 96vw;
+      max-height: 80vh;
+      padding: 32px 26px 18px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: auto;
+      position: relative;
+    }
+    #novedades-box h2 {
+      margin-top: 0;
+      font-size: 2em;
+      color: #00f6ff;
+      text-align: center;
+      margin-bottom: 12px;
+      font-family: 'Montserrat', sans-serif;
+      text-shadow: 1px 2px 12px #0008;
+    }
+    .novedad-linea {
+      font-size: 1.13em;
+      color: #fff;
+      margin-bottom: 9px;
+      text-align: center;
+      word-break: break-word;
+      max-width: 95vw;
+    }
+    .novedad-img {
+      display: block;
+      margin: 16px auto 16px auto;
+      max-width: 92vw;
+      max-height: 230px;
+      border-radius: 18px;
+      border: 4px ridge #00e6ff;
+      box-shadow: 0 3px 16px #005a8c33;
+      object-fit: contain;
+    }
+    #novedades-vale {
+      margin-top: 14px;
+      background: linear-gradient(90deg,#00f6ff,#0f0c29 120%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-family: inherit;
+      padding: 7px 35px;
+      box-shadow: 0 3px 12px #0007;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    #novedades-vale:hover {
+      background: linear-gradient(90deg,#0ff,#302b63 120%);
+    }
+    @media (max-width:700px) {
+      #novedades-box { min-width: 98vw; padding: 16px 2vw 10px 2vw; }
+      .novedad-img { max-width: 98vw; max-height: 140px;}
+    }
   </style>
 </head>
 <body>
+  <!-- TABLÓN DE NOVEDADES -->
+  <div id="novedades-modal" style="display:none;">
+    <div id="novedades-box">
+      <h2>Novedades</h2>
+      <div id="novedades-content"></div>
+      <button id="novedades-vale">Vale</button>
+    </div>
+  </div>
+
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
 
@@ -305,6 +388,58 @@
       </div>
     </div>
   </div>
+  <script>
+    // --- NOVEDADES ---
+    function hashString(str) {
+      // Sencillo hash para el contenido, para detectar cambios
+      let hash = 0, i, chr;
+      if (str.length === 0) return hash;
+      for (i = 0; i < str.length; i++) {
+        chr = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0;
+      }
+      return hash.toString();
+    }
+    function mostrarNovedades(contenido, hash) {
+      const modal = document.getElementById('novedades-modal');
+      const contenedor = document.getElementById('novedades-content');
+      contenedor.innerHTML = "";
+      const lineas = contenido.split('\n');
+      for (let linea of lineas) {
+        linea = linea.trim();
+        if (!linea) continue;
+        // Si es imagen
+        if (/^https?:\/\/.*\.(png|jpg|jpeg|gif|webp|svg)$/i.test(linea)) {
+          const img = document.createElement('img');
+          img.src = linea;
+          img.className = 'novedad-img';
+          contenedor.appendChild(img);
+        } else {
+          const div = document.createElement('div');
+          div.textContent = linea;
+          div.className = 'novedad-linea';
+          contenedor.appendChild(div);
+        }
+      }
+      modal.style.display = "flex";
+      document.getElementById('novedades-vale').onclick = function() {
+        modal.style.display = 'none';
+        // Guardar hash para no mostrar de nuevo
+        localStorage.setItem('novedadesHash', hash);
+      }
+    }
+    // Cargar y mostrar si es necesario
+    (function(){
+      fetch('nov.txt?_=' + Date.now())
+        .then(r=>r.ok?r.text():"").then(txt=>{
+          const hash = hashString(txt.trim());
+          if (!txt.trim()) return;
+          if (localStorage.getItem('novedadesHash') === hash) return;
+          mostrarNovedades(txt, hash);
+        });
+    })();
+  </script>
   <script>
     // --- NUEVO: funcionalidad hamburguesa ---
     const hamburguesaBtn = document.getElementById('hamburguesaBtn');
