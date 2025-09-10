@@ -227,7 +227,7 @@
   </div>
   <div id="resultados-busqueda" style="display:none;"></div>
 
-  <!-- AQUÍ VA TODO TU MENÚ (idéntico al original) -->
+  <!-- MENU COMPLETO (no se omite nada) -->
   <div id="menu">
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -395,7 +395,7 @@
     </div>
   </div>
   <script>
-    // --- NOVEDADES MEJORADO ---
+    // --- NOVEDADES MEJORADO - acepta cualquier cosa entre €...€ como imagen ---
     function hashString(str) {
       let hash = 0, i, chr;
       if (str.length === 0) return hash;
@@ -414,9 +414,9 @@
       for (let linea of lineas) {
         linea = linea.trim();
         if (!linea) continue;
-        // Si la línea está entre €...€, mostrar imagen, ej: €https://ruta.com/imagen.png€
-        if (/^€https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?€$/i.test(linea)) {
-          const url = linea.slice(1, -1); // quita los €
+        // Si la línea está entre €...€, mostrar imagen, ej: €https://loquesea€
+        if (/^€(.+)€$/.test(linea)) {
+          const url = linea.slice(1, -1);
           const img = document.createElement('img');
           img.src = url;
           img.className = 'novedad-img';
