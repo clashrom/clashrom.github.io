@@ -409,7 +409,7 @@
         linea = linea.trim();
         if (!linea) continue;
         // Si la línea está entre #...#, mostrar imagen, ej: #https://ruta.com/imagen.png#
-        if (/^|#https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?#|$/i.test(linea)) {
+        if (/^€https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?€$/i.test(linea)) {
           const url = linea.slice(1, -1); // quita los #
           const img = document.createElement('img');
           img.src = url;
