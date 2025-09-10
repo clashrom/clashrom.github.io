@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* --- NUEVO: Botonera vertical y hamburguesa lado IZQUIERDO --- */
     .menu-hamburguesa-container {
       position: fixed;
       top: 20px;
@@ -78,7 +77,6 @@
         padding: 8px 10px;
       }
     }
-
     /* --- ESTILOS TABLÓN DE NOVEDADES MODIFICADOS --- */
     #novedades-modal {
       position: fixed;
@@ -87,7 +85,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 99999;
+      z-index: 1000; /* Por debajo de la imagen fullscreen (que usa 9999) */
       padding: 0;
       animation: fadeIn 0.5s;
     }
@@ -159,7 +157,8 @@
 <body>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Pantalla completa" />
-  <!-- TABLÓN DE NOVEDADES -->
+
+  <!-- TABLÓN DE NOVEDADES (por debajo de fullscreen, z-index menor) -->
   <div id="novedades-modal" style="display:none;">
     <div id="novedades-box">
       <h2>Novedades</h2>
@@ -167,6 +166,7 @@
       <button id="novedades-vale">Vale</button>
     </div>
   </div>
+
   <!-- NUEVO: Botonera vertical y menu hamburguesa a la izquierda -->
   <div class="menu-hamburguesa-container">
     <!-- Botón hamburguesa -->
@@ -221,6 +221,7 @@
   </div>
   <div id="resultados-busqueda" style="display:none;"></div>
 
+  <!-- MENU COMPLETO (sin recortar nada) -->
   <div id="menu">
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -261,7 +262,6 @@
         </button>
       </div>
     </div>
-
     <!-- Sección Juegos -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Juegos</div>
@@ -400,10 +400,6 @@
       }
       return hash.toString();
     }
-    function esImagenURL(url) {
-      // acepta imagenes aunque tengan parámetros
-      return /^https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?$/i.test(url);
-    }
     function mostrarNovedades(contenido, hash) {
       const modal = document.getElementById('novedades-modal');
       const contenedor = document.getElementById('novedades-content');
@@ -412,13 +408,16 @@
       for (let linea of lineas) {
         linea = linea.trim();
         if (!linea) continue;
-        if (esImagenURL(linea)) {
+        // Si la línea está entre #...#, mostrar imagen, ej: #https://ruta.com/imagen.png#
+        if (/^|#https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)(\?.*)?#|$/i.test(linea)) {
+          const url = linea.slice(1, -1); // quita los #
           const img = document.createElement('img');
-          img.src = linea;
+          img.src = url;
           img.className = 'novedad-img';
           img.alt = "Imagen de novedades";
           contenedor.appendChild(img);
         } else {
+          // Línea normal (texto)
           const div = document.createElement('div');
           div.textContent = linea;
           div.className = 'novedad-linea';
