@@ -9,11 +9,11 @@
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #320000, #7b1f1f, #3e1a1a);
+      background: linear-gradient(135deg, #960000, #2d0000, #ff0000 60%, #660000);
       font-family: sans-serif;
       height: 100vh;
       overflow: hidden;
-      color: white;
+      color: #fff;
       animation: backgroundMove 20s infinite alternate;
       display: flex;
       flex-direction: column;
@@ -28,23 +28,29 @@
     }
 
     h1 {
-      color: #ff5252;
+      color: #ff1b1b;
       font-family: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
       font-weight: 900;
-      font-size: 38px;
-      margin-bottom: 20px;
+      font-size: 44px;
+      margin-bottom: 24px;
       margin-top: 30px;
-      letter-spacing: -1px;
-      text-shadow: 0 2px 14px #7b1f1f88;
+      letter-spacing: -1.5px;
+      text-shadow: 0 4px 22px #000c, 0 2px 10px #70000088, 0 0px 1px #000;
+      border-bottom: 4px solid #000;
+      padding-bottom: 8px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.10);
+      box-shadow: 0 4px 24px #4d0000aa;
+      width: clamp(300px, 90vw, 600px);
+      text-align: center;
     }
 
-    /* Botón de ajustes (Cambiar imagen) */
     #publish-text {
       position: fixed;
       top: 10%;
       left: 20px;
       z-index: 1000;
-      background: #220101;
+      background: #960000;
       color: #fff;
       cursor: pointer;
       font-weight: bold;
@@ -52,92 +58,115 @@
       user-select: none;
       padding: 10px 26px;
       border-radius: 14px;
-      box-shadow: 0 2px 12px #ff525233, 0 0 0 3px #ff525244;
-      border: 2px solid #ff5252;
+      box-shadow: 0 2px 12px #0008, 0 0 0 3px #ff000033;
+      border: 2.5px solid #000;
+      border-bottom: 4px solid #ff1b1b;
       transition: background 0.3s, box-shadow 0.3s, border 0.3s;
     }
     #publish-text:hover {
-      background: #320404;
-      box-shadow: 0 4px 24px #ff525277, 0 0 0 4px #ff525288;
-      border: 2px solid #fff;
+      background: #c90000;
+      box-shadow: 0 4px 24px #ff000077, 0 0 0 4px #ff525288;
+      border: 2.5px solid #ff1b1b;
+      border-bottom: 4px solid #fff;
     }
 
-    /* Buscador/input */
     input {
-      width: 300px;
-      background: #170000;
+      width: 320px;
+      background: #3e0000;
       color: #fff;
-      border: 2px solid #ff5252;
-      box-shadow: 0 2px 8px #ff525233, 0 0 0 2px #ff525222;
-      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      border: 2.5px solid #000;
+      box-shadow: 0 2px 8px #0006, 0 0 0 2px #ff000033;
       font-weight: bold;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 10px;
+      padding: 13px;
+      font-size: 18px;
+      border-radius: 13px;
       margin: 5px;
       outline: none;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      text-align: left;
     }
     input:focus {
-      background: #240101;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 16px #ff525277, 0 0 0 4px #ff525244;
+      background: #5d0606;
+      border: 2.5px solid #ff1b1b;
+      box-shadow: 0 4px 18px #ff000077, 0 0 0 5px #ff000033;
     }
 
-    /* Botón de buscar */
     button {
-      background: #220101;
+      background: #7a0000;
       color: #fff;
-      border: 2px solid #ff5252;
+      border: 2.5px solid #000;
       cursor: pointer;
       text-transform: uppercase;
-      box-shadow: 0 2px 8px #ff525233;
+      box-shadow: 0 2px 8px #0008;
       font-weight: bold;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 10px;
+      padding: 13px 18px;
+      font-size: 18px;
+      border-radius: 13px;
       margin: 5px;
-      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s, color 0.3s;
       outline: none;
     }
     button:hover {
-      background: #320404;
-      border: 2px solid #fff;
-      box-shadow: 0 6px 20px #ff525277;
+      background: #ff1b1b;
+      color: #000;
+      border: 2.5px solid #fff;
+      box-shadow: 0 6px 24px #ff000088;
     }
 
     #resultados {
-      margin-top: 30px;
+      margin-top: 32px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
+      gap: 18px;
       max-height: 500px;
       overflow-y: auto;
       padding-right: 10px;
+      width: 95vw;
+      max-width: 1100px;
     }
 
     .video {
-      background: rgba(40, 0, 0, 0.85);
-      padding: 10px;
-      border-radius: 12px;
-      width: 200px;
+      background: linear-gradient(135deg, #8b0000 80%, #1a0000);
+      padding: 12px;
+      border-radius: 14px;
+      width: 220px;
+      min-height: 120px;
       cursor: pointer;
       text-align: left;
-      box-shadow: 0 0 10px #7b1f1f33;
-      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 20px #000a, 0 0 0 3px #000;
+      border: 3.5px solid #000;
+      transition: background 0.25s, box-shadow 0.25s, transform 0.18s;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
     }
     .video:hover {
-      background: rgba(80, 10, 10, 0.95);
-      box-shadow: 0 0 20px #ff525288;
+      background: linear-gradient(135deg, #ff1b1b 60%, #3e0000 100%);
+      box-shadow: 0 0 30px #ff0000cc, 0 0 0 4px #ff1b1b;
+      transform: translateY(-6px) scale(1.025);
+      border-color: #ff1b1b;
     }
     .video img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 10px;
+      border: 2.5px solid #000;
+      box-shadow: 0 2px 8px #0007;
+      margin-bottom: 7px;
     }
     .titulo {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #ff9e9e;
+      margin-top: 5px;
+      font-size: 15.5px;
+      color: #fff;
+      text-shadow: 0 1px 6px #0009;
+      font-weight: bold;
+      line-height: 1.2;
+      padding-bottom: 2px;
+      border-bottom: 2px solid #ff1b1b;
+      border-radius: 1px;
     }
 
     #fullscreen-image {
@@ -145,7 +174,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-color: rgba(30, 0, 0, 0.9);
+      background-color: rgba(30, 0, 0, 0.95);
       justify-content: center;
       align-items: center;
       z-index: 99999;
@@ -163,34 +192,105 @@
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(80, 0, 0, 0.98);
-      border: 2px solid #ff5252;
-      border-radius: 16px;
-      padding: 20px;
-      width: 300px;
-      box-shadow: 0px 8px 24px #7b1f1f55;
+      background: #a00000ee;
+      border: 3px solid #000;
+      border-radius: 18px;
+      padding: 22px;
+      width: 310px;
+      box-shadow: 0 8px 28px #000b;
       z-index: 10000;
       text-align: center;
     }
     #upload-popup p {
       color: white;
-      font-size: 16px;
-      margin-bottom: 20px;
+      font-size: 17px;
+      margin-bottom: 21px;
     }
     #upload-popup button {
       margin: 10px;
-      width: 100px;
-      padding: 10px;
-      font-size: 16px;
+      width: 110px;
+      padding: 11px;
+      font-size: 17px;
       border-radius: 10px;
-      border: none;
-      background: #ff5252;
+      border: 2.5px solid #000;
+      background: #ff1b1b;
       color: white;
       cursor: pointer;
-      transition: background 0.3s;
+      font-weight: bold;
+      transition: background 0.3s, border 0.3s, color 0.3s;
     }
     #upload-popup button:hover {
-      background: #b71c1c;
+      background: #fff;
+      color: #a00000;
+      border: 2.5px solid #a00000;
+    }
+
+    /* --- Estilos del overlay de video --- */
+    #video-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(20,0,0,0.98);
+      z-index: 10001;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: background 0.25s;
+    }
+    #video-overlay.active {
+      display: flex;
+    }
+    #video-frame-container {
+      background: #2d0000;
+      border: 5px solid #ff1b1b;
+      border-radius: 22px;
+      box-shadow: 0 10px 40px #000d, 0 0 0 8px #000;
+      overflow: hidden;
+      position: relative;
+      max-width: 95vw;
+      max-height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #close-video-btn {
+      position: absolute;
+      top: -28px;
+      right: 0;
+      background: #ff1b1b;
+      color: #000;
+      border: 2.5px solid #000;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #000a;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.18s, border 0.18s, color 0.18s;
+    }
+    #close-video-btn:hover {
+      background: #fff;
+      color: #ff1b1b;
+      border: 2.5px solid #ff1b1b;
+    }
+    @media (max-width: 800px) {
+      #video-frame-container {
+        max-width: 99vw;
+        max-height: 52vw;
+      }
+      h1 {
+        font-size: 30px;
+      }
+      .video {
+        width: 95vw;
+        min-width: 0;
+      }
     }
   </style>
 </head>
@@ -217,6 +317,14 @@
   <!-- Contenedor para la imagen a pantalla completa -->
   <div id="fullscreen-image">
     <img id="fullscreen-img" src="images/Screenshot 2025-06-16 13.03.28.png" alt="Fullscreen Screenshot">
+  </div>
+
+  <!-- Overlay para mostrar el video embebido -->
+  <div id="video-overlay">
+    <div id="video-frame-container" style="position:relative;">
+      <button id="close-video-btn" onclick="cerrarVideo()" title="Cerrar vídeo">&times;</button>
+      <iframe id="video-iframe" width="720" height="405" src="" frameborder="0" allowfullscreen style="display:block; background:#000;"></iframe>
+    </div>
   </div>
 
   <script>
@@ -262,7 +370,7 @@
 
           const div = document.createElement("div");
           div.className = "video";
-          div.onclick = () => abrirVideo(id);
+          div.onclick = () => abrirVideoEnOverlay(id);
           div.innerHTML = `
             <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg">
             <div class="titulo">Video: ${descripcion}</div>
@@ -280,7 +388,7 @@
 
           const div = document.createElement("div");
           div.className = "video";
-          div.onclick = () => abrirVideo(id);
+          div.onclick = () => abrirVideoEnOverlay(id);
           div.innerHTML = `
             <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg">
             <div class="titulo">Video relacionado</div>
@@ -296,11 +404,27 @@
       }
     }
 
+    // Cambia esta función para mostrar el video embebido en overlay dentro de la web
+    function abrirVideoEnOverlay(videoId) {
+      const overlay = document.getElementById("video-overlay");
+      const iframe = document.getElementById("video-iframe");
+      // Usa youtube-nocookie para privacidad
+      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+      overlay.classList.add("active");
+      overlay.style.display = "flex";
+    }
+
+    function cerrarVideo() {
+      const overlay = document.getElementById("video-overlay");
+      const iframe = document.getElementById("video-iframe");
+      overlay.classList.remove("active");
+      overlay.style.display = "none";
+      iframe.src = ""; // Detener video
+    }
+
+    // Mantén esta función por si acaso se usa desde otro sitio
     function abrirVideo(videoId) {
-      const win = window.open("about:blank", "_blank");
-      const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
-      win.document.write(`<iframe width="100%" height="100%" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`);
-      win.document.close();
+      abrirVideoEnOverlay(videoId);
     }
 
     function toggleUploadPopup() {
@@ -337,6 +461,10 @@
         event.preventDefault(); // Evita el comportamiento normal de Tab
         const fullscreenImage = document.getElementById('fullscreen-image');
         fullscreenImage.style.display = fullscreenImage.style.display === 'flex' ? 'none' : 'flex';
+      }
+      // Cerrar overlay con Escape
+      if (event.key === 'Escape') {
+        cerrarVideo();
       }
     });
   </script>
