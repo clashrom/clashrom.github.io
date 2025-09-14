@@ -8,34 +8,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* NUEVO: Imagen fija a la derecha del buscador */
-    #buscador-img-fixed {
-      position: fixed;
-      top: 70px; /* ajusta este valor según donde esté el buscador */
-      right: 32px; /* margen derecho */
-      z-index: 100;
-      background: #232323;
-      border-radius: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      padding: 10px;
-      max-width: 120px;
-      max-height: 60px;
+    /* NUEVO: Imagen junto al buscador */
+    #buscador-contenedor {
       display: flex;
-      align-items: center;
       justify-content: center;
-      /* El recuadro gris no debe ser más alto que el input de buscador */
+      align-items: center;
+      width: 100vw;
+      margin-top: 25px;
     }
-    #buscador-img-fixed img {
-      max-width: 100px;
-      max-height: 40px;
-      width: auto;
-      height: auto;
-      border-radius: 10px;
+    #buscador-menu {
+      width: 350px;
+      font-size: 1.1em;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+    }
+    #buscador-logo-img {
+      margin-left: 28px;
+      max-height: 70px;       /* Un poco más grande */
+      max-width: 160px;
+      object-fit: contain;
+      background: none;
+      border-radius: 0;
       display: block;
     }
-    @media (max-width: 600px) {
-      #buscador-img-fixed {
-        display: none; /* Opcional: oculta en móviles */
+    @media (max-width: 700px) {
+      #buscador-logo-img {
+        max-height: 40px;
+        max-width: 90px;
+        margin-left: 10px;
+      }
+    }
+    @media (max-width: 500px) {
+      #buscador-logo-img {
+        display: none;
       }
     }
   </style>
@@ -102,12 +109,10 @@
   <!-- Sentinela para IntersectionObserver -->
   <div id="buscador-sentinela" style="height:1px;"></div>
   <!-- Barra de búsqueda de botones -->
-  <div id="buscador-contenedor" style="width:100vw;display:flex;justify-content:center;margin-top:25px;">
-    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú..." style="width: 350px; font-size: 1.1em; padding: 10px 16px; border-radius: 12px; border: none; outline: none;">
-  </div>
-  <!-- NUEVO: Imagen fija a la derecha del buscador -->
-  <div id="buscador-img-fixed">
-    <img src="images/clashrom.png" alt="clashrom logo">
+  <div id="buscador-contenedor">
+    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú...">
+    <!-- NUEVO: Imagen a la derecha del buscador, más grande y sin fondo -->
+    <img id="buscador-logo-img" src="images/clashrom.png" alt="clashrom logo">
   </div>
   <div id="resultados-busqueda" style="display:none;"></div>
 
