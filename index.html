@@ -7,6 +7,38 @@
   <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* NUEVO: Imagen fija a la derecha del buscador */
+    #buscador-img-fixed {
+      position: fixed;
+      top: 70px; /* ajusta este valor según donde esté el buscador */
+      right: 32px; /* margen derecho */
+      z-index: 100;
+      background: #232323;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      padding: 10px;
+      max-width: 120px;
+      max-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* El recuadro gris no debe ser más alto que el input de buscador */
+    }
+    #buscador-img-fixed img {
+      max-width: 100px;
+      max-height: 40px;
+      width: auto;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      #buscador-img-fixed {
+        display: none; /* Opcional: oculta en móviles */
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Imagen fullscreen -->
@@ -72,6 +104,10 @@
   <!-- Barra de búsqueda de botones -->
   <div id="buscador-contenedor" style="width:100vw;display:flex;justify-content:center;margin-top:25px;">
     <input id="buscador-menu" type="text" placeholder="Buscar botón del menú..." style="width: 350px; font-size: 1.1em; padding: 10px 16px; border-radius: 12px; border: none; outline: none;">
+  </div>
+  <!-- NUEVO: Imagen fija a la derecha del buscador -->
+  <div id="buscador-img-fixed">
+    <img src="images/clashrom.png" alt="clashrom logo">
   </div>
   <div id="resultados-busqueda" style="display:none;"></div>
 
@@ -181,7 +217,7 @@
           </button>
           <!-- NUEVO BOTÓN SURVEV.IO -->
           <button class="menu-button" onclick="abrirEnIframe('https://survev.io/')">
-            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75" alt="survev.io">
+            <img src="https://www.hahagames.com/_next/image?url=https%3A%2F%2Fstatic.hahagames.com%2Fmedia%2F422b24c3-09cf-492d-a454-a47ae693251e%2Fe80d193e-6569-4e6e-b240-5aa55e163a30.png&w=3840&q=75[...]
           </button>
           <!-- NUEVO BOTON skyriders -->
           <button class="menu-button" onclick="abrirEnIframe('https://holajuegos.com/game/sky-riders')">
