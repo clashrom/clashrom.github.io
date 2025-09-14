@@ -317,3 +317,64 @@ document.addEventListener('keydown', function(e) {
     window.location.href = 'https://classroom.google.com/';
   }
 });
+    // --- NOVEDADES MEJORADO - acepta cualquier cosa entre €...€ como imagen ---
+    function hashString(str) {
+      let hash = 0, i, chr;
+      if (str.length === 0) return hash;
+      for (i = 0; i < str.length; i++) {
+        chr = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0;
+      }
+      return hash.toString();
+    }
+    function mostrarNovedades(contenido, hash) {
+      const modal = document.getElementById('novedades-modal');
+      const contenedor = document.getElementById('novedades-content');
+      contenedor.innerHTML = "";
+      const lineas = contenido.split('\n');
+      for (let linea of lineas) {
+        linea = linea.trim();
+        if (!linea) continue;
+        // Si la línea está entre €...€, mostrar imagen, ej: €https://loquesea€
+        if (/^€(.+)€$/.test(linea)) {
+          const url = linea.slice(1, -1);
+          const img = document.createElement('img');
+          img.src = url;
+          img.className = 'novedad-img';
+          img.alt = "Imagen de novedades";
+          contenedor.appendChild(img);
+        } else {
+          // Línea normal (texto)
+          const div = document.createElement('div');
+          div.textContent = linea;
+          div.className = 'novedad-linea';
+          contenedor.appendChild(div);
+        }
+      }
+      modal.style.display = "flex";
+      document.getElementById('novedades-vale').onclick = function() {
+        modal.style.display = 'none';
+        localStorage.setItem('novedadesHash', hash);
+      }
+    }
+    (function(){
+      fetch('nov.txt?_=' + Date.now())
+        .then(r=>r.ok?r.text():"").then(txt=>{
+          const hash = hashString(txt.trim());
+          if (!txt.trim()) return;
+          if (localStorage.getItem('novedadesHash') === hash) return;
+          mostrarNovedades(txt, hash);
+        });
+    })();
+    // --- NUEVO: funcionalidad hamburguesa ---
+    const hamburguesaBtn = document.getElementById('hamburguesaBtn');
+    const panelBotones = document.getElementById('panelBotones');
+    hamburguesaBtn.addEventListener('click', () => {
+      panelBotones.classList.toggle('show');
+    });
+    document.addEventListener('click', function(e) {
+      if (!panelBotones.contains(e.target) && !hamburguesaBtn.contains(e.target)) {
+        panelBotones.classList.remove('show');
+      }
+    });
