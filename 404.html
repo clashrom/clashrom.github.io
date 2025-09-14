@@ -12,7 +12,7 @@
     img{max-width:320px;width:60%;height:auto;display:block;margin:0 auto 28px}
     h1{font-size:28px;margin:0 0 8px}
     p{margin:0 0 20px;color:var(--muted)}
-    .btn{display:inline-block;padding:14px 26px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#5b21b6);color:white;text-decoration:none;font-weight:600;box-shadow:0 6px 18px rgba(124,58,237,0.28);transition:transform .16s ease, box-shadow .16s ease}
+    .btn{display:inline-block;padding:14px 26px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#5b21b6);color:white;text-decoration:none;font-weight:600;box-shadow:0 6px 18px rgba(124,58,237,0.28);cursor:pointer;transition:transform .16s ease, box-shadow .16s ease}
     .btn:active{transform:translateY(1px)}
     .btn:focus{outline:3px solid rgba(124,58,237,0.16);outline-offset:4px}
     footer{margin-top:18px;color:var(--muted);font-size:13px}
@@ -25,22 +25,16 @@
     <h1>¡Uy! Página no encontrada (404)</h1>
     <p>La página que buscas no existe o ha sido movida. Puedes volver a la página principal de Clashrom.</p>
 
-    <a id="enterBtn" class="btn" href="https://clashrom.github.io" rel="noopener" target="_self">Entrar a Clashrom</a>
+    <button id="enterBtn" class="btn">Entrar a Clashrom</button>
 
     <footer>Si el botón no funciona, copia y pega: <code>https://clashrom.github.io</code></footer>
   </main>
 
   <script>
-    // Mejora accesible: permitir Enter/Space para activar desde teclado cuando el foco está en el enlace.
-    (function(){
-      const btn = document.getElementById('enterBtn');
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          btn.click();
-        }
-      });
-    })();
+    document.getElementById("enterBtn").addEventListener("click", () => {
+      // Redirige SIN guardar en historial
+      location.replace("https://clashrom.github.io");
+    });
   </script>
 </body>
 </html>
