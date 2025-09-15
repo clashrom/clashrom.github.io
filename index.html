@@ -249,6 +249,26 @@
         </button>
       </div>
     </div>
+    <!-- SECCIÓN EMULADORES -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Emuladores</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="emuladores-arrow-left" onclick="scrollRow('emuladores', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="emuladores-row">
+          <button class="menu-button" onclick="abrirEnIframe('https://www.retrogames.onl/')">
+            <img src="images/emu2.jpg" alt="retrogames/emulador">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://classicgamezone.com/')">
+            <img src="images/emu1.jpg" alt="classic game zone/emulador">
+          </button>
+        </div>
+        <button class="carousel-arrow right" id="emuladores-arrow-right" onclick="scrollRow('emuladores', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
     <!-- SECCIÓN HERRAMIENTAS -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Herramientas</div>
@@ -283,26 +303,6 @@
           </button>
         </div>
         <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
-          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-    <!-- SECCIÓN HERRAMIENTAS -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
-      <div class="section-title">Emuladores</div>
-      <div class="menu-buttons-row-wrapper">
-        <button class="carousel-arrow left" id="emuladores-arrow-left" onclick="scrollRow('emuladores', -1)" aria-label="Izquierda">
-          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="menu-buttons-row" id="emuladores-row">
-          <button class="menu-button" onclick="abrirEnIframe('https://www.retrogames.onl/')">
-            <img src="images/emu2.jpg" alt="retrogames/emulador">
-          </button>
-          <button class="menu-button" onclick="abrirEnIframe('https://classicgamezone.com/')">
-            <img src="images/emu1.jpg" alt="classic game zone/emulador">
-          </button>
-        </div>
-        <button class="carousel-arrow right" id="emuladores-arrow-right" onclick="scrollRow('emuladores', 1)" aria-label="Derecha">
           <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
