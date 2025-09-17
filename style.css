@@ -312,20 +312,80 @@ html, body {
       border: none;
       background: none;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.4,1.7,0.6,1), filter 0.3s, box-shadow 0.4s;
       display: inline-block;
+      position: relative;
+      outline: none;
     }
+
+    /* --- NUEVO HOVER ESTÉTICO Y BONITO --- */
     .menu-button img {
       width: 220px;
       height: 120px;
       object-fit: cover;
       border-radius: 12px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: 
+        transform 0.4s cubic-bezier(0.4,1.7,0.6,1),
+        box-shadow 0.4s,
+        filter 0.3s;
+      box-shadow: 0 2px 14px rgba(0, 255, 255, 0.08);
+      filter: brightness(1) saturate(1);
+      border: 2px solid transparent;
+      z-index: 1;
+      position: relative;
+      background: linear-gradient(135deg, #00f6ff88 0%, #302b63 100%);
     }
-    .menu-button:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    .menu-button:hover img,
+    .menu-button:focus-visible img {
+      transform: scale(1.10) rotate(-2deg);
+      box-shadow: 0 0 44px 8px #0ff8, 0 8px 32px #00e6ff44;
+      filter: brightness(1.16) saturate(1.25) blur(0.5px);
+      border: 2.5px solid #00f6ff;
+      outline: 0;
+      z-index: 2;
+      background: linear-gradient(135deg, #00f6ff 0%, #24243e 100%);
     }
+    .menu-button::after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: -9px;
+      border-radius: 18px;
+      background: radial-gradient(circle, #00f6ff33 0%, #24243e00 85%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      z-index: 0;
+      filter: blur(2px);
+    }
+    .menu-button:hover::after,
+    .menu-button:focus-visible::after {
+      opacity: 1;
+    }
+    .menu-button:hover img,
+    .menu-button:focus-visible img {
+      animation: menuButtonGlow 0.9s cubic-bezier(.7,0,.36,1.38) both;
+    }
+    @keyframes menuButtonGlow {
+      0% {
+        box-shadow: 0 0 0 #00f6ff00, 0 8px 32px #00e6ff44;
+      }
+      70% {
+        box-shadow: 0 0 88px 16px #0ffb, 0 8px 32px #00e6ff44;
+      }
+      100% {
+        box-shadow: 0 0 44px 8px #0ff8, 0 8px 32px #00e6ff44;
+      }
+    }
+
+    .menu-button:hover img,
+    .menu-button:focus-visible img {
+      /* Deja la animación y los efectos bonitos */
+    }
+    .menu-button:hover,
+    .menu-button:focus-visible {
+      z-index: 3;
+    }
+
     .settings {
       display: none;
       flex-direction: column;
