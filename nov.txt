@@ -12,6 +12,7 @@ Disculpen las molestias.
 - NUEVA SECCION EMULADORES
     + emulador retrogames
     + emulador classic zone
-    - juego recomendado battle stations  €https://i.ytimg.com/vi/MhmjlsudDfA/mqdefault.jpg€
+    - juego recomendado battle stations  
+€https://i.ytimg.com/vi/MhmjlsudDfA/mqdefault.jpg€
 - ACTUALIZADO icono de web 
 €https://i.postimg.cc/TYjpZSq3/clashrom.png€
