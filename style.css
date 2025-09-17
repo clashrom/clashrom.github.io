@@ -320,11 +320,21 @@ html, body {
       height: 120px;
       object-fit: cover;
       border-radius: 12px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
     }
     .menu-button:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+      transform: scale(1.06) translateY(-9px);
+      box-shadow: 0 0 28px rgba(0, 255, 255, 0.55);
+      filter: brightness(1.12);
+        
+    }
+    /* NUEVO: hace el botón más claro y se eleva levemente en hover */
+    .menu-button:hover {
+      transform: scale(1.06) translateY(-9px);
+      box-shadow: 0 0 28px rgba(0, 255, 255, 0.55);
+      filter: brightness(1.12);
+      /* Puedes añadir un poco de sombra extra si quieres */
+      /* Nota: el efecto principal está en el img, pero puedes poner aquí también si ves que queda mejor */
     }
     .settings {
       display: none;
