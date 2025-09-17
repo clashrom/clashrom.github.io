@@ -1,99 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página no encontrada</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-            text-align: center;
-        }
-        
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        
-        h1 {
-            font-size: 8rem;
-            margin: 0;
-            animation: pulse 2s infinite;
-        }
-        
-        h2 {
-            font-size: 2rem;
-            margin-top: 0;
-        }
-        
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background-color: #fff;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: transparent;
-            color: white;
-            border-color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error 404 - Página no encontrada</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #0a0f2c, #0d1a46);
+      font-family: 'Press Start 2P', cursive;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px #00faff;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Botón estilo mando de videojuego */
+    .gamepad-button {
+      position: relative;
+      display: inline-block;
+      width: 180px;
+      height: 100px;
+      background: #1c2e6d;
+      border-radius: 50px;
+      border: 4px solid #00faff;
+      box-shadow: 0 0 20px rgba(0, 250, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .gamepad-button::before, .gamepad-button::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      background: #00faff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00faff;
+    }
+
+    .gamepad-button::before {
+      left: 15px;
+    }
+
+    .gamepad-button::after {
+      right: 15px;
+    }
+
+    .gamepad-button span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 1rem;
+      text-shadow: 0 0 5px #00faff;
+    }
+
+    .gamepad-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #00faff;
+    }
+
+    /* Animación gamer (naves pixel art flotando) */
+    .ship {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('https://i.ibb.co/nc9z9Yp/space-ship.png') no-repeat center/contain;
+      animation: float 6s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-120vh) translateX(20vw); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>404</h1>
-        <h2>¡Ups! Página no encontrada</h2>
-        <p>La página que buscas no existe o ha sido movida.</p>
-        <button onclick="loadHomePage()" class="btn">Volver al Inicio</button>
+  <div class="container">
+    <h1>404</h1>
+    <p>¡Has entrado a un mundo desconocido!</p>
+    <div id="btnAcceder" class="gamepad-button">
+      <span>Acceder</span>
     </div>
+  </div>
 
-    <script>
-        function loadHomePage() {
-            // Usando fetch para cargar el contenido de index.html
-            fetch('index.html')
-                .then(response => response.text())
-                .then(data => {
-                    // Reemplazar todo el contenido del body
-                    document.body.innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Error al cargar la página:', error);
-                    // Si hay error, redirigir normalmente
-                    window.location.href = 'index.html';
-                });
-        }
-    </script>
+  <!-- Naves animadas -->
+  <div class="ship" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="ship" style="left: 50%; animation-delay: 2s;"></div>
+  <div class="ship" style="left: 80%; animation-delay: 4s;"></div>
+
+  <script>
+    document.getElementById('btnAcceder').addEventListener('click', async () => {
+      try {
+        // Cargar el contenido de index.html
+        const res = await fetch('index.html');
+        const html = await res.text();
+
+        // Reemplazar el contenido actual
+        document.open();
+        document.write(html);
+        document.close();
+
+        // Cargar CSS y JS
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = 'style.css';
+        document.head.appendChild(css);
+
+        const js = document.createElement('script');
+        js.src = 'script.js';
+        document.body.appendChild(js);
+
+        // No añadir al historial
+        history.replaceState(null, '', '');
+      } catch (e) {
+        console.error('Error cargando archivos:', e);
+      }
+    });
+  </script>
 </body>
 </html>
