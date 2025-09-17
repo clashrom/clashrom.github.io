@@ -383,10 +383,10 @@ body {
     box-shadow: 0 0 0 #00f6ff00, 0 4px 16px #00e6ff22;
   }
   70% {
-    box-shadow: 0 0 24px 4px #0ff6, 0 4px 16px #00e6ff22;
+    box-shadow: 0 0 15px 4px #0ff6, 0 4px 16px #00e6ff22;
   }
   100% {
-    box-shadow: 0 0 18px 2px #0ff6, 0 4px 16px #00e6ff22;
+    box-shadow: 0 0 9px 2px #0ff6, 0 4px 16px #00e6ff22;
   }
 }
 .menu-button:hover img,
