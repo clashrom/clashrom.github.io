@@ -8,8 +8,10 @@ El nuevo enlace es: Clashrom.github.io
 Disculpen las molestias.
 
 🔵AHORA SI LO NUEVO: 
-- NUEVO juego simulador de coches
-- NUEVO juego simulador de aviones
-- NUEVO boton de añadir webs
+- NUEVO juego world war
+- NUEVA SECCION EMULADORES
+    + emulador retrogames
+    + emulador classic zone
+    - juego recomendado battle stations  €https://i.ytimg.com/vi/MhmjlsudDfA/mqdefault.jpg€
 - ACTUALIZADO icono de web 
 €https://i.postimg.cc/TYjpZSq3/clashrom.png€
