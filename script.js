@@ -146,6 +146,7 @@
     function updateAllArrows() {
       updateArrows('ent');
       updateArrows('juegos');
+      updateArrows('emuladores');
       updateArrows('herramientas');
     }
     window.addEventListener('resize', updateAllArrows);
@@ -205,7 +206,7 @@
           }
         });
       }
-      ['ent-row', 'juegos-row', 'herramientas-row'].forEach(rowId => {
+      ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
@@ -227,7 +228,7 @@
     const buscadorSentinela = document.getElementById('buscador-sentinela');
 
     function obtenerBotonesMenu() {
-      const secciones = ['ent-row', 'juegos-row', 'herramientas-row'];
+      const secciones = ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row'];
       let botones = [];
       secciones.forEach(id => {
         const fila = document.getElementById(id);
