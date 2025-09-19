@@ -174,11 +174,11 @@
           window.open('https://poki.com/' + letrasAzar, '_blank');
         });
       }
-      // NUEVO PARA BUCKSHOT ROULETTE
-      const buckshotBtn = document.getElementById('buckshotroulette-btn');
+      // NUEVO PARA SERVER
+      const buckshotBtn = document.getElementById('server-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
-          abrirEnIframe('https://buckshotroulette.com/home');
+          abrirEnIframe('https://clashrom.github.io/server/');
         });
       }
       // BOTON TERMINOS Y CONDICIONES
