@@ -147,6 +147,7 @@
       updateArrows('ent');
       updateArrows('juegos');
       updateArrows('emuladores');
+      updateArrows('server');
       updateArrows('herramientas');
     }
     window.addEventListener('resize', updateAllArrows);
@@ -175,7 +176,7 @@
         });
       }
       // NUEVO PARA SERVER
-      const buckshotBtn = document.getElementById('server-btn');
+      const buckshotBtn = document.getElementById('server1-btn');
       if (buckshotBtn) {
         buckshotBtn.addEventListener('click', function() {
           abrirEnIframe('https://clashrom.github.io/server/');
@@ -206,7 +207,7 @@
           }
         });
       }
-      ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row'].forEach(rowId => {
+      ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row', 'server-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
@@ -228,7 +229,7 @@
     const buscadorSentinela = document.getElementById('buscador-sentinela');
 
     function obtenerBotonesMenu() {
-      const secciones = ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row'];
+      const secciones = ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row', 'server-row'];
       let botones = [];
       secciones.forEach(id => {
         const fila = document.getElementById(id);
