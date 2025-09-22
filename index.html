@@ -118,6 +118,21 @@
 
   <!-- MENU COMPLETO (no se omite nada) -->
   <div id="menu">
+    <!-- SECCIÓN EMULADORES -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Emuladores</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="server-arrow-left" onclick="scrollRow('server', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="menu-button" id="server1-btn">
+            <img src="images/server.jpg" alt="server">
+          </button>
+        <button class="carousel-arrow right" id="server-arrow-right" onclick="scrollRow('server', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
       <div class="section-title">Entretenimiento</div>
@@ -168,10 +183,6 @@
           <!-- boton sugerencias -->
           <button class="menu-button" onclick="abrirEnIframe('gracias.html')">
             <img src="images/+.jpg" alt="#prev#">
-          </button>
-          <!-- NUEVO BOTÓN minecraft -->
-          <button class="menu-button" id="server-btn">
-            <img src="images/server.jpg" alt="server">
           </button>
           <button class="menu-button" onclick="abrirEnIframe('https://web.cloudmoonapp.com/es/game/com.supercell.clashroyale/')">
             <img src="https://img2.rtve.es/p/112590/imgportada/?w=1600" alt="clash">
