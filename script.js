@@ -72,7 +72,7 @@
     }
     function setDefaultImage() {
       document.getElementById("imageInput").value = "";
-      document.getElementById("fullscreenImage").src = "images/screen1.png";
+      document.getElementById("fullscreenImage").src = "images/screen1.jpg";
     }
     function openAboutBlankIframe() {
       const nuevaPestana = window.open('about:blank', '_blank');
