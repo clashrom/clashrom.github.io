@@ -9,12 +9,12 @@
   <link rel="stylesheet" href="style.css">
   <style>
     #adblock-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: none; z-index: 99999;
-      justify-content: center; align-items: center;
-      font-family: system-ui, sans-serif;
-    }
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none; z-index: 99999;
+    justify-content: center; align-items: center;
+    font-family: system-ui, sans-serif;
+  }
     #adblock-box {
       width: min(680px, 92vw);
       background: linear-gradient(180deg, #111 0%, #222 100%);
@@ -28,8 +28,8 @@
       border-radius: 8px; font-weight: 600;
       font-size: 1rem;
     }
-  .adblock-btn { background:#28a745; color:#fff; }
-  .adblock-btn.secondary { background:#6c757d; }
+    .adblock-btn { background:#28a745; color:#fff; }
+    .adblock-btn.secondary { background:#6c757d; }
     /* NUEVO: Imagen junto al buscador  */
     #buscador-contenedor {
       display: flex;
@@ -70,12 +70,14 @@
   </style>
 </head>
 <body>
-    <div id="adblock-overlay">
+  <div id="adblock-overlay">
     <div id="adblock-box">
-      <!-- El contenido lo cambiaremos dinámicamente con JS -->
-    </div>
+      <h2>Bloqueador de anuncios detectado</h2>
+      <p>Debes desactivarlo para continuar. Una vez desactivado, pulsa el botón:</p>
+      <button id="adblock-continue" class="adblock-btn">He desactivado el bloqueador — continuar</button>
+      <button id="adblock-instructions" class="adblock-btn secondary">¿Cómo desactivar?</button>
   </div>
-
+  </div>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/screen1.jpg" alt="Pantalla completa" />
 
@@ -429,30 +431,12 @@
         panelBotones.classList.remove('show');
       }
     });
-  </script>
-  <script src="script.js"></script>
-    <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40XZGY812X"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-40XZGY812X');
-  </script>
-<script>
-(function(){
+        
+  (function(){
   const OVERLAY_ID = 'adblock-overlay';
-  const BOX_ID = 'adblock-box';
   const OVERRIDE_KEY = 'adblock_override_v1';
-
-  function showOverlay(html){
-    const box=document.getElementById(BOX_ID);
-    box.innerHTML=html;
-    document.getElementById(OVERLAY_ID).style.display='flex';
-  }
+  function showOverlay(){document.getElementById(OVERLAY_ID).style.display='flex';}
   function hideOverlay(){document.getElementById(OVERLAY_ID).style.display='none';}
-
   function detectByBait(){
     return new Promise(res=>{
       const bait=document.createElement('div');
@@ -466,7 +450,6 @@
       },120);
     });
   }
-
   function detectByScript(){
     return new Promise(res=>{
       let done=false;
@@ -479,40 +462,30 @@
       setTimeout(()=>{if(!done){done=true;res(false);} s.remove();},1500);
     });
   }
-
   async function detectAdblock(){
     const [a,b]=await Promise.all([detectByBait(),detectByScript()]);
     return a||b;
   }
-
   document.addEventListener('click',e=>{
     if(e.target.id==='adblock-continue'){localStorage.setItem(OVERRIDE_KEY,'1');hideOverlay();}
     if(e.target.id==='adblock-instructions'){alert("1) Abre tu extensión de bloqueo\n2) Desactívala en este sitio\n3) Recarga y pulsa continuar");}
   });
-
   (async()=>{
+    if(localStorage.getItem(OVERRIDE_KEY)) return;
     if(document.readyState==='loading')await new Promise(r=>document.addEventListener('DOMContentLoaded',r));
-
-    const adblockOn = await detectAdblock();
-
-    if(adblockOn){
-      if(!localStorage.getItem(OVERRIDE_KEY)){
-        showOverlay(`
-          <h2>Bloqueador de anuncios detectado</h2>
-          <p>Debes desactivarlo para continuar. Una vez desactivado, pulsa el botón:</p>
-          <button id="adblock-continue" class="adblock-btn">He desactivado el bloqueador — continuar</button>
-          <button id="adblock-instructions" class="adblock-btn secondary">¿Cómo desactivar?</button>
-        `);
-      }
-    } else {
-      // Mensaje cuando NO hay adblock
-      showOverlay(`
-        <h2>¡Gracias!</h2>
-        <p>Gracias por no usar bloqueador de anuncios ❤️</p>
-      `);
-    }
+    if(await detectAdblock()) showOverlay();
   })();
 })();
+  </script>
+  <script src="script.js"></script>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-40XZGY812X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-40XZGY812X');
 </script>
 </body>
 </html>
