@@ -8,6 +8,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    #adblock-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none; z-index: 99999;
+    justify-content: center; align-items: center;
+    font-family: system-ui, sans-serif;
+  }
+    #adblock-box {
+      width: min(680px, 92vw);
+      background: linear-gradient(180deg, #111 0%, #222 100%);
+      color: #fff; padding: 28px;
+      border-radius: 14px; text-align: center;
+    }
+    #adblock-box h2 { margin:0 0 12px; font-size:1.6rem; }
+    .adblock-btn {
+      border: none; cursor: pointer;
+      padding: 10px 16px; margin: 6px;
+      border-radius: 8px; font-weight: 600;
+      font-size: 1rem;
+    }
+    .adblock-btn { background:#28a745; color:#fff; }
+    .adblock-btn.secondary { background:#6c757d; }
     /* NUEVO: Imagen junto al buscador  */
     #buscador-contenedor {
       display: flex;
