@@ -70,7 +70,14 @@
   </style>
 </head>
 <body>
-
+  <div id="adblock-overlay">
+    <div id="adblock-box">
+      <h2>Bloqueador de anuncios detectado</h2>
+      <p>Debes desactivarlo para continuar. Una vez desactivado, pulsa el botón:</p>
+      <button id="adblock-continue" class="adblock-btn">He desactivado el bloqueador — continuar</button>
+      <button id="adblock-instructions" class="adblock-btn secondary">¿Cómo desactivar?</button>
+  </div>
+  </div>
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/screen1.jpg" alt="Pantalla completa" />
 
@@ -434,6 +441,51 @@
     gtag('js', new Date());
 
     gtag('config', 'G-40XZGY812X');
+    
+(function(){
+  const OVERLAY_ID = 'adblock-overlay';
+  const OVERRIDE_KEY = 'adblock_override_v1';
+  function showOverlay(){document.getElementById(OVERLAY_ID).style.display='flex';}
+  function hideOverlay(){document.getElementById(OVERLAY_ID).style.display='none';}
+  function detectByBait(){
+    return new Promise(res=>{
+      const bait=document.createElement('div');
+      bait.className='adsbox ad-banner adsbygoogle';
+      bait.style.width='1px'; bait.style.height='1px'; bait.style.position='absolute';bait.style.left='-9999px';
+      document.body.appendChild(bait);
+      setTimeout(()=>{
+        const s=window.getComputedStyle(bait);
+        const hidden=(s.display==='none'||s.visibility==='hidden'||bait.offsetHeight===0);
+        bait.remove(); res(hidden);
+      },120);
+    });
+  }
+  function detectByScript(){
+    return new Promise(res=>{
+      let done=false;
+      const s=document.createElement('script');
+      s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      s.async=true;
+      s.onload=()=>{if(!done){done=true;res(false);}};
+      s.onerror=()=>{if(!done){done=true;res(true);}};
+      document.head.appendChild(s);
+      setTimeout(()=>{if(!done){done=true;res(false);} s.remove();},1500);
+    });
+  }
+  async function detectAdblock(){
+    const [a,b]=await Promise.all([detectByBait(),detectByScript()]);
+    return a||b;
+  }
+  document.addEventListener('click',e=>{
+    if(e.target.id==='adblock-continue'){localStorage.setItem(OVERRIDE_KEY,'1');hideOverlay();}
+    if(e.target.id==='adblock-instructions'){alert("1) Abre tu extensión de bloqueo\n2) Desactívala en este sitio\n3) Recarga y pulsa continuar");}
+  });
+  (async()=>{
+    if(localStorage.getItem(OVERRIDE_KEY)) return;
+    if(document.readyState==='loading')await new Promise(r=>document.addEventListener('DOMContentLoaded',r));
+    if(await detectAdblock()) showOverlay();
+  })();
+})();
 </script>
 </body>
 </html>
