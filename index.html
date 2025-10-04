@@ -78,6 +78,10 @@
       <button id="adblock-instructions" class="adblock-btn secondary">¿Cómo desactivar?</button>
   </div>
   </div>
+  <div id="offlineBanner" style="display:none; position:fixed; top:0; width:100%; text-align:center; background:#ff4d4d; color:white; padding:8px; z-index:9999;">
+  ⚠ Sin conexión. Algunas funciones pueden no funcionar.
+  </div>
+
   <!-- Imagen fullscreen -->
   <img id="fullscreenImage" class="fullscreen-img" src="images/screen1.jpg" alt="Pantalla completa" />
 
@@ -369,6 +373,8 @@
     </div>
   </div>
   <script>
+   window.addEventListener('offline', ()=> document.getElementById('offlineBanner').style.display='block');
+   window.addEventListener('online', ()=> document.getElementById('offlineBanner').style.display='none');
     // --- NOVEDADES MEJORADO - acepta cualquier cosa entre €...€ como imagen ---
     function hashString(str) {
       let hash = 0, i, chr;
