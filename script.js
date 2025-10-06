@@ -147,7 +147,6 @@
       updateArrows('ent');
       updateArrows('juegos');
       updateArrows('emuladores');
-      updateArrows('server');
       updateArrows('herramientas');
     }
     window.addEventListener('resize', updateAllArrows);
@@ -207,7 +206,7 @@
           }
         });
       }
-      ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row', 'server-row'].forEach(rowId => {
+      ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row'].forEach(rowId => {
         const el = document.getElementById(rowId);
         if (el) el.addEventListener('scroll', updateAllArrows, {passive:true});
       });
