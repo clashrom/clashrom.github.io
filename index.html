@@ -43,10 +43,11 @@
     }
     
     .menu-buttons-row.vertical {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 22px !important; /* Puedes aumentar o disminuir el espacio */
-      align-items: flex-start !important;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px !important;
+      align-items: stretch !important;
+      justify-items: center;
       overflow-x: visible !important;
       overflow-y: visible !important;
       white-space: normal !important;
@@ -203,8 +204,8 @@
 
   <!-- MENU COMPLETO (no se omite nada) -->
   <div id="menu">
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
     <!-- Sección Entretenimiento -->
-    <div class="margen-grande-arriba" style="display: flex; flex-direction: column;">
       <div class="section-title-row">
       <!-- Flecha expandible a la izquierda -->
           <button class="expand-arrow" id="ent-expand-arrow" aria-label="Expandir">
