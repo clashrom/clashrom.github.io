@@ -318,3 +318,27 @@ document.addEventListener('keydown', function(e) {
     window.location.href = 'https://classroom.google.com/';
   }
 });
+// --- FLECHA EXPANDIR SECCIONES ---
+document.addEventListener('DOMContentLoaded', function() {
+  [
+    {row: 'ent-row', btn: 'ent-expand-arrow', wrap: 'ent'},
+    {row: 'juegos-row', btn: 'juegos-expand-arrow', wrap: 'juegos'},
+    {row: 'emuladores-row', btn: 'emuladores-expand-arrow', wrap: 'emuladores'},
+    {row: 'herramientas-row', btn: 'herramientas-expand-arrow', wrap: 'herramientas'}
+  ].forEach(({row, btn, wrap}) => {
+    const arrowBtn = document.getElementById(btn);
+    const rowDiv = document.getElementById(row);
+    // wrapper es menu-buttons-row-wrapper
+    const wrapper = rowDiv ? rowDiv.parentElement : null;
+    if (arrowBtn && rowDiv && wrapper) {
+      arrowBtn.addEventListener('click', function() {
+        rowDiv.classList.toggle('vertical');
+        arrowBtn.classList.toggle('rotated');
+        wrapper.classList.toggle('expanded');
+        setTimeout(() => {
+          updateArrows(wrap);
+        }, 310);
+      });
+    }
+  });
+});
