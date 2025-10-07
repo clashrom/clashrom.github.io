@@ -8,13 +8,64 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Fila de título + flecha */
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      margin-left: 64px;
+      width: calc(100vw - 64px);
+      max-width: calc(100vw - 64px);
+      box-sizing: border-box;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-bottom: 12px;
+    }
+    
+    /* Flecha expandible */
+    .expand-arrow {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+      transition: transform 0.3s;
+      padding: 0;
+    }
+    .expand-arrow .expand-triangle {
+      transition: transform 0.3s;
+    }
+    .expand-arrow.rotated .expand-triangle {
+      transform: rotate(180deg);
+    }
+    
+    /* Sección expandida: layout vertical */
+    .menu-buttons-row.vertical {
+      flex-direction: column !important;
+      gap: 22px !important;
+      align-items: flex-start !important;
+      overflow-x: visible !important;
+      overflow-y: visible !important;
+      white-space: normal !important;
+      padding: 20px 0 !important;
+      min-height: auto !important;
+      max-width: 98vw;
+    }
+    
+    /* Oculta flechas carrusel si expandido */
+    .menu-buttons-row-wrapper.expanded .carousel-arrow {
+      display: none !important;
+    }
     #adblock-overlay {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.85);
     display: none; z-index: 99999;
     justify-content: center; align-items: center;
     font-family: system-ui, sans-serif;
-  }
+    }
     #adblock-box {
       width: min(680px, 92vw);
       background: linear-gradient(180deg, #111 0%, #222 100%);
@@ -154,6 +205,13 @@
   <div id="menu">
     <!-- Sección Entretenimiento -->
     <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title-row">
+      <!-- Flecha expandible a la izquierda -->
+          <button class="expand-arrow" id="ent-expand-arrow" aria-label="Expandir">
+            <svg class="expand-triangle" viewBox="0 0 24 24" width="28" height="28">
+              <polygon points="12,18 4,6 20,6" fill="#00ffff"/>
+          </svg>
+        </button>
       <div class="section-title">Entretenimiento</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
@@ -193,6 +251,12 @@
     </div>
     <!-- Sección Juegos -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <!-- Flecha expandible a la izquierda -->
+          <button class="expand-arrow" id="juegos-expand-arrow" aria-label="Expandir">
+            <svg class="expand-triangle" viewBox="0 0 24 24" width="28" height="28">
+              <polygon points="12,18 4,6 20,6" fill="#00ffff"/>
+          </svg>
+        </button>
       <div class="section-title">Juegos</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="juegos-arrow-left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">
@@ -291,6 +355,12 @@
     </div>
     <!-- SECCIÓN EMULADORES -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <!-- Flecha expandible a la izquierda -->
+          <button class="expand-arrow" id="emuladores-expand-arrow" aria-label="Expandir">
+            <svg class="expand-triangle" viewBox="0 0 24 24" width="28" height="28">
+              <polygon points="12,18 4,6 20,6" fill="#00ffff"/>
+          </svg>
+        </button>
       <div class="section-title">Emuladores</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="emuladores-arrow-left" onclick="scrollRow('emuladores', -1)" aria-label="Izquierda">
@@ -323,6 +393,12 @@
     </div>
     <!-- SECCIÓN HERRAMIENTAS -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <!-- Flecha expandible a la izquierda -->
+          <button class="expand-arrow" id="herramientas-expand-arrow" aria-label="Expandir">
+            <svg class="expand-triangle" viewBox="0 0 24 24" width="28" height="28">
+              <polygon points="12,18 4,6 20,6" fill="#00ffff"/>
+          </svg>
+        </button>
       <div class="section-title">Herramientas</div>
       <div class="menu-buttons-row-wrapper">
         <button class="carousel-arrow left" id="herramientas-arrow-left" onclick="scrollRow('herramientas', -1)" aria-label="Izquierda">
