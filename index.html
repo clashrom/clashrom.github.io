@@ -54,11 +54,31 @@
       padding: 20px 0 !important;
       min-height: auto !important;
       max-width: 98vw;
+      transition:
+      max-height 0.6s cubic-bezier(.5,1.7,.5,1),
+      gap 0.35s,
+      padding 0.3s;
     }
     
-    /* Oculta flechas carrusel si expandido */
+        /* Oculta flechas carrusel si expandido */
     .menu-buttons-row-wrapper.expanded .carousel-arrow {
       display: none !important;
+    }
+    
+    .menu-buttons-row .menu-button {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+    .menu-buttons-row:not(.vertical) .menu-button {
+      opacity: 1;
+    }
+    .menu-buttons-row.vertical .menu-button {
+      opacity: 1;
+      animation: fadeInBtns 0.5s;
+    }
+    @keyframes fadeInBtns {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     #adblock-overlay {
     position: fixed; inset: 0;
