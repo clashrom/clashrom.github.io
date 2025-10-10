@@ -10,6 +10,7 @@
     .menu-hamburguesa-btn {
       border: none;
       background: none;
+      background-color: transparent;
       padding: 7px 11px;
       color: #000000;
       cursor: pointer;
