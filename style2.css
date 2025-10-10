@@ -129,7 +129,7 @@
         display: none;
       }
     }
-    .foot {
+    #foot {
       width: 100vw;
       background: #000000;
       text-align: center;
