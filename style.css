@@ -326,13 +326,141 @@ html, body {
       transform: scale(1.06) translateY(-9px);
       box-shadow: 0 0 28px rgba(0, 255, 255, 0.55);
       filter: brightness(1.12);
-        
     }
-    /* NUEVO: hace el botón más claro y se eleva levemente en hover */
-    .menu-button:hover {
-      /* Puedes añadir un poco de sombra extra si quieres */
-      /* Nota: el efecto principal está en el img, pero puedes poner aquí también si ves que queda mejor */
+    <!-- nuevo -->
+      <style>
+    /* Fila de título + flecha */
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      margin-left: 64px;
+      width: calc(100vw - 64px);
+      max-width: calc(100vw - 64px);
+      box-sizing: border-box;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin-bottom: 12px;
     }
+    
+    /* Flecha expandible */
+    .expand-arrow {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+      transition: transform 0.3s;
+      padding: 0;
+    }
+    .expand-arrow .expand-triangle {
+      transition: transform 0.3s;
+    }
+    .expand-arrow.rotated .expand-triangle {
+      transform: rotate(180deg);
+    }
+    
+    .menu-buttons-row.vertical {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px !important;
+      align-items: stretch !important;
+      justify-items: center;
+      overflow-x: visible !important;
+      overflow-y: visible !important;
+      white-space: normal !important;
+      padding: 20px 0 !important;
+      min-height: auto !important;
+      max-width: 98vw;
+      transition:
+      max-height 0.6s cubic-bezier(.5,1.7,.5,1),
+      gap 0.35s,
+      padding 0.3s;
+    }
+    
+        /* Oculta flechas carrusel si expandido */
+    .menu-buttons-row-wrapper.expanded .carousel-arrow {
+      display: none !important;
+    }
+    
+    .menu-buttons-row .menu-button {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+    .menu-buttons-row:not(.vertical) .menu-button {
+      opacity: 1;
+    }
+    .menu-buttons-row.vertical .menu-button {
+      opacity: 1;
+      animation: fadeInBtns 0.5s;
+    }
+    @keyframes fadeInBtns {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #adblock-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none; z-index: 99999;
+    justify-content: center; align-items: center;
+    font-family: system-ui, sans-serif;
+    }
+    #adblock-box {
+      width: min(680px, 92vw);
+      background: linear-gradient(180deg, #111 0%, #222 100%);
+      color: #fff; padding: 28px;
+      border-radius: 14px; text-align: center;
+    }
+    #adblock-box h2 { margin:0 0 12px; font-size:1.6rem; }
+    .adblock-btn {
+      border: none; cursor: pointer;
+      padding: 10px 16px; margin: 6px;
+      border-radius: 8px; font-weight: 600;
+      font-size: 1rem;
+    }
+    .adblock-btn { background:#28a745; color:#fff; }
+    .adblock-btn.secondary { background:#6c757d; }
+    /* NUEVO: Imagen junto al buscador  */
+    #buscador-contenedor {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      margin-top: 25px;
+    }
+    #buscador-menu {
+      width: 350px;
+      font-size: 1.1em;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+    }
+    #buscador-logo-img {
+      margin-left: 28px;
+      max-height: 70px;       /* Un poco más grande */
+      max-width: 160px;
+      object-fit: contain;
+      background: none;
+      border-radius: 0;
+      display: block;
+    }
+    @media (max-width: 700px) {
+      #buscador-logo-img {
+        max-height: 40px;
+        max-width: 90px;
+        margin-left: 10px;
+      }
+    }
+    @media (max-width: 500px) {
+      #buscador-logo-img {
+        display: none;
+      }
+    }
+    <!-- fin -->
     .settings {
       display: none;
       flex-direction: column;
