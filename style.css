@@ -158,6 +158,7 @@ html, body {
       overflow-y: auto;
     }
     body {
+      background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%);
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
       color: white;
@@ -165,17 +166,6 @@ html, body {
       width: 100vw;
       min-width: 100vw;
     }
-        /* From Uiverse.io by muhammad_1180 */ 
-    .background {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%);
-      z-index: -10;
-    }
-
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
