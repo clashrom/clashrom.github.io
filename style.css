@@ -157,7 +157,7 @@ html, body {
       overflow-y: auto;
     }
     body {
-      background: radial-gradient(125% 125% at 50% 10%, #0d6182 30%, rgb(53, 27, 127) 100%);
+      background: radial-gradient(125% 125% at 50% 10%, #0f5c7b 10%, #301872 100%);
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
       color: white;
