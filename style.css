@@ -8,21 +8,16 @@
       align-items: flex-start;
     }
     .menu-hamburguesa-btn {
-      background: rgba(0,255,255,0.18);
       border: none;
       border-radius: 12px;
       padding: 7px 11px;
       color: #fff;
       cursor: pointer;
-      font-size: 1.3em;
+      font-size: 1.5em;
       margin-bottom: 8px;
-      transition: background 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .menu-hamburguesa-btn:active {
-      background: rgba(0,255,255,0.35);
     }
     .botones-panel {
       display: none;
