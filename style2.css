@@ -129,7 +129,7 @@
         display: none;
       }
     }
-    #foot {
+    .foot {
       width: 100vw;
       background: #000000;
       color: #ffffff;
@@ -139,5 +139,7 @@
       margin-top: 40px;
       font-family: system-ui, sans-serif;
       box-shadow: 0 -12px 20px rgba(0,0,0,0.5);
+    }
+    #text-footer {
       font-family: swap 'BBH Sans Bogle', sans-serif;
     }
