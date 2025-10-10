@@ -132,11 +132,11 @@
     #foot {
       width: 100vw;
       background: #111;
-      color: #bbb8ee;
+      color: #dddbff;
       text-align: center;
       padding: 12px 0;
       font-size: 1.2rem;
       margin-top: 40px;
       font-family: system-ui, sans-serif;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.5);
+      box-shadow: 0 -12px 20px rgba(0,0,0,0.5);
     }
