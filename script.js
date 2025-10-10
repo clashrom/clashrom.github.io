@@ -228,7 +228,7 @@
     const buscadorSentinela = document.getElementById('buscador-sentinela');
 
     function obtenerBotonesMenu() {
-      const secciones = ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row', 'server-row'];
+      const secciones = ['ent-row', 'juegos-row', 'herramientas-row', 'emuladores-row'];
       let botones = [];
       secciones.forEach(id => {
         const fila = document.getElementById(id);
