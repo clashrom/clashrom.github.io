@@ -9,29 +9,91 @@
       background-color: #111;
       color: #eee;
       font-family: "Segoe UI", sans-serif;
-      line-height: 1.6;
+      line-height: 1.8;
       margin: 0;
-      padding: 2rem;
+      padding: 3rem;
+      font-size: 1.15rem;
     }
     h1 {
       color: #ff5252;
       text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px #ff3b3b;
     }
     h2 {
       color: #ff9999;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
+      font-size: 1.5rem;
     }
     a {
       color: #ff8080;
       text-decoration: underline;
+      font-size: 1.05rem;
     }
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
     }
+    details {
+      margin-top: 1.2rem;
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      border: 1px solid #333;
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+    details[open] {
+      background: #181818;
+      box-shadow: 0 0 15px rgba(255, 80, 80, 0.15);
+      transform: scale(1.01);
+    }
+    summary {
+      cursor: pointer;
+      color: #ff7070;
+      font-weight: bold;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      outline: none;
+      transition: color 0.3s ease;
+    }
+    summary:hover {
+      color: #ff8888;
+    }
+
+    /* Animación del contenido al abrir */
+    details > *:not(summary) {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    details[open] > *:not(summary) {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    ul {
+      margin-left: 1.5rem;
+    }
+
     .back {
       margin-top: 3rem;
       text-align: center;
+    }
+    .back a {
+      display: inline-block;
+      background: #ff3333;
+      color: #fff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+      font-size: 1.1rem;
+    }
+    .back a:hover {
+      background: #ff5555;
+      transform: scale(1.05);
     }
   </style>
 </head>
