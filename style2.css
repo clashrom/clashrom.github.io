@@ -136,6 +136,10 @@
         padding: 12px 0;
         font-size: 1.2rem;
         margin-top: 40px;
-        box-shadow: 0px -30px 20px 10px #000000;
+        box-shadow: -2px -21px 53px 37px #000000;
         font-family:swap;
+    }
+      #fot {
+        color: white;
+        font-family: swap 'BBH Sans Bogle', sans-serif;
     }
