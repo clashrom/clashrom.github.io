@@ -142,7 +142,12 @@
     }
       #fot {
         color: white;
-        font-family: monospace;
-        text-decoration: none;
+        font-family: "Archivo Black", sans-serif;
+        text-decoration: none !important;
         font-size: 1.5rem;
+    }
+    .archivo-black-regular {
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 400;
+        font-style: normal;
     }
