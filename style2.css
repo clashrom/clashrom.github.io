@@ -143,7 +143,7 @@
       #fot {
         color: white;
         font-family: "Archivo Black", sans-serif;
-        text-decoration: none !important;
+        text-decoration: transparent !important;
         font-size: 1.5rem;
     }
     .archivo-black-regular {
