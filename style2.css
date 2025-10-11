@@ -175,6 +175,7 @@
   color: #ffd700;
   text-decoration: underline !important;
   font-size: 1.6rem;
+}
 .archivo-black-regular {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
@@ -250,3 +251,4 @@
     padding: 13px 0;
   }
 }
+
