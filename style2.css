@@ -166,6 +166,10 @@
   font-size: 1.5rem;
   cursor: pointer;
   transition: text-size 0.3s, color 0.3s;
+  border: 0;
+  background: none;
+  padding: 0;
+  
 }
 #fot:hover {
   color: #ffd700;
