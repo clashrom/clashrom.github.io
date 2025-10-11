@@ -164,7 +164,13 @@
   font-family: "Archivo Black", sans-serif;
   text-decoration: transparent !important;
   font-size: 1.5rem;
+  cursor: pointer;
+  transition: text-size 0.3s, color 0.3s;
 }
+#fot:hover {
+  color: #ffd700;
+  text-decoration: underline !important;
+  font-size: 1.6rem;
 .archivo-black-regular {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
