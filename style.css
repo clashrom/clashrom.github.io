@@ -77,11 +77,13 @@
       z-index: 1000; /* Por debajo de la imagen fullscreen (que usa 9999) */
       padding: 0;
       animation: fadeIn 0.5s;
+      border-radius: 8px;
+      cursor: pointer;
+
     }
     #novedades-box {
-      background: rgba(36,38,56,0.98);
+      background: linear-gradient(-45deg, #6f0f8d 0%, #1e5f78 100% );
       border-radius: 18px;
-      box-shadow: 0 4px 40px #000a;
       min-width: 260px;
       max-width: 380px;
       width: 95vw;
@@ -92,6 +94,8 @@
       align-items: center;
       position: relative;
       overflow: hidden;
+       box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
+        0.3em 0.3em 1em rgba(0,0,0,0.3);
     }
     #novedades-content {
       width: 100%;
@@ -101,12 +105,13 @@
       margin-bottom: 8px;
     }
     #novedades-box h2 {
-      margin-top: 0;
+      margin-top: -2px  ;
       font-size: 1.6em;
       color: #00f6ff;
       text-align: center;
       margin-bottom: 10px;
-      font-family: 'Montserrat', sans-serif;
+      font-family: fantasy;
+      letter-spacing: 2px;
       text-shadow: 1px 2px 12px #0008;
     }
     .novedad-linea {
@@ -129,7 +134,7 @@
     }
     #novedades-vale {
       margin-top: 4px;
-      background: linear-gradient(90deg,#00f6ff,#0f0c29 120%);
+      background: linear-gradient(45deg,#9f32f9,#2888dc 100%);
       color: white;
       border: none;
       border-radius: 12px;
@@ -141,7 +146,8 @@
       transition: background .2s;
     }
     #novedades-vale:hover {
-      background: linear-gradient(90deg,#0ff,#302b63 120%);
+      background: linear-gradient(90deg,#bf72ff,rgb(88, 73, 255) 90%);
+      transition: ease-in .1s;
     }
     @media (max-width:700px) {
       #novedades-box { min-width: 95vw; max-width: 97vw; padding: 8px 2vw 5px 2vw; }
