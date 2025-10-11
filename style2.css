@@ -133,6 +133,7 @@
         width: 100vw;
         background: #000000;
         text-align: center;
+        padding-bottom: -20px;
         padding: 12px 0;
         font-size: 1.2rem;
         margin-top: 40px;
@@ -141,5 +142,7 @@
     }
       #fot {
         color: white;
-        font-family: swap 'BBH Sans Bogle', sans-serif;
+        font-family: monospace;
+        text-decoration: none;
+        font-size: 1.5rem;
     }
