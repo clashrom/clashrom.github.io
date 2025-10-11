@@ -161,11 +161,11 @@ html, body {
       overflow-y: auto;
     }
     body {
-      background: radial-gradient(110% 110% at 50% 10%, #0f5c7b 10%, #301872 100%);
+      background: radial-gradient(110% 110% at 50% 10%, #0f5c7b 10%, #4b1872 100%);
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
       color: white;
-      animation: backgroundMove 20s infinite alternate;
+      animation: backgroundMove 10s infinite alternate;
       width: 100vw;
       min-width: 100vw;
     }
