@@ -99,10 +99,16 @@
     <!-- RECUADRO RECOMENDADOS -->
     <div id="recomendados-wrapper" class="menu-buttons-row-wrapper recomendados-row-wrapper">
       <div class="recomendados-title">🌟 Recomendados</div>
+        <button class="carousel-arrow left" id="reco-arrow-left" onclick="scrollRow('reco', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       <div class="recomendados-row">
         <!-- Ejemplo de botones recomendados, puedes cambiar los enlaces e imágenes -->
         <button class="menu-button" onclick="abrirEnIframe('https://shellshock.io/')">
           <img src="https://pbs.twimg.com/profile_images/1456048577839435781/GiJJhpA3_400x400.jpg" alt="shellshokers.io">
+        </button>
+        <button class="menu-button" onclick="abrirEnIframe('https://kartbros.io/')">
+          <img src="https://store-images.s-microsoft.com/image/apps.45142.14077711198622072.87de44b8-a3b1-4457-9a12-07ae7d1d2d1d.fc852965-177e-4ff6-8b70-39285d803332?h=1280" alt="kartbros">
         </button>
         <button class="menu-button" onclick="abrirEnIframe('https://gamesnacks.com/games/billiardsclassic')">
           <img src="https://www.classicgame.com/uploaded/game/screenshot/8-ball-billiards-classic.webp" alt="billar">
@@ -115,6 +121,9 @@
         </button>
         <!-- Añade aquí más botones recomendados -->
       </div>
+      <button class="carousel-arrow right" id="reco-arrow-right" onclick="scrollRow('reco', 1)" aria-label="Derecha">
+        <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>    
     <!-- Sección Entretenimiento -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -211,6 +220,10 @@
           <!-- NUEVO appleworm -->
           <button class="menu-button" onclick="abrirEnIframe('https://appleworm.io/')">
             <img src="https://i.ytimg.com/vi/aaiLZCEphcY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA4hoh_iS6l9wNVSAXUa-o3TCdhKg" alt="appleworm">
+          </button>
+          <!-- NUEVO kartbros -->
+          <button class="menu-button" onclick="abrirEnIframe('https://kartbros.io/')">
+            <img src="https://store-images.s-microsoft.com/image/apps.45142.14077711198622072.87de44b8-a3b1-4457-9a12-07ae7d1d2d1d.fc852965-177e-4ff6-8b70-39285d803332?h=1280" alt="kartbros">
           </button>
           <!-- NUEVO moto x3m -->
           <button class="menu-button" onclick="abrirEnIframe('https://www.friv.com/z/games/motox3m/game.html')">
