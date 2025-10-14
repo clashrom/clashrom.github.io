@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steal Brainrot Online - Embed</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+    }
+    iframe {
+      width: 90%;
+      height: 90%;
+      border: none;
+      border-radius: 10px;
+    }
+    p {
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <p id="status">Comprobando origen...</p>
+  <iframe id="gameFrame" style="display:none;" allowfullscreen></iframe>
+
+  <script>
+    (function() {
+      const allowedSuffix = "crazygames.com";
+      const gameURL = "https://games.crazygames.com/en_US/steal-brainrot-online/index.html";
+      const frame = document.getElementById("gameFrame");
+      const status = document.getElementById("status");
+
+      const origin = window.location.origin || "";
+
+      if (origin.endsWith(allowedSuffix)) {
+        status.textContent = "Origen permitido — cargando juego...";
+        frame.src = gameURL;
+        frame.style.display = "block";
+      } else {
+        status.textContent = "Origen no permitido — redirigiendo...";
+        setTimeout(() => {
+          window.location.href = gameURL;
+        }, 1000);
+      }
+    })();
+  </script>
+</body>
+</html>
