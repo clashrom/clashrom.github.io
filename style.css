@@ -43,7 +43,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(0,255,255,0.18);
+      background: rgba(191, 0, 255, 0.18);
       color: #fff;
       border: none;
       border-radius: 12px;
@@ -53,7 +53,7 @@
       transition: background 0.2s;
     }
     .boton-ajuste-vertical:active {
-      background: rgba(0,255,255,0.35);
+      background: rgba(191, 0, 255, 0.35);
     }
     @media (max-width: 500px) {
       .menu-hamburguesa-container {
@@ -161,13 +161,13 @@ html, body {
       overflow-y: auto;
     }
     body {
-      background: radial-gradient(110% 110% at 50% 10%, #0f5c7b 10%, #4b1872 100%);
+      background: url("https://media.istockphoto.com/id/1049178004/vector/happy-halloween-purple-background.jpg?s=612x612&w=0&k=20&c=8npN_raVS1RJVwCcT_OTWtNHk8oBxjpRIRT9eynllt8=");
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
-      color: white;
-      animation: backgroundMove 10s infinite alternate;
-      width: 100vw;
-      min-width: 100vw;
+      background-position: 50% 50%;
+      background-attachment: fixed;
+      animation: backgroundMove 120s linear infinite;
+      background-repeat: repeat;
+      backdrop-filter: contrast(1.2) brightness(0.9);
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
@@ -194,7 +194,7 @@ html, body {
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(0,255,255,0.18);
+      background: rgba(0, 255, 81, 0.18);
       color: #fff;
       border: none;
       border-radius: 12px;
@@ -202,15 +202,15 @@ html, body {
       font-size: 1.08em;
       cursor: pointer;
       transition: background 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 10px 0 rgba(0,255,255,0.08);
+      box-shadow: 0 2px 10px 0 rgba(0, 255, 94, 0.08);
       margin: 0;
     }
     .boton-ajuste-vertical:hover {
-      background: rgba(0,255,255,0.32);
-      box-shadow: 0 4px 18px 0 rgba(0,255,255,0.14);
+      background: rgba(0, 255, 47, 0.32);
+      box-shadow: 0 4px 18px 0 rgba(0, 255, 34, 0.14);
     }
     .boton-ajuste-vertical:active {
-      background: rgba(0,255,255,0.40);
+      background: rgba(0, 255, 34, 0.4);
     }
     .margen-grande-arriba {
       margin-top: 90px;
@@ -230,7 +230,7 @@ html, body {
       letter-spacing: 2px;
       text-shadow: 0 2px 12px #000, 0 0px 2px #222;
       color: #fff;
-      border-left: 5px solid #00ffff66;
+      border-left: 5px solid #00ff4c66;
       padding-left: 12px;
       margin-right: 0;
     }
@@ -327,7 +327,7 @@ html, body {
     }
     .menu-button:hover img {
       transform: scale(1.06) translateY(-9px);
-      box-shadow: 0 0 28px rgba(0, 255, 255, 0.55);
+      box-shadow: 0 0 28px rgba(0, 255, 0, 0.55);
       filter: brightness(1.12);
         
     }
