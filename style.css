@@ -168,6 +168,7 @@ html, body {
       animation: backgroundMove 120s linear infinite;
       width: 100vw;
       min-width: 100vw;
+      backdrop-filter: blur(4px) contrast(1.2) brightness(0.9);
     }
     @keyframes backgroundMove {
       0% { background-position: 0% 50%; }
