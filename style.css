@@ -165,7 +165,7 @@ html, body {
       font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
       color: black;
-      width: 100vw;
+      background-size: cover;
       min-width: 100vw;
       backdrop-filter: blur(2px) contrast(1.2) brightness(0.9);
     }
