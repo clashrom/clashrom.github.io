@@ -168,7 +168,6 @@ html, body {
       background-position: center;
       background-size: cover;
       min-width: 100vw;
-      backdrop-filter: contrast(1.2) brightness(0.9);
     }
     .fullscreen-img {
       position: fixed;
