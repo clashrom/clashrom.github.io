@@ -251,4 +251,17 @@
     padding: 13px 0;
   }
 }
+}
+#menu .menu-button {
+  opacity: 0;               /* Ocultos al inicio */
+  visibility: hidden;       /* No ocupan espacio visual */
+  transform: translateY(30px); /* Ligeramente desplazados hacia abajo */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#menu .menu-button.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
