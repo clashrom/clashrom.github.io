@@ -25,11 +25,24 @@
     document.body.addEventListener('scroll', updateAjustesButton, {passive:true});
     document.addEventListener('DOMContentLoaded', updateAjustesButton);
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        fullscreenImage.classList.toggle("hidden");
+    if (e.key === "Tab") {
+      e.preventDefault();
+      fullscreenImage.classList.toggle("hidden");
+
+      const logo = document.getElementById("buscador-logo-img");
+
+      // Si fullscreenImage acaba de esconderse (tiene la clase hidden)
+      if (fullscreenImage.classList.contains("hidden")) {
+        if (logo) {
+          // Quita animaciones anteriores
+          logo.classList.remove("animate__animated", "animate__tada");
+          void logo.offsetWidth; // reinicia animación
+          // Aplica la nueva animación
+          logo.classList.add("animate__animated", "animate__tada");
+        }
       }
-    });
+    }
+  });
     toggleSettingsBtn.addEventListener("click", () => {
       if (settingsPanel.classList.contains("show")) {
         settingsPanel.classList.remove("show");
