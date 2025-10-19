@@ -35,10 +35,10 @@
       if (fullscreenImage.classList.contains("hidden")) {
         if (logo) {
           // Quita animaciones anteriores
-          logo.classList.remove("animate__animated", "animate__tada");
+          logo.classList.remove("animate__animated", "animate__rubberBand");
           void logo.offsetWidth; // reinicia animación
           // Aplica la nueva animación
-          logo.classList.add("animate__animated", "animate__tada");
+          logo.classList.add("animate__animated", "animate__rubberBand");
         }
       }
     }
