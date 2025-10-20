@@ -356,3 +356,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+// --- ANIMACIÓN SUAVE DE BOTONES AL APARECER ---
+document.addEventListener("DOMContentLoaded", () => {
+  const botonesMenu = document.querySelectorAll("#menu .menu-button");
+
+  const observerBotones = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const btn = entry.target;
+      if (entry.isIntersecting) {
+        // Muestra el botón y aplica animación solo la primera vez
+        if (!btn.classList.contains("visible")) {
+          btn.classList.add("visible", "animate__animated", "animate__fadeInDown");
+          btn.style.setProperty('--animate-duration', '0.7s');
+        }
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  botonesMenu.forEach(btn => observerBotones.observe(btn));
+});
