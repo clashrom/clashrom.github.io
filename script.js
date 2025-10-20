@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (entry.isIntersecting) {
         // Muestra el botón y aplica animación solo la primera vez
         if (!btn.classList.contains("visible")) {
-          btn.classList.add("visible", "animate__animated", "animate__fadeInDown");
+          btn.classList.add("visible", "animate__animated", "animate__fadeIn");
           btn.style.setProperty('--animate-duration', '0.7s');
         }
       }
