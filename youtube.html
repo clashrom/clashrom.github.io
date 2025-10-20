@@ -9,7 +9,7 @@
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #960000, #2d0000, #ff0000 60%, #660000);
+      background: linear-gradient(135deg, #610000, #5b0000, 60%, #660000);
       font-family: sans-serif;
       height: 100vh;
       overflow: hidden;
@@ -28,19 +28,16 @@
     }
 
     h1 {
-      color: #ff1b1b;
+      color: #ffffff;
       font-family: 'Roboto Condensed', 'Roboto', Arial, sans-serif;
       font-weight: 900;
       font-size: 44px;
       margin-bottom: 24px;
       margin-top: 30px;
       letter-spacing: -1.5px;
-      text-shadow: 0 4px 22px #000c, 0 2px 10px #70000088, 0 0px 1px #000;
-      border-bottom: 4px solid #000;
+      text-shadow: 0 4px 22px #000c, 0 2px 10px #ffffff88, 0 0px 1px #000;
       padding-bottom: 8px;
       border-radius: 10px;
-      background: rgba(0,0,0,0.10);
-      box-shadow: 0 4px 24px #4d0000aa;
       width: clamp(300px, 90vw, 600px);
       text-align: center;
     }
@@ -50,7 +47,7 @@
       top: 10%;
       left: 20px;
       z-index: 1000;
-      background: #960000;
+      background: #3b0000;
       color: #fff;
       cursor: pointer;
       font-weight: bold;
@@ -60,14 +57,12 @@
       border-radius: 14px;
       box-shadow: 0 2px 12px #0008, 0 0 0 3px #ff000033;
       border: 2.5px solid #000;
-      border-bottom: 4px solid #ff1b1b;
       transition: background 0.3s, box-shadow 0.3s, border 0.3s;
     }
     #publish-text:hover {
       background: #c90000;
       box-shadow: 0 4px 24px #ff000077, 0 0 0 4px #ff525288;
       border: 2.5px solid #ff1b1b;
-      border-bottom: 4px solid #fff;
     }
 
     input {
@@ -91,6 +86,14 @@
       box-shadow: 0 4px 18px #ff000077, 0 0 0 5px #ff000033;
     }
 
+    #contenedor_buscar{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
     button {
       background: #7a0000;
       color: #fff;
@@ -103,6 +106,7 @@
       font-size: 18px;
       border-radius: 13px;
       margin: 5px;
+      margin-left: auto;
       transition: background 0.3s, border 0.3s, box-shadow 0.3s, color 0.3s;
       outline: none;
     }
@@ -127,7 +131,7 @@
     }
 
     .video {
-      background: linear-gradient(135deg, #8b0000 80%, #1a0000);
+      background: linear-gradient(135deg, #8b0000 80%, #550000);
       padding: 12px;
       border-radius: 14px;
       width: 220px;
@@ -146,15 +150,15 @@
     }
     .video:hover {
       background: linear-gradient(135deg, #ff1b1b 60%, #3e0000 100%);
-      box-shadow: 0 0 30px #ff0000cc, 0 0 0 4px #ff1b1b;
+      -webkit-box-shadow: 0px 0px 38px 9px rgba(255,42,42,0.6); 
+      box-shadow: 0px 0px 38px 9px rgba(255,42,42,0.6);
       transform: translateY(-6px) scale(1.025);
-      border-color: #ff1b1b;
     }
     .video img {
       width: 100%;
       border-radius: 10px;
       border: 2.5px solid #000;
-      box-shadow: 0 2px 8px #0007;
+      object-fit:fill;
       margin-bottom: 7px;
     }
     .titulo {
@@ -213,7 +217,6 @@
       font-size: 17px;
       border-radius: 10px;
       border: 2.5px solid #000;
-      background: #ff1b1b;
       color: white;
       cursor: pointer;
       font-weight: bold;
@@ -222,7 +225,6 @@
     #upload-popup button:hover {
       background: #fff;
       color: #a00000;
-      border: 2.5px solid #a00000;
     }
 
     /* --- Estilos del overlay de video --- */
@@ -231,7 +233,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: rgba(20,0,0,0.98);
+      background: rgba(20, 0, 0, 0.575);
       z-index: 10001;
       justify-content: center;
       align-items: center;
@@ -246,18 +248,19 @@
       border: 5px solid #ff1b1b;
       border-radius: 22px;
       box-shadow: 0 10px 40px #000d, 0 0 0 8px #000;
-      overflow: hidden;
+      overflow:visible;
       position: relative;
       max-width: 95vw;
       max-height: 85vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 4px;
     }
     #close-video-btn {
       position: absolute;
       top: -28px;
-      right: 0;
+      right: -20px;
       background: #ff1b1b;
       color: #000;
       border: 2.5px solid #000;
@@ -268,7 +271,7 @@
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 2px 8px #000a;
-      z-index: 50;
+      z-index: 9999;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -295,9 +298,11 @@
   </style>
 </head>
 <body>
-  <h1>Buscador privado de YouTube</h1>
-  <input id="busqueda" placeholder="Buscar video o canal...">
-  <button onclick="buscar()">Buscar</button>
+  <h1>YouTube No historial</h1>
+  <div id="contenedor_buscar">
+    <input id="busqueda" placeholder="Buscar video o canal...">
+    <button id="boton_buscar" onclick="buscar()">Buscar</button>
+  </div>
 
   <div id="resultados"></div>
 
