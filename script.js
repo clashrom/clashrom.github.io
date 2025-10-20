@@ -292,34 +292,45 @@
       }
     });
 
-    // --- PEGAR BUSCADOR ARRIBA SI SE ESCONDE POR SCROLL ---
-    function updateBuscadorCompactBySettings() {
-      if (settingsPanel.classList.contains('show')) {
-        buscadorContenedor.classList.remove('compact');
-      }
+// --- PEGAR BUSCADOR ARRIBA SI SE ESCONDE POR SCROLL ---
+function updateBuscadorCompactBySettings() {
+  if (settingsPanel.classList.contains('show')) {
+    buscadorContenedor.classList.remove('compact');
+  }
+}
+
+const observer = new window.IntersectionObserver(
+  entries => {
+    const e = entries[0];
+    if (settingsPanel.classList.contains('show')) {
+      buscadorContenedor.classList.remove('compact');
+      return;
     }
 
-    const observer = new window.IntersectionObserver(
-      entries => {
-        const e = entries[0];
-        if (settingsPanel.classList.contains('show')) {
-          buscadorContenedor.classList.remove('compact');
-          return;
-        }
-        if (!e.isIntersecting) {
-          buscadorContenedor.classList.add('compact');
-        } else {
-          buscadorContenedor.classList.remove('compact');
-        }
-      },
-      { threshold: 0 }
-    );
+    if (!e.isIntersecting) {
+      // Se pega arriba → aplica animación
+      if (!buscadorContenedor.classList.contains('compact')) {
+        buscadorContenedor.classList.add('compact');
+        buscadorContenedor.classList.remove('animate__animated', 'animate__slideInDown');
+        void buscadorContenedor.offsetWidth; // reinicia animación
+        buscadorContenedor.classList.add('animate__animated', 'animate__slideInDown');
+        buscadorContenedor.style.setProperty('--animate-duration', '0.6s');
+      }
+    } else {
+      // Vuelve a posición normal
+      buscadorContenedor.classList.remove('compact');
+      buscadorContenedor.classList.remove('animate__animated', 'animate__slideInUp');
+    }
+  },
+  { threshold: 0 }
+);
 
-    observer.observe(buscadorSentinela);
+observer.observe(buscadorSentinela);
 
-    document.getElementById('toggleSettings').addEventListener('click', () => {
-      setTimeout(updateBuscadorCompactBySettings, 100);
-    });
+document.getElementById('toggleSettings').addEventListener('click', () => {
+  setTimeout(updateBuscadorCompactBySettings, 100);
+});
+
   // --- REDIRECCIÓN CON BOTÓN Y TECLA º ---
 const classroomBtn = document.getElementById('classroomRedirectBtn');
 if (classroomBtn) {
