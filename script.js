@@ -396,6 +396,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   botonesMenu.forEach(btn => observerBotones.observe(btn));
 });
+// --- CAMBIO DE fullscreenImage CON imageInput Y BOTONES .images-rows ---
+document.addEventListener('DOMContentLoaded', () => {
+  const fullscreenImage = document.getElementById('fullscreenImage');
+  const imageInput = document.getElementById('imageInput');
+
+  // Si el usuario elige una imagen desde el input
+  if (imageInput) {
+    imageInput.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          fullscreenImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
   // Si el usuario hace clic en un botón de clase .images-rows
   const imageButtons = document.querySelectorAll('.images-rows');
   imageButtons.forEach(btn => {
