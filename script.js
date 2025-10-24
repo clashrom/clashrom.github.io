@@ -396,3 +396,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   botonesMenu.forEach(btn => observerBotones.observe(btn));
 });
+  // Si el usuario hace clic en un botón de clase .images-rows
+  const imageButtons = document.querySelectorAll('.images-rows');
+  imageButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      if (img && fullscreenImage) {
+        fullscreenImage.src = img.src; // cambia la imagen fullscreen
+      }
+    });
+  });
+});
