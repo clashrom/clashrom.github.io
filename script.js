@@ -180,6 +180,7 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
+      // crazygames 2
       const crazygames2Btn = document.getElementById('crazygames2-btn');
       if (crazygames2Btn) {
         crazygamesBtn.addEventListener('click', function() {
