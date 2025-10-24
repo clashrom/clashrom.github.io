@@ -180,6 +180,13 @@
           window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
         });
       }
+      const crazygames2Btn = document.getElementById('crazygames2-btn');
+      if (crazygames2Btn) {
+        crazygamesBtn.addEventListener('click', function() {
+          const letrasAzar = generarLetrasAzar(8);
+          window.open('https://www.crazygames.com/' + letrasAzar, '_blank');
+        });
+      }
       // SCRIPT NUEVO PARA POKI
       const pokiBtn = document.getElementById('poki-btn');
       if (pokiBtn) {
