@@ -365,6 +365,46 @@ html, body {
       width: 100%;
       justify-content: center;
     }
+    .screens-menu {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+    }
+    .images-rows {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      overflow-x: auto;
+      background: none;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      font-family: archivo Black sans-serif;
+      transition: transform 0.3s ease;
+    }
+    .images-sett {
+      width: 144px;
+      height: 84px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      overflow: hidden;
+    }
+    .images-sett:hover {
+      transform: scale(1.2);
+      box-shadow: inset 0 0 12px #2c2c2caa, 0 0 20px #3e3e3eaa;
+      filter:brightness(1.1s) ;
+    }
     .default-btn, .aboutblank-btn {
       background: rgba(0, 255, 255, 0.18);
       color: #fff;
