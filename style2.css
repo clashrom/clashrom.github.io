@@ -263,6 +263,14 @@
   visibility: visible;
   transform: translateY(0);
 }
+.halloween {
+  margin: 0;
+  margin-right: 40px;
+  margin-top: -30px;
+  width:10%;
+  height: auto;
+  z-index: 10;
+}
 
 
 
