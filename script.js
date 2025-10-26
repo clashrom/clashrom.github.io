@@ -396,12 +396,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   botonesMenu.forEach(btn => observerBotones.observe(btn));
 });
-// --- CAMBIO DE fullscreenImage CON imageInput Y BOTONES .images-rows ---
+// --- CAMBIO DE fullscreenImage CON imageInput Y BOTONES .images-rows + GUARDAR EN localStorage ---
 document.addEventListener('DOMContentLoaded', () => {
   const fullscreenImage = document.getElementById('fullscreenImage');
   const imageInput = document.getElementById('imageInput');
 
-  // Si el usuario elige una imagen desde el input
+  // 🔹 Al cargar la página, restaurar imagen desde localStorage (si existe)
+  const savedImage = localStorage.getItem('fullscreenImageSrc');
+  if (savedImage && fullscreenImage) {
+    fullscreenImage.src = savedImage;
+  }
+
+  // 🔹 Si el usuario elige una imagen desde el input
   if (imageInput) {
     imageInput.addEventListener('change', function (event) {
       const file = event.target.files[0];
@@ -409,19 +415,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
         reader.onload = function (e) {
           fullscreenImage.src = e.target.result;
+          // Guardar imagen en localStorage
+          localStorage.setItem('fullscreenImageSrc', e.target.result);
         };
         reader.readAsDataURL(file);
       }
     });
   }
 
-  // Si el usuario hace clic en un botón de clase .images-rows
+  // 🔹 Si el usuario hace clic en un botón de clase .images-rows
   const imageButtons = document.querySelectorAll('.images-rows');
   imageButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const img = btn.querySelector('img');
       if (img && fullscreenImage) {
         fullscreenImage.src = img.src; // cambia la imagen fullscreen
+        // Guardar imagen en localStorage
+        localStorage.setItem('fullscreenImageSrc', img.src);
       }
     });
   });
