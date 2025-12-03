@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Classroom</title>
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* NUEVO: Imagen junto al buscador  */
+    #buscador-contenedor {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      margin-top: 25px;
+    }
+    #buscador-menu {
+      width: 350px;
+      font-size: 1.1em;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+    }
+    #buscador-logo-img {
+      margin-left: 28px;
+      max-height: 70px;       /* Un poco más grande */
+      max-width: 160px;
+      object-fit: contain;
+      background: none;
+      border-radius: 0;
+      display: block;
+    }
+    @media (max-width: 700px) {
+      #buscador-logo-img {
+        max-height: 40px;
+        max-width: 90px;
+        margin-left: 10px;
+      }
+    }
+    @media (max-width: 500px) {
+      #buscador-logo-img {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TABLÓN DE NOVEDADES (por debajo de fullscreen, z-index menor) -->
+  <div id="novedades-modal" style="display:none;">
+    <div id="novedades-box">
+      <h2>Novedades</h2>
+      <div id="novedades-content"></div>
+      <button id="novedades-vale">Vale</button>
+    </div>
+  </div>
+
+  <!-- NUEVO: Botonera vertical y menu hamburguesa a la izquierda -->
+  <div class="menu-hamburguesa-container">
+    <!-- Botón hamburguesa -->
+    <button id="hamburguesaBtn" class="menu-hamburguesa-btn" title="Mostrar menú">
+      <span style="font-size:1.3em;">&#9776;</span>
+    </button>
+    <!-- Panel botones verticales -->
+    <div id="panelBotones" class="botones-panel">
+      <!-- Botón Ajustes -->
+      <button id="toggleSettings" class="boton-ajuste-vertical">
+        <span class="ajustes-text">⚙  Ajustes</span>
+      </button>
+      <!-- Botón de pánico -->
+      <button id="classroomRedirectBtn" class="boton-ajuste-vertical" title="Botón de pánico, Ir a Google Classroom">
+        <span style="font-size:1.15em;">🏫</span>
+        <span style="margin-left:4px;">Classroom</span>
+      </button>
+      <!-- Botón Términos y condiciones -->
+      <button id="tyc" class="boton-ajuste-vertical" title="Términos y condiciones">
+        <span style="font-size:1.15em;">-?-</span>
+        <span style="margin-left:4px;">Términos</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel de Ajustes centrado -->
+  <div class="settings" id="settingsPanel">
+    <div class="settings-row">
+      <label for="colorPicker" style="color:white;">Color de fondo:</label>
+      <input type="color" id="colorPicker" name="colorPicker" value="#0f0c29" style="width: 40px; height: 40px; border: none; background: none;">
+      <button class="default-btn" type="button" onclick="resetColor()">Default</button>
+    </div>
+    <div class="settings-row">
+      <input id="titleInput" type="text" placeholder="Nuevo título de pestaña">
+      <button class="default-btn" type="button" onclick="setDefaultTitle()">Default</button>
+    </div>
+    <div class="settings-row">
+      <input id="imageInput" type="text" placeholder="URL nueva imagen fullscreen">
+      <button class="default-btn" type="button" onclick="setDefaultImage()">Default</button>
+    </div>
+    <div class="settings-row">
+      <button class="aboutblank-btn" type="button" onclick="openAboutBlankIframe()">about:blank</button>
+    </div>
+    <button id="applyBtn" onclick="applySettings()">Aplicar</button>
+  </div>
+
+  <!-- Sentinela para IntersectionObserver -->
+  <div id="buscador-sentinela" style="height:1px;"></div>
+  <!-- Barra de búsqueda de botones -->
+  <div id="buscador-contenedor">
+    <input id="buscador-menu" type="text" placeholder="Buscar botón del menú...">
+    <!-- NUEVO: Imagen a la derecha del buscador, más grande y sin fondo -->
+    <img id="buscador-logo-img" src="images/clashrom.png" alt="clashrom logo">
+  </div>
+  <div id="resultados-busqueda" style="display:none;"></div>
+
+  <!-- MENU COMPLETO (no se omite nada) -->
+  <div id="menu">
+    <!-- SECCIÓN EMULADORES -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">servidor de minecraft!!</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="server-arrow-left" onclick="scrollRow('server', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="menu-button" id="server1-btn">
+            <img src="images/panass.jpg" alt="server">
+          </button>
+        <button class="carousel-arrow right" id="server-arrow-right" onclick="scrollRow('server', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Sección Entretenimiento -->
+    <div class="margen-grande-arriba" style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Entretenimiento</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="ent-arrow-left" onclick="scrollRow('ent', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="ent-row">
+          <button class="menu-button" onclick="abrirEnIframe('gracias.html')">
+            <img src="images/+.jpg" alt="#prev#">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('youtube.html')">
+            <img src="https://cdn.sologo.ai/2025/0305/20250305072449146.png" alt="YouTube">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('twich.html')">
+            <img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/19234617/01_Twitch_Logo.jpg?quality=90&strip=all&crop=0,0,100,100" alt="Twich">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('kick.html')">
+            <img src="https://i.pinimg.com/736x/75/3a/80/753a8026311b908da737fab513be953a.jpg" alt="Kick">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://pluto.tv/es/')">
+            <img src="https://play-lh.googleusercontent.com/uYuzRkAmitXSVzx5J3zKJR3WlYKbMr6kffslwSxLiWWGgUIUm6kFB2ZeEjFJLclIZxox=w240-h480-rw" alt="plutotv">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://librefutboltv.su/')">
+            <img src="https://i.ytimg.com/vi/zWzGNvBfaw4/hqdefault.jpg" alt="LibreFutbolTV">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://sporticos.com/es/league/espana/laliga')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqMKSC_10hSBhNYjcdYI2XQ8d2tMU-3N7cwA&s" alt="sporticos">
+          </button>
+          <!-- NUEVO BOTÓN OMEGLE -->
+          <button class="menu-button" onclick="abrirEnIframe('https://ome.tv')">
+            <img src="https://play-lh.googleusercontent.com/dqXfJhXmJRvQNU-6ExVKC1QchVfscm1VpmZO16IAjAF0eN6YwWIUjdOSPSdBgK1gRQ" alt="omegle">
+          </button>
+        </div>
+        <button class="carousel-arrow right" id="ent-arrow-right" onclick="scrollRow('ent', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Sección Juegos -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Juegos</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="juegos-arrow-left" onclick="scrollRow('juegos', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="juegos-row">
+          <!-- boton sugerencias -->
+          <button class="menu-button" onclick="abrirEnIframe('gracias.html')">
+            <img src="images/+.jpg" alt="#prev#">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://web.cloudmoonapp.com/es/game/com.supercell.clashroyale/')">
+            <img src="https://img2.rtve.es/p/112590/imgportada/?w=1600" alt="clash">
+          </button>
+          <button class="menu-button" id="crazygames-btn">
+            <img src="https://artoonsolutions.com/wp-content/uploads/2023/12/ICON-IMAGE-03.png" alt="CrazyGames Aleatorio">
+          </button>
+          <button class="menu-button" id="poki-btn">
+            <img src="https://cloudfront-us-east-1.images.arcpublishing.com/semana/N6XRSIKBGFH6FNS6PYHKBM5W3Q.jpg" alt="Poki Aleatorio">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://www.conflictnations.com/')">
+            <img src="https://i.ytimg.com/vi/twXAuacAO04/maxresdefault.jpg" alt="conflictofnations">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://slowroads.io/')">
+            <img src="https://cdn.arstechnica.net/wp-content/uploads/2022/10/slowroads_hero_1.jpg" alt="slowroads">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://framesynthesis.com/drivingsimulator/maps/')">
+            <img src="https://i.blogs.es/b38efa/apersimulator/450_1000.png" alt="driving simulator">
+          </button>
+          <!-- NUEVO BOTÓN minecraft -->
+          <button class="menu-button" onclick="abrirEnIframe('https://eaglercraft.q13x.com/1.8-wasm/')">
+            <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2025/02/minecraft-key-art-feature.jpg" alt="minecraft">
+          </button>
+          <!-- NUEVO BOTÓN Bloxd -->
+          <button class="menu-button" onclick="abrirEnIframe('https://bloxd.io/')">
+            <img src="https://imgs.crazygames.com/bloxdhop-io_16x9/20250709130806/bloxdhop-io_16x9-cover?metadata=none&quality=60&width=1200&height=630&fit=crop" alt="bloxd.io">
+          </button>
+          <!-- NUEVO BOTÓN lolbeans -->
+          <button class="menu-button" onclick="abrirEnIframe('https://lolbeans.io/')">
+            <img src="https://cdn.titotu.io/images/games/lolbeans-io-1138x640.jpg" alt="LOLbeans">
+          </button>
+          <!-- NUEVO BOTÓN deeeep.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://deeeep.io/?host=8vPdOK')">
+            <img src="https://1games.io/data/image/game/deeeep-io/deeeep-io1.jpg" alt="deeeep.io">
+          </button>
+          <!-- NUEVO BOTÓN hole.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://holeio.com/')">
+            <img src="https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/2x1_NSwitchDS_HoleIo.jpg" alt="hole.io">
+          </button>
+          <!-- NUEVO BOTÓN krunker.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://krunker.io/')">
+            <img src="https://gnw.su/wp-content/uploads/2022/02/Featured-How-to-add-friends-on-Krunker-768x432-750x432.jpg" alt="krunker.io">
+          </button>
+          <!-- NUEVO BOTÓN deadshot.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://deadshot.io/')">
+            <img src="https://imgs.crazygames.com/games/deadshot-io/cover_16x9-1694770506842.png?metadata=none&quality=60&width=1200&height=630&fit=crop" alt="deadshot.io">
+          </button>
+          <!-- NUEVO BOTÓN poxel.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://poxel.io/')">
+            <img src="https://imgs.crazygames.com/poxel-io_16x9/20250422021430/poxel-io_16x9-cover?metadata=none&quality=60&width=1200&height=630&fit=crop" alt="poxel.io">
+          </button>
+          <!-- NUEVO BOTÓN gulper.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://gulper.io/')">
+            <img src="https://imgs.crazygames.com/games/gulper-io/cover_16x9-1722864711255.png?metadata=none&quality=60&width=1200&height=630&fit=crop" alt="gulper.io">
+          </button>
+          <!-- NUEVO BOTÓN evoworld.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://evoworld.io/')">
+            <img src="https://img.gamepix.com/games/flyordie/cover/flyordie.png?w=1200&ar=16:10" alt="evoworld.io">
+          </button>
+          <!-- NUEVO BOTÓN digdig.io -->
+          <button class="menu-button" onclick="abrirEnIframe('https://digdig.io/')">
+            <img src="https://www.gamekarma.com/images/games/1002.png" alt="digdig.io">
+          </button>
+          <!-- NUEVO BOTÓN INFINITE CRAFT -->
+          <button class="menu-button" onclick="abrirEnIframe('https://infinite-craft.com/')">
+            <img src="https://neal.fun/share-cards/infinite-craft.png" alt="Infinitecraft">
+          </button>
+          <!-- NUEVO BOTON GARTIC PHONE -->
+          <button class="menu-button" onclick="abrirEnIframe('https://garticphone.com/es')">
+            <img src="https://i.pinimg.com/originals/e9/67/a6/e967a6cbaba556d30794fe287a300cba.png" alt="gartic phone">
+          </button>
+          <!-- NUEVO BOTÓN GEFORCE NOW -->
+          <button class="menu-button" onclick="abrirEnIframe('https://definitelyscience.com/class/GeForce-Now/')">
+            <img src="https://static1.xdaimages.com/wordpress/wp-content/uploads/2020/02/nvidia-geforce-now.jpg" alt="GeForce NOW">
+          </button>
+          <button class="menu-button" id="eldardo-btn">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51_Im5VNcGahplptFNATUJrq-qU7fIVVLHQ&s" alt="Eldardo">
+          </button>
+        </div>
+        <button class="carousel-arrow right" id="juegos-arrow-right" onclick="scrollRow('juegos', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- SECCIÓN EMULADORES -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Emuladores</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="emuladores-arrow-left" onclick="scrollRow('emuladores', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="emuladores-row">
+          <button class="menu-button" onclick="abrirEnIframe('https://gam.onl/psx/fifa-soccer-2005.html#fifa-soccer-2005')">
+            <img src="https://i.pinimg.com/564x/d1/e9/6c/d1e96cc4abca8cff847fa431f9fdf2cc.jpg" alt="fifa">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://gam.onl/nds/super-mario-64-ds.html#super-mario-64-ds')">
+            <img src="https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_7/SI_N64_SuperMario64.jpg" alt="mario64">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://gam.onl/psx/battle-stations.html#battle-stations')">
+            <img src="https://i.ytimg.com/vi/MhmjlsudDfA/mqdefault.jpg" alt="battlestations/retrogames">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://www.retrogames.onl/2022/03/shrek-treasure-hunt-ps1.html')">
+            <img src="https://i.ytimg.com/vi/tCJ4c78ZpHU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDU3RCawaMD2kIG5e4LcvElIOYE-w" alt="shrek">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://www.retrogames.onl/')">
+            <img src="images/emu2.jpg" alt="retrogames">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://classicgamezone.com/')">
+            <img src="images/emu1.jpg" alt="classicgamezone">
+          </button>
+        </div>
+        <button class="carousel-arrow right" id="emuladores-arrow-right" onclick="scrollRow('emuladores', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- SECCIÓN HERRAMIENTAS -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div class="section-title">Herramientas</div>
+      <div class="menu-buttons-row-wrapper">
+        <button class="carousel-arrow left" id="herramientas-arrow-left" onclick="scrollRow('herramientas', -1)" aria-label="Izquierda">
+          <svg viewBox="0 0 48 48"><polyline points="32,12 16,24 32,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="menu-buttons-row" id="herramientas-row">
+          <button class="menu-button" onclick="abrirEnIframe('gracias.html')">
+            <img src="images/+.jpg" alt="#prev#">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://us.best-server.work/')">
+            <img src="https://play-lh.googleusercontent.com/dQ713sV9JMVE2q8y6v_SftihL5Hw2yoSqiTIJ40rtMrSEmeMOb9oawSK8U-JKTJccce2" alt="Proxy/Navegador">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://www.myinstants.com/en/index/es/')">
+            <img src="https://framerusercontent.com/images/Lik7Ulf0536wUJLav1Q5Z8RcHU.png" alt="Chat">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('https://anura.pro')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2H1lIjVZXgJbUW-3kgcaJk8jff5fr8kRZC2iF4HrfkTlut85ICei01QGzPAP-F5YY0XM&usqp=CAU" alt="anuraOS">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('Tu_seguridad.html')">
+            <img src="images/imagen_tu seguridad.jpg" alt="privacidad">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('chat.html')">
+            <img src="https://img.freepik.com/vector-premium/icono-chat-bocadillo-dialogo_23-2147501656.jpg" alt="Chat">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('about.html')">
+            <img src="images/blank.jpg" alt="blank">
+          </button>
+          <button class="menu-button" onclick="abrirEnIframe('overflow.html')">
+            <img src="images/overflow.jpg" alt="overflow">
+          </button>
+        </div>
+        <button class="carousel-arrow right" id="herramientas-arrow-right" onclick="scrollRow('herramientas', 1)" aria-label="Derecha">
+          <svg viewBox="0 0 48 48"><polyline points="16,12 32,24 16,36" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // --- NOVEDADES MEJORADO - acepta cualquier cosa entre €...€ como imagen ---
+    function hashString(str) {
+      let hash = 0, i, chr;
+      if (str.length === 0) return hash;
+      for (i = 0; i < str.length; i++) {
+        chr = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0;
+      }
+      return hash.toString();
+    }
+    function mostrarNovedades(contenido, hash) {
+      const modal = document.getElementById('novedades-modal');
+      const contenedor = document.getElementById('novedades-content');
+      contenedor.innerHTML = "";
+      const lineas = contenido.split('\n');
+      for (let linea of lineas) {
+        linea = linea.trim();
+        if (!linea) continue;
+        // Si la línea está entre €...€, mostrar imagen, ej: €https://loquesea€
+        if (/^€(.+)€$/.test(linea)) {
+          const url = linea.slice(1, -1);
+          const img = document.createElement('img');
+          img.src = url;
+          img.className = 'novedad-img';
+          img.alt = "Imagen de novedades";
+          contenedor.appendChild(img);
+        } else {
+          // Línea normal (texto)
+          const div = document.createElement('div');
+          div.textContent = linea;
+          div.className = 'novedad-linea';
+          contenedor.appendChild(div);
+        }
+      }
+      modal.style.display = "flex";
+      document.getElementById('novedades-vale').onclick = function() {
+        modal.style.display = 'none';
+        localStorage.setItem('novedadesHash', hash);
+      }
+    }
+    (function(){
+      fetch('nov.txt?_=' + Date.now())
+        .then(r=>r.ok?r.text():"").then(txt=>{
+          const hash = hashString(txt.trim());
+          if (!txt.trim()) return;
+          if (localStorage.getItem('novedadesHash') === hash) return;
+          mostrarNovedades(txt, hash);
+        });
+    })();
+
+    // --- NUEVO: funcionalidad hamburguesa ---
+    const hamburguesaBtn = document.getElementById('hamburguesaBtn');
+    const panelBotones = document.getElementById('panelBotones');
+    hamburguesaBtn.addEventListener('click', () => {
+      panelBotones.classList.toggle('show');
+    });
+    document.addEventListener('click', function(e) {
+      if (!panelBotones.contains(e.target) && !hamburguesaBtn.contains(e.target)) {
+        panelBotones.classList.remove('show');
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
+ 

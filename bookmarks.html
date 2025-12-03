@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarks Mejorado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #d7d9ff, #f5f5f5);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 120px;
+            color: #2c2f75;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .button {
+            display: inline-block;
+            margin: 12px;
+            padding: 12px 28px;
+            background: #4c56af;
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.2s;
+            user-select: none;
+        }
+
+        .button:hover {
+            transform: scale(1.08);
+            background-color: #3f4a95;
+        }
+
+        p {
+            max-width: 600px;
+            margin: 20px auto;
+            color: #333;
+            font-size: 15px;
+        }
+
+        /* MODAL */
+        #modal-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        #modal-box {
+            background: white;
+            padding: 30px;
+            width: 90%;
+            max-width: 420px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        #modal-box h2 {
+            color: #2c2f75;
+            margin-bottom: 10px;
+        }
+
+        #modal-box button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #4c56af;
+            color: white;
+            transition: 0.2s;
+        }
+
+        #modal-box button:hover {
+            background: #3f4a95;
+            transform: scale(1.07);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MODAL DE AVISO -->
+    <div id="modal-bg">
+        <div id="modal-box">
+            <h2>Responsabilidad</h2>
+            <p>Usa estos bookmarks bajo tu propia responsabilidad.<br>
+               Para más información, revisa los términos.</p>
+            <button onclick="cerrarModal()">Entendido</button>
+        </div>
+    </div>
+
+    <h1>Bookmarks</h1>
+
+    <div class="button" onclick="copyText(floodJS)">Flood</div>
+    <div class="button" onclick="copyText(borrarJS)">Borrar</div>
+    <div class="button" onclick="copyText(browserJS)">Browser</div>
+    <div class="button" onclick="copyText(tabJS)">TAB</div>
+    <div class="button" onclick="copyText(sonidoJS)">Sonido</div>
+
+    <p>*Para insertar un bookmark, ve a la barra de favoritos y añade uno nuevo, luego pega el texto copiado.</p>
+    <p>*Para el bookmark TAB: al tenerlo en favoritos, haz clic (no pasará nada), y luego pulsa TAB para activarlo.</p>
+
+    <script>
+        function cerrarModal() {
+            document.getElementById('modal-bg').style.display = 'none';
+        }
+
+        const floodJS = `javascript:var num=prompt("History flood amount:");done=false;x=window.location.href;for (var i=1; i<=num; i++){history.pushState(0, 0, i==num?x:i.toString());if(i==num){done=true}}if(done===true){alert("History flood successful! "+window.location.href+" ahora aparece en tu historial"+num+(num==1?" time.":" veces. (Merx_studios)"))}`;
+
+        const borrarJS = `javascript:(function(){window.location.replace('https://classroom.google.com/');})();`;
+
+        const browserJS = `javascript:((function()%7Bvar a,b,c;c="https://wide-heart-401.guesstheanimal.org/",b=document.createElement("iframe"),b.setAttribute("src",c),b.setAttribute("id","rusic-modal"),b.setAttribute("style","position: fixed; z-index: 999999; width: 1333px; height: 768px; right: 10px; top: 10px; border: 5px solid #8834af; overflow: hidden; background-color: #fff;"),a=document.getElementsByTagName("body")%5B0%5D,a.appendChild(b)%7D)).call(this)`;
+
+        const tabJS = `javascript:(function(){let i='bookmarkletFullscreenImg',e=document.getElementById(i);if(!e){e=document.createElement('img');e.src='https://i.postimg.cc/yN2QCMzd/Screenshot-2025-11-23-12-26-44.png';e.id=i;e.style.position='fixed';e.style.top='0';e.style.left='0';e.style.width='100%';e.style.height='100%';e.style.zIndex='9999';e.style.display='none';e.style.objectFit='contain';document.body.appendChild(e);document.addEventListener('keydown',function(k){if(k.key==='Tab'){k.preventDefault();e.style.display=(e.style.display==='none')?'block':'none';}});}})();`;
+
+        const sonidoJS = `javascript:alert("High Pitched Noise! Press H to Hide!");var s = "https://www.youtube.com/embed/MMNa8yqUEbE";((function(){var a,b,c;c=s,b=document.createElement("iframe"),b.setAttribute("src",c),b.setAttribute("id","rusic-modal"),b.setAttribute("style","position: fixed; z-index: 999999; width: 400px; height: 270px; left: 10px; top: 10px; border: 5px solid #009933; overflow: hidden; background-color: #fff;"),a=document.getElementsByTagName("body")[0],a.appendChild(b); window.addEventListener('keydown', function(event) { if (event.key == 'h') { b.setAttribute("style","left:-100000px;"); } }); })).call(this);`;
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+        }
+    </script>
+</body>
+</html>

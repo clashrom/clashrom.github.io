@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Classroom</title>
+  <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" type="image/png">
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%; overflow: hidden; background: black;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Pantalla de contraseña */
+    #loginScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 2000;
+    }
+
+    #loginInput {
+      padding: 10px;
+      font-size: 20px;
+      border-radius: 5px;
+      border: none;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #loginButton {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Botón del mapa */
+    #mapButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.9);
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      user-select: none;
+      display: none;
+    }
+
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de contraseña -->
+  <div id="loginScreen">
+    <h2>Introduce la contraseña</h2>
+    <input type="password" id="loginInput" placeholder="Contraseña" />
+    <button id="loginButton">Entrar</button>
+    <p>pidele la contraseña al creador para iniciar</p>
+    <p id="errorMsg" style="color:red; display:none;">Contraseña incorrecta</p>
+  </div>
+
+  <!-- Botón que abre el mapa -->
+  <div id="mapButton" title="Abrir mapa en pestaña nueva">🗺️</div>
+
+  <!-- Iframe del juego -->
+  <iframe 
+    id="gameFrame"
+    src="Eaglercraft_1.12.2_WASM_Offline_Download.html"
+    allow="autoplay; encrypted-media; fullscreen; pointer-lock; clipboard-read; clipboard-write"
+    sandbox="allow-scripts allow-same-origin allow-popups allow-modals allow-pointer-lock allow-downloads allow-forms"
+    tabindex="0">
+  </iframe>
+
+  <script>
+    // Contraseña ofuscada (no visible directamente)
+    const PASSWORD = atob("MTYyNTc5");
+
+    const loginScreen = document.getElementById("loginScreen");
+    const loginInput = document.getElementById("loginInput");
+    const loginButton = document.getElementById("loginButton");
+    const errorMsg = document.getElementById("errorMsg");
+
+    const mapButton = document.getElementById("mapButton");
+    const gameFrame = document.getElementById("gameFrame");
+
+    loginButton.addEventListener("click", () => {
+      if (loginInput.value === PASSWORD) {
+        loginScreen.style.display = "none";
+        mapButton.style.display = "block";
+        gameFrame.style.display = "block";
+      } else {
+        errorMsg.style.display = "block";
+      }
+    });
+
+    loginInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") loginButton.click();
+    });
+
+    // Abrir mapa en otra pestaña
+    mapButton.addEventListener("click", () => {
+      window.open("http://23.160.168.170:45841/", "_blank", "noopener,noreferrer");
+    });
+
+    // Manejo básico de enfoque del iframe del juego
+    function focusGameIframe() {
+      try {
+        gameFrame.focus();
+        if (gameFrame.contentWindow) gameFrame.contentWindow.focus();
+      } catch (e) {}
+    }
+
+    gameFrame.addEventListener("click", focusGameIframe);
+    gameFrame.addEventListener("focus", focusGameIframe);
+
+  </script>
+
+</body>
+</html>
